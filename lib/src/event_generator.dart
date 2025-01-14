@@ -54,20 +54,24 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
 
       // Generate the event class
       buffer.writeln('''
-class ${eventName}Event extends $className {
+class ${capitalizeFirst(eventName)} extends $className {
 $fieldDeclarations
 
-  const ${eventName}Event($constructorParams);
+  const ${capitalizeFirst(eventName)}($constructorParams);
 
   @override
   List<Object?> get props => [$propsList];
 
-  @override 
-  String toString() => '${eventName}Event(${parameters.map((p) => '${p.name}: \$${p.name}').join(', ')})';
+ 
 }
 ''');
     }
 
     return buffer.toString();
   }
+}
+
+String capitalizeFirst(String input) {
+  if (input.isEmpty) return input; // Return if the string is empty
+  return input[0].toUpperCase() + input.substring(1);
 }
