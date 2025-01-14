@@ -1,3 +1,4 @@
-class GenerateEvents {
-  const GenerateEvents();
+class GenerateEvent {
+  final String name;
+  const GenerateEvent(this.name);
 }
