@@ -1,9 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
 
-class EventGenerator extends GeneratorForAnnotation<GenerateEvent> {
+class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
   @override
   String generateForAnnotatedElement(
     Element element,
@@ -12,33 +13,61 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvent> {
   ) {
     if (element is! ClassElement) {
       throw InvalidGenerationSourceError(
-        'GenerateEvent can only be applied to classes.',
+        'GenerateEvents can only be applied to classes',
         element: element,
       );
     }
 
+    final buffer = StringBuffer();
     final className = element.name;
-    final eventName = annotation.read('name').stringValue;
-    
-    return '''
-    class ${eventName}Event extends $className {
-      const ${eventName}Event();
+
+    // Process each factory constructor
+    for (final constructor in element.constructors) {
+      if (!constructor.isFactory) continue;
+
+      final eventName = constructor.name;
+      if (eventName.isEmpty) continue;  // Skip unnamed factory constructors
+
+      // Get constructor parameters
+      final parameters = constructor.parameters;
       
-      factory ${eventName}Event.fromJson(Map<String, dynamic> json) {
-        return ${eventName}Event();
-      }
-      
-      @override
-      Map<String, dynamic> toJson() {
-        return {
-          'type': '$eventName',
-          ...super.toJson(),
-        };
-      }
-      
-      @override
-      String toString() => '${eventName}Event()';
+      // Generate field declarations
+      final fieldDeclarations = parameters.map((param) {
+        final type = param.type.getDisplayString(withNullability: true);
+        final name = param.name;
+        return '  final $type $name;';
+      }).join('\n');
+
+      // Generate constructor parameters
+      final constructorParams = parameters.map((param) {
+        final type = param.type.getDisplayString(withNullability: true);
+        final name = param.name;
+        final requiredKeyword = param.isRequired ? 'required ' : '';
+        final namedParam = param.isNamed ? 'this.' : '';
+        return '${param.isNamed ? '{' : ''}$requiredKeyword$namedParam$name${param.isNamed ? '}' : ''}';
+      }).join(', ');
+
+      // Generate props list for equatable
+      final propsList = parameters
+          .map((param) => param.name)
+          .join(', ');
+
+      // Generate the event class
+      buffer.writeln('''
+class ${eventName}Event extends $className {
+$fieldDeclarations
+
+  const ${eventName}Event($constructorParams);
+
+  @override
+  List<Object?> get props => [$propsList];
+
+  @override 
+  String toString() => '${eventName}Event(${parameters.map((p) => '${p.name}: \$${p.name}').join(', ')})';
+}
+''');
     }
-    ''';
+
+    return buffer.toString();
   }
 }

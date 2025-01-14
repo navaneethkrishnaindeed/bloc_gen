@@ -6,21 +6,36 @@ part of 'events.dart';
 // EventGenerator
 // **************************************************************************
 
-class UserLoggedInEvent extends BaseEvent {
-   UserLoggedInEvent();
+class userLoggedInEvent extends BaseEvent {
+  final String userId;
 
-  factory UserLoggedInEvent.fromJson(Map<String, dynamic> json) {
-    return UserLoggedInEvent();
-  }
+  const userLoggedInEvent({required this.userId});
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'type': 'UserLoggedIn',
-      ...super.toJson(),
-    };
-  }
+  List<Object?> get props => [userId];
 
   @override
-  String toString() => 'UserLoggedInEvent()';
+  String toString() => 'userLoggedInEvent(userId: $userId)';
+}
+
+class userLoggedOutEvent extends BaseEvent {
+  const userLoggedOutEvent();
+
+  @override
+  List<Object?> get props => [];
+
+  @override
+  String toString() => 'userLoggedOutEvent()';
+}
+
+class dataLoadedEvent extends BaseEvent {
+  final List<String> items;
+
+  const dataLoadedEvent({required this.items});
+
+  @override
+  List<Object?> get props => [items];
+
+  @override
+  String toString() => 'dataLoadedEvent(items: $items)';
 }

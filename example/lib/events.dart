@@ -1,17 +1,12 @@
 import 'package:event_generator/annotations.dart';
+import 'package:equatable/equatable.dart';
 
 part 'events.g.dart';
+@GenerateEvents()
+abstract class BaseEvent extends Equatable {
+  const BaseEvent();
 
-@GenerateEvent('UserLoggedIn')
-class BaseEvent {
-  final DateTime timestamp;
-  
-   BaseEvent({DateTime? timestamp}) 
-      : timestamp = timestamp ?? DateTime.now();
-  
-  Map<String, dynamic> toJson() {
-    return {
-      'timestamp': timestamp.toIso8601String(),
-    };
-  }
+  factory BaseEvent.userLoggedIn({required String userId}) = UserLoggedInEvent;
+  factory BaseEvent.userLoggedOut() = UserLoggedOutEvent;
+  factory BaseEvent.dataLoaded({required List<String> items}) = DataLoadedEvent;
 }
