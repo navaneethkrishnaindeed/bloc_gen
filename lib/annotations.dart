@@ -1,0 +1,3 @@
+class GenerateEvents {
+  const GenerateEvents();
+}
