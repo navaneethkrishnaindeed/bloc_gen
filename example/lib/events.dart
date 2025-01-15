@@ -1,5 +1,5 @@
-import 'package:event_generator/annotations.dart';
 import 'package:equatable/equatable.dart';
+import 'package:bloc_gen/annotations.dart';
 
 part 'events.g.dart';
 @GenerateEvents()

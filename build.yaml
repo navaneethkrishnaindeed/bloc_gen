@@ -1,7 +1,7 @@
 targets:
   $default:
     builders:
-      event_generator|event_generator:
+      bloc_gen|bloc_gen:
         enabled: true
         generate_for:
           - example/lib/**.dart
@@ -9,10 +9,10 @@ targets:
           - test/**.dart
 
 builders:
-  event_generator:
-    import: "package:event_generator/builder.dart"
+  bloc_gen:
+    import: "package:bloc_gen/builder.dart"
     builder_factories: ["eventGenerator"]
-    build_extensions: {".dart": [".event_generator.g.part"]}
+    build_extensions: {".dart": [".bloc_gen.g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]

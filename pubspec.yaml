@@ -1,4 +1,4 @@
-name: event_generator
+name: bloc_gen
 description: Generates event classes from factory constructors
 version: 1.0.0
 environment:
