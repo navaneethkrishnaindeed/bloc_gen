@@ -1,4 +1,4 @@
-# fbloc_event_gen Event Generator
+# Flutter Bloc Event Generator
 
 A Dart package that automatically generates event classes from factory constructors. This package helps reduce boilerplate code when working with event-driven architectures, particularly useful in BLoC pattern implementations.
 
