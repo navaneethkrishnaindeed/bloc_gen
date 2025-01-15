@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:bloc_event_gen/annotations.dart';
+import 'package:fbloc_event_gen/annotations.dart';
 
 part 'events.g.dart';
 

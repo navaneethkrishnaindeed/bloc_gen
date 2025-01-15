@@ -1,4 +1,4 @@
-# bloc_event_gen Event Generator
+# fbloc_event_gen Event Generator
 
 A Dart package that automatically generates event classes from factory constructors. This package helps reduce boilerplate code when working with event-driven architectures, particularly useful in BLoC pattern implementations.
 
@@ -17,7 +17,7 @@ Add these dependencies to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  bloc_event_gen: ^1.0.0
+  fbloc_event_gen: ^1.0.0
   equatable: ^2.0.7
 
 dev_dependencies:
@@ -31,7 +31,7 @@ dev_dependencies:
 1. Create your base event class with factory constructors:
 
 ```dart
-import 'package:bloc_event_gen/annotations.dart';
+import 'package:fbloc_event_gen/annotations.dart';
 import 'package:equatable/equatable.dart';
 
 part 'events.g.dart';
