@@ -1,39 +1,160 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Event Generator
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A Dart package that automatically generates event classes from factory constructors. This package helps reduce boilerplate code when working with event-driven architectures, particularly useful in BLoC pattern implementations.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Automatically generates event classes from factory constructors
+- Supports both named and positional parameters
+- Integrates with Equatable for value comparison
+- Generates proper props list for each event
+- Supports nullable types
+- Type-safe event generation
 
-## Getting started
+## Installation
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add these dependencies to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  event_generator: ^1.0.0
+  equatable: ^2.0.7
+
+dev_dependencies:
+  build_runner: ^2.4.6
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Basic Setup
+
+1. Create your base event class with factory constructors:
 
 ```dart
-const like = 'sample';
+import 'package:event_generator/annotations.dart';
+import 'package:equatable/equatable.dart';
+
+part 'events.g.dart';
+
+@GenerateEvents()
+abstract class BaseEvent extends Equatable {
+  const BaseEvent();
+
+  factory BaseEvent.userLoggedIn({required String userId}) = UserLoggedInEvent;
+  factory BaseEvent.userLoggedOut() = UserLoggedOutEvent;
+  factory BaseEvent.dataLoaded({required List<String> items}) = DataLoadedEvent;
+}
 ```
 
-## Additional information
+2. Run the generator:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```bash
+dart run build_runner build
+```
+
+### Generated Code
+
+For the above example, the following classes will be generated:
+
+```dart
+class UserLoggedInEvent extends BaseEvent {
+  final String userId;
+  
+  const UserLoggedInEvent({required this.userId});
+  
+  @override
+  List<Object?> get props => [userId];
+  
+  @override
+  String toString() => 'UserLoggedInEvent(userId: $userId)';
+}
+
+class UserLoggedOutEvent extends BaseEvent {
+  const UserLoggedOutEvent();
+  
+  @override
+  List<Object?> get props => [];
+  
+  @override
+  String toString() => 'UserLoggedOutEvent()';
+}
+
+class DataLoadedEvent extends BaseEvent {
+  final List<String> items;
+  
+  const DataLoadedEvent({required this.items});
+  
+  @override
+  List<Object?> get props => [items];
+  
+  @override
+  String toString() => 'DataLoadedEvent(items: $items)';
+}
+```
+
+### Using Generated Events
+
+```dart
+void main() {
+  // Using named constructor syntax
+  final loginEvent = BaseEvent.userLoggedIn(userId: '123');
+  final logoutEvent = BaseEvent.userLoggedOut();
+  final dataEvent = BaseEvent.dataLoaded(items: ['item1', 'item2']);
+
+  // Events are Equatable
+  print(loginEvent == BaseEvent.userLoggedIn(userId: '123')); // true
+  
+  // toString() is implemented
+  print(loginEvent); // UserLoggedInEvent(userId: 123)
+}
+```
+
+## Advanced Usage
+
+### Custom Event Properties
+
+You can add any number of properties to your events:
+
+```dart
+@GenerateEvents()
+abstract class BaseEvent extends Equatable {
+  const BaseEvent();
+
+  factory BaseEvent.userAction({
+    required String userId,
+    required String action,
+    DateTime? timestamp,
+    Map<String, dynamic>? metadata,
+  }) = UserActionEvent;
+}
+```
+
+### Working with Bloc Pattern
+
+The generated events work seamlessly with the bloc pattern:
+
+```dart
+class UserBloc extends Bloc<BaseEvent, UserState> {
+  UserBloc() : super(UserInitial()) {
+    on<UserLoggedInEvent>((event, emit) {
+      // Handle login with event.userId
+    });
+
+    on<UserLoggedOutEvent>((event, emit) {
+      // Handle logout
+    });
+  }
+}
+```
+
+## Features and bugs
+
+Please file feature requests and bugs at the [issue tracker][tracker].
+
+## Contributing
+
+We welcome contributions! Please read our [contributing guide](CONTRIBUTING.md) to learn about our development process.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
