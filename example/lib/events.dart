@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:bloc_gen/annotations.dart';
+import 'package:bloc_event_gen/annotations.dart';
 
 part 'events.g.dart';
+
 @GenerateEvents()
 abstract class BaseEvent extends Equatable {
   const BaseEvent();
