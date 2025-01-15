@@ -1,6 +1,6 @@
 name: bloc_gen
 description: Generates event classes from factory constructors
-version: 1.0.0
+version: 1.0.5
 repository: https://github.com/naveen-as-a-geek-wolf/bloc_gen
 issue_tracker: https://github.com/naveen-as-a-geek-wolf/bloc_gen/issues
 environment:

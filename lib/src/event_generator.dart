@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
@@ -40,7 +39,6 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
 
       // Generate constructor parameters
       final constructorParams = parameters.map((param) {
-        final type = param.type.getDisplayString(withNullability: true);
         final name = param.name;
         final requiredKeyword = param.isRequired ? 'required ' : '';
         final namedParam = param.isNamed ? 'this.' : '';
