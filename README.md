@@ -146,15 +146,3 @@ class UserBloc extends Bloc<BaseEvent, UserState> {
   }
 }
 ```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-## Contributing
-
-We welcome contributions! Please read our [contributing guide](CONTRIBUTING.md) to learn about our development process.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
