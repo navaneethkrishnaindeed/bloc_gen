@@ -1,9 +1,7 @@
-import 'package:equatable/equatable.dart';
-import 'package:fbloc_event_gen/annotations.dart';
 
-part 'events.g.dart';
+part of 'main.dart';
 
-@GenerateEvents()
+@generateEvents
 abstract class BaseEvent extends Equatable {
   const BaseEvent();
 

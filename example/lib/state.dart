@@ -1,10 +1,8 @@
-import 'package:equatable/equatable.dart';
-import 'package:fbloc_event_gen/annotations.dart';
-part 'state.g.dart';
 
+part of 'main.dart';
 @generateStates
 abstract class _$$SplashScreenState {
-  
+
   final bool? isLoading = false;
   final bool isError = false;
   final List<String>? errorMessages = [];
