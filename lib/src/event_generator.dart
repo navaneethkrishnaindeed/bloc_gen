@@ -25,11 +25,11 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
       if (!constructor.isFactory) continue;
 
       final eventName = constructor.name;
-      if (eventName.isEmpty) continue;  // Skip unnamed factory constructors
+      if (eventName.isEmpty) continue; // Skip unnamed factory constructors
 
       // Get constructor parameters
       final parameters = constructor.parameters;
-      
+
       // Generate field declarations
       final fieldDeclarations = parameters.map((param) {
         final type = param.type.getDisplayString(withNullability: true);
@@ -37,32 +37,35 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
         return '  final $type $name;';
       }).join('\n');
 
-      // Generate constructor parameters
       final constructorParams = parameters.map((param) {
         final name = param.name;
-        final requiredKeyword = param.isRequired ? 'required ' : '';
+        final requiredKeyword =
+            param.isRequired && param.isNamed ? 'required ' : '';
         final namedParam = param.isNamed ? 'this.' : '';
-        return '${param.isNamed ? '{' : ''}$requiredKeyword$namedParam$name${param.isNamed ? '}' : ''}';
+        return '$requiredKeyword$namedParam$name';
       }).join(', ');
 
+      final hasNamedParameters = parameters.any((param) => param.isNamed);
+
+      final result = hasNamedParameters
+          ? 'const ${capitalizeFirst(eventName)}({$constructorParams});'
+          : 'const ${capitalizeFirst(eventName)}($constructorParams);';
+
       // Generate props list for equatable
-      final propsList = parameters
-          .map((param) => param.name)
-          .join(', ');
+      final propsList = parameters.map((param) => param.name).join(', ');
 
       // Generate the event class
       buffer.writeln('''
 class ${capitalizeFirst(eventName)} extends $className {
 $fieldDeclarations
 
-  const ${capitalizeFirst(eventName)}($constructorParams);
+  $result
 
   @override
   List<Object?> get props => [$propsList];
-
- 
 }
 ''');
+
     }
 
     return buffer.toString();

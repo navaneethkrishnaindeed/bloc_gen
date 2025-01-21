@@ -6,26 +6,28 @@ part of 'events.dart';
 // EventGenerator
 // **************************************************************************
 
-class UserLoggedInEvent extends BaseEvent {
+class UserLoggedIn extends BaseEvent {
   final String userId;
+  final String userIdde;
+  final bool? gfg;
 
-  UserLoggedInEvent({required this.userId});
+  const UserLoggedIn({required this.userId, required this.userIdde, this.gfg});
 
   @override
-  List<Object?> get props => [userId];
+  List<Object?> get props => [userId, userIdde, gfg];
 }
 
-class UserLoggedOutEvent extends BaseEvent {
-  UserLoggedOutEvent();
+class UserLoggedOut extends BaseEvent {
+  const UserLoggedOut();
 
   @override
   List<Object?> get props => [];
 }
 
-class DataLoadedEvent extends BaseEvent {
+class DataLoaded extends BaseEvent {
   final List<String> items;
 
-  DataLoadedEvent({required this.items});
+  const DataLoaded({required this.items});
 
   @override
   List<Object?> get props => [items];

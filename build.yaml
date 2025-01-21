@@ -7,12 +7,25 @@ targets:
           - example/lib/**.dart
           - lib/**.dart
           - test/**.dart
+      fbloc_event_gen|fbloc_state_gen:
+        enabled: true
+        generate_for:
+          - example/lib/**.dart
+          - lib/**.dart
+          - test/**.dart
 
 builders:
   fbloc_event_gen:
     import: "package:fbloc_event_gen/builder.dart"
     builder_factories: ["eventGenerator"]
     build_extensions: {".dart": [".fbloc_event_gen.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+  fbloc_state_gen:
+    import: "package:fbloc_event_gen/builder.dart"
+    builder_factories: ["stateGenerator"]
+    build_extensions: {".dart": [".fbloc_state_gen.g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
