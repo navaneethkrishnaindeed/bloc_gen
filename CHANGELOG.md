@@ -6,3 +6,6 @@ Readme change
 
 ## 2.0.0
 Updated with annotations changes alsong with new state generators 
+
+## 2.0.1
+Updated with annotations as @generateEvents and as @generateStates

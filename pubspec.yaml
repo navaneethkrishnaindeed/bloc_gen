@@ -1,6 +1,6 @@
 name: fbloc_event_gen
 description: Generates event classes from factory constructors
-version: 2.0.0
+version: 2.0.1
 repository: https://github.com/naveen-as-a-geek-wolf/bloc_gen
 issue_tracker: https://github.com/naveen-as-a-geek-wolf/bloc_gen/issues
 environment:
