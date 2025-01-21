@@ -19,7 +19,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
 
     final buffer = StringBuffer();
     final className = element.name.replaceFirst('_\$\$', '');
-    print(element.source.contents.data);
+    
     final abstractClassRegex = RegExp(r"abstract class.*", dotAll: true);
     final match = abstractClassRegex.firstMatch(element.source.contents.data);
     List<String> fields = [];
@@ -33,9 +33,9 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
           .map((m) => m.group(0)!)
           .toList();
 
-      print(fields);
+      
     } else {
-      print("No abstract class found.");
+      
     }
     
     String fieldParamsForGeneratedClass = fields
