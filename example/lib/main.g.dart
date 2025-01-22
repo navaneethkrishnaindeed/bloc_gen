@@ -122,7 +122,7 @@ class UpdateIsGetUserActiveBusinessEvent extends BaseEvent {
 }
 
 class UpdateGetUserResponseEvent extends BaseEvent {
-   final GetMyUserResponseModelsssss getUserResponse;
+   final GetMyUserResponseModelsssss    getUserResponse;
   const UpdateGetUserResponseEvent({required this.getUserResponse});
 
   @override
@@ -194,7 +194,7 @@ final List<BusinessDataModel> businessDataModel;
 final ErrorModel errorModel;
 final int? businessId;
 final bool isGetUserActiveBusiness;
-final GetMyUserResponseModelsssss getUserResponse;
+final GetMyUserResponseModelsssss    getUserResponse;
 final bool isGetCardCapabilitySuccess;
 final bool? isBusinessSubscriptionActive;
 final bool? isTokenInvalid;
