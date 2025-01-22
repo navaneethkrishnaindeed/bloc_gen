@@ -6,7 +6,7 @@ part of 'main.dart';
 // EventGenerator
 // **************************************************************************
 
-class UserLoggedIn extends SplashScreenEvent {
+class UserLoggedIn extends BaseEvent {
   final String userId;
   final String userIdde;
   final bool? gfg;
@@ -17,14 +17,14 @@ class UserLoggedIn extends SplashScreenEvent {
   List<Object?> get props => [userId, userIdde, gfg];
 }
 
-class UserLoggedOut extends SplashScreenEvent {
+class UserLoggedOut extends BaseEvent {
   const UserLoggedOut();
 
   @override
   List<Object?> get props => [];
 }
 
-class DataLoaded extends SplashScreenEvent {
+class DataLoaded extends BaseEvent {
   final List<String> items;
 
   const DataLoaded({required this.items});
@@ -33,7 +33,7 @@ class DataLoaded extends SplashScreenEvent {
   List<Object?> get props => [items];
 }
 
-class UpdateIsLoadingEvent extends SplashScreenEvent {
+class UpdateIsLoadingEvent extends BaseEvent {
    final bool? isLoading;
   const UpdateIsLoadingEvent({required this.isLoading});
 
@@ -41,7 +41,7 @@ class UpdateIsLoadingEvent extends SplashScreenEvent {
   List<Object?> get props => [isLoading];
 }
 
-class UpdateIsErrorEvent extends SplashScreenEvent {
+class UpdateIsErrorEvent extends BaseEvent {
    final bool isError;
   const UpdateIsErrorEvent({required this.isError});
 
@@ -49,7 +49,7 @@ class UpdateIsErrorEvent extends SplashScreenEvent {
   List<Object?> get props => [isError];
 }
 
-class UpdateErrorMessagesEvent extends SplashScreenEvent {
+class UpdateErrorMessagesEvent extends BaseEvent {
    final List<String>? errorMessages;
   const UpdateErrorMessagesEvent({required this.errorMessages});
 
@@ -57,7 +57,7 @@ class UpdateErrorMessagesEvent extends SplashScreenEvent {
   List<Object?> get props => [errorMessages];
 }
 
-class UpdateIsSetUserDetailsSuccessEvent extends SplashScreenEvent {
+class UpdateIsSetUserDetailsSuccessEvent extends BaseEvent {
    final bool isSetUserDetailsSuccess;
   const UpdateIsSetUserDetailsSuccessEvent({required this.isSetUserDetailsSuccess});
 
@@ -65,7 +65,7 @@ class UpdateIsSetUserDetailsSuccessEvent extends SplashScreenEvent {
   List<Object?> get props => [isSetUserDetailsSuccess];
 }
 
-class UpdateIsStateClearedEvent extends SplashScreenEvent {
+class UpdateIsStateClearedEvent extends BaseEvent {
    final bool isStateCleared;
   const UpdateIsStateClearedEvent({required this.isStateCleared});
 
@@ -73,7 +73,7 @@ class UpdateIsStateClearedEvent extends SplashScreenEvent {
   List<Object?> get props => [isStateCleared];
 }
 
-class UpdateIsGetFeatureSuccessEvent extends SplashScreenEvent {
+class UpdateIsGetFeatureSuccessEvent extends BaseEvent {
    final bool isGetFeatureSuccess;
   const UpdateIsGetFeatureSuccessEvent({required this.isGetFeatureSuccess});
 
@@ -81,7 +81,7 @@ class UpdateIsGetFeatureSuccessEvent extends SplashScreenEvent {
   List<Object?> get props => [isGetFeatureSuccess];
 }
 
-class UpdateGetUserContextSuccessEvent extends SplashScreenEvent {
+class UpdateGetUserContextSuccessEvent extends BaseEvent {
    final bool getUserContextSuccess;
   const UpdateGetUserContextSuccessEvent({required this.getUserContextSuccess});
 
@@ -89,7 +89,7 @@ class UpdateGetUserContextSuccessEvent extends SplashScreenEvent {
   List<Object?> get props => [getUserContextSuccess];
 }
 
-class UpdateBusinessDataModelEvent extends SplashScreenEvent {
+class UpdateBusinessDataModelEvent extends BaseEvent {
    final List<BusinessDataModel> businessDataModel;
   const UpdateBusinessDataModelEvent({required this.businessDataModel});
 
@@ -97,7 +97,7 @@ class UpdateBusinessDataModelEvent extends SplashScreenEvent {
   List<Object?> get props => [businessDataModel];
 }
 
-class UpdateErrorModelEvent extends SplashScreenEvent {
+class UpdateErrorModelEvent extends BaseEvent {
    final ErrorModel errorModel;
   const UpdateErrorModelEvent({required this.errorModel});
 
@@ -105,7 +105,7 @@ class UpdateErrorModelEvent extends SplashScreenEvent {
   List<Object?> get props => [errorModel];
 }
 
-class UpdateBusinessIdEvent extends SplashScreenEvent {
+class UpdateBusinessIdEvent extends BaseEvent {
    final int? businessId;
   const UpdateBusinessIdEvent({required this.businessId});
 
@@ -113,7 +113,7 @@ class UpdateBusinessIdEvent extends SplashScreenEvent {
   List<Object?> get props => [businessId];
 }
 
-class UpdateIsGetUserActiveBusinessEvent extends SplashScreenEvent {
+class UpdateIsGetUserActiveBusinessEvent extends BaseEvent {
    final bool isGetUserActiveBusiness;
   const UpdateIsGetUserActiveBusinessEvent({required this.isGetUserActiveBusiness});
 
@@ -121,15 +121,15 @@ class UpdateIsGetUserActiveBusinessEvent extends SplashScreenEvent {
   List<Object?> get props => [isGetUserActiveBusiness];
 }
 
-class UpdateGetUserResponseEvent extends SplashScreenEvent {
-   final GetMyUserResponseModel getUserResponse;
+class UpdateGetUserResponseEvent extends BaseEvent {
+   final GetMyUserResponseModelsssss getUserResponse;
   const UpdateGetUserResponseEvent({required this.getUserResponse});
 
   @override
   List<Object?> get props => [getUserResponse];
 }
 
-class UpdateIsGetCardCapabilitySuccessEvent extends SplashScreenEvent {
+class UpdateIsGetCardCapabilitySuccessEvent extends BaseEvent {
    final bool isGetCardCapabilitySuccess;
   const UpdateIsGetCardCapabilitySuccessEvent({required this.isGetCardCapabilitySuccess});
 
@@ -137,7 +137,7 @@ class UpdateIsGetCardCapabilitySuccessEvent extends SplashScreenEvent {
   List<Object?> get props => [isGetCardCapabilitySuccess];
 }
 
-class UpdateIsBusinessSubscriptionActiveEvent extends SplashScreenEvent {
+class UpdateIsBusinessSubscriptionActiveEvent extends BaseEvent {
    final bool? isBusinessSubscriptionActive;
   const UpdateIsBusinessSubscriptionActiveEvent({required this.isBusinessSubscriptionActive});
 
@@ -145,7 +145,7 @@ class UpdateIsBusinessSubscriptionActiveEvent extends SplashScreenEvent {
   List<Object?> get props => [isBusinessSubscriptionActive];
 }
 
-class UpdateIsTokenInvalidEvent extends SplashScreenEvent {
+class UpdateIsTokenInvalidEvent extends BaseEvent {
    final bool? isTokenInvalid;
   const UpdateIsTokenInvalidEvent({required this.isTokenInvalid});
 
@@ -153,7 +153,7 @@ class UpdateIsTokenInvalidEvent extends SplashScreenEvent {
   List<Object?> get props => [isTokenInvalid];
 }
 
-class UpdateIsGetBusinessDataSuccessEvent extends SplashScreenEvent {
+class UpdateIsGetBusinessDataSuccessEvent extends BaseEvent {
    final bool isGetBusinessDataSuccess;
   const UpdateIsGetBusinessDataSuccessEvent({required this.isGetBusinessDataSuccess});
 
@@ -161,7 +161,7 @@ class UpdateIsGetBusinessDataSuccessEvent extends SplashScreenEvent {
   List<Object?> get props => [isGetBusinessDataSuccess];
 }
 
-class UpdateShowLoginButtonEvent extends SplashScreenEvent {
+class UpdateShowLoginButtonEvent extends BaseEvent {
    final bool showLoginButton;
   const UpdateShowLoginButtonEvent({required this.showLoginButton});
 
@@ -169,7 +169,7 @@ class UpdateShowLoginButtonEvent extends SplashScreenEvent {
   List<Object?> get props => [showLoginButton];
 }
 
-class UpdateLoaderValueEvent extends SplashScreenEvent {
+class UpdateLoaderValueEvent extends BaseEvent {
    final String loaderValue;
   const UpdateLoaderValueEvent({required this.loaderValue});
 
@@ -179,7 +179,10 @@ class UpdateLoaderValueEvent extends SplashScreenEvent {
 
 
 
-class SplashScreenState extends Equatable {
+
+
+
+class BaseState extends Equatable {
 final bool? isLoading;
 final bool isError;
 final List<String>? errorMessages;
@@ -191,7 +194,7 @@ final List<BusinessDataModel> businessDataModel;
 final ErrorModel errorModel;
 final int? businessId;
 final bool isGetUserActiveBusiness;
-final GetMyUserResponseModel getUserResponse;
+final GetMyUserResponseModelsssss getUserResponse;
 final bool isGetCardCapabilitySuccess;
 final bool? isBusinessSubscriptionActive;
 final bool? isTokenInvalid;
@@ -199,7 +202,7 @@ final bool isGetBusinessDataSuccess;
 final bool showLoginButton;
 final String loaderValue;
 
-  const SplashScreenState({
+  const BaseState({
    this.isLoading,
       required this.isError,
       this.errorMessages,
@@ -220,8 +223,8 @@ final String loaderValue;
       required this.loaderValue
   });
 
-  static SplashScreenState initial() {
-    return SplashScreenState(
+  static BaseState initial() {
+    return BaseState(
       isLoading: false,
         isError: false,
         errorMessages: [],
@@ -233,7 +236,7 @@ final String loaderValue;
         errorModel: ErrorModel(),
         businessId: null,
         isGetUserActiveBusiness: false,
-        getUserResponse: GetMyUserResponseModel(),
+        getUserResponse: GetMyUserResponseModelsssss(),
         isGetCardCapabilitySuccess: false,
         isBusinessSubscriptionActive: null,
         isTokenInvalid: false,
@@ -243,7 +246,7 @@ final String loaderValue;
     );
   }
 
-  SplashScreenState copyWith({
+  BaseState copyWith({
   bool? isLoading,
       bool? isError,
       List<String>? errorMessages,
@@ -255,7 +258,7 @@ final String loaderValue;
       ErrorModel? errorModel,
       int? businessId,
       bool? isGetUserActiveBusiness,
-      GetMyUserResponseModel? getUserResponse,
+      GetMyUserResponseModelsssss? getUserResponse,
       bool? isGetCardCapabilitySuccess,
       bool? isBusinessSubscriptionActive,
       bool? isTokenInvalid,
@@ -263,7 +266,7 @@ final String loaderValue;
       bool? showLoginButton,
       String? loaderValue
   }) {
-    return SplashScreenState(
+    return BaseState(
        isLoading: isLoading ?? this.isLoading,
         isError: isError ?? this.isError,
         errorMessages: errorMessages ?? this.errorMessages,
@@ -283,6 +286,82 @@ final String loaderValue;
         showLoginButton: showLoginButton ?? this.showLoginButton,
         loaderValue: loaderValue ?? this.loaderValue
     );
+  }
+  static void registerEvents(BaseBloc bloc){
+ 
+      bloc.on<UpdateIsLoadingEvent>((event, emit) {
+    emit(bloc.state.copyWith(isLoading: event.isLoading)); 
+  });
+
+  bloc.on<UpdateIsErrorEvent>((event, emit) {
+    emit(bloc.state.copyWith(isError: event.isError)); 
+  });
+
+  bloc.on<UpdateErrorMessagesEvent>((event, emit) {
+    emit(bloc.state.copyWith(errorMessages: event.errorMessages)); 
+  });
+
+  bloc.on<UpdateIsSetUserDetailsSuccessEvent>((event, emit) {
+    emit(bloc.state.copyWith(isSetUserDetailsSuccess: event.isSetUserDetailsSuccess)); 
+  });
+
+  bloc.on<UpdateIsStateClearedEvent>((event, emit) {
+    emit(bloc.state.copyWith(isStateCleared: event.isStateCleared)); 
+  });
+
+  bloc.on<UpdateIsGetFeatureSuccessEvent>((event, emit) {
+    emit(bloc.state.copyWith(isGetFeatureSuccess: event.isGetFeatureSuccess)); 
+  });
+
+  bloc.on<UpdateGetUserContextSuccessEvent>((event, emit) {
+    emit(bloc.state.copyWith(getUserContextSuccess: event.getUserContextSuccess)); 
+  });
+
+  bloc.on<UpdateBusinessDataModelEvent>((event, emit) {
+    emit(bloc.state.copyWith(businessDataModel: event.businessDataModel)); 
+  });
+
+  bloc.on<UpdateErrorModelEvent>((event, emit) {
+    emit(bloc.state.copyWith(errorModel: event.errorModel)); 
+  });
+
+  bloc.on<UpdateBusinessIdEvent>((event, emit) {
+    emit(bloc.state.copyWith(businessId: event.businessId)); 
+  });
+
+  bloc.on<UpdateIsGetUserActiveBusinessEvent>((event, emit) {
+    emit(bloc.state.copyWith(isGetUserActiveBusiness: event.isGetUserActiveBusiness)); 
+  });
+
+  bloc.on<UpdateGetUserResponseEvent>((event, emit) {
+    emit(bloc.state.copyWith(getUserResponse: event.getUserResponse)); 
+  });
+
+  bloc.on<UpdateIsGetCardCapabilitySuccessEvent>((event, emit) {
+    emit(bloc.state.copyWith(isGetCardCapabilitySuccess: event.isGetCardCapabilitySuccess)); 
+  });
+
+  bloc.on<UpdateIsBusinessSubscriptionActiveEvent>((event, emit) {
+    emit(bloc.state.copyWith(isBusinessSubscriptionActive: event.isBusinessSubscriptionActive)); 
+  });
+
+  bloc.on<UpdateIsTokenInvalidEvent>((event, emit) {
+    emit(bloc.state.copyWith(isTokenInvalid: event.isTokenInvalid)); 
+  });
+
+  bloc.on<UpdateIsGetBusinessDataSuccessEvent>((event, emit) {
+    emit(bloc.state.copyWith(isGetBusinessDataSuccess: event.isGetBusinessDataSuccess)); 
+  });
+
+  bloc.on<UpdateShowLoginButtonEvent>((event, emit) {
+    emit(bloc.state.copyWith(showLoginButton: event.showLoginButton)); 
+  });
+
+  bloc.on<UpdateLoaderValueEvent>((event, emit) {
+    emit(bloc.state.copyWith(loaderValue: event.loaderValue)); 
+  });
+
+  
   }
 
   @override
@@ -306,4 +385,104 @@ final String loaderValue;
         showLoginButton,
         loaderValue
       ];
+}
+
+
+
+
+extension BaseBlocContextExtension on BuildContext {
+  void setBaseBlocState({
+     bool? isLoading,
+      bool? isError,
+      List<String>? errorMessages,
+      bool? isSetUserDetailsSuccess,
+      bool? isStateCleared,
+      bool? isGetFeatureSuccess,
+      bool? getUserContextSuccess,
+      List<BusinessDataModel>? businessDataModel,
+      ErrorModel? errorModel,
+      int? businessId,
+      bool? isGetUserActiveBusiness,
+      GetMyUserResponseModelsssss? getUserResponse,
+      bool? isGetCardCapabilitySuccess,
+      bool? isBusinessSubscriptionActive,
+      bool? isTokenInvalid,
+      bool? isGetBusinessDataSuccess,
+      bool? showLoginButton,
+      String? loaderValue
+}) {
+    final myBloc = read<BaseBloc>();  // Read the MyBloc instance
+     if (isLoading != null) {
+    myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading));
+}
+
+if (isError != null) {
+    myBloc.add(UpdateIsErrorEvent(isError: isError));
+}
+
+if (errorMessages != null) {
+    myBloc.add(UpdateErrorMessagesEvent(errorMessages: errorMessages));
+}
+
+if (isSetUserDetailsSuccess != null) {
+    myBloc.add(UpdateIsSetUserDetailsSuccessEvent(isSetUserDetailsSuccess: isSetUserDetailsSuccess));
+}
+
+if (isStateCleared != null) {
+    myBloc.add(UpdateIsStateClearedEvent(isStateCleared: isStateCleared));
+}
+
+if (isGetFeatureSuccess != null) {
+    myBloc.add(UpdateIsGetFeatureSuccessEvent(isGetFeatureSuccess: isGetFeatureSuccess));
+}
+
+if (getUserContextSuccess != null) {
+    myBloc.add(UpdateGetUserContextSuccessEvent(getUserContextSuccess: getUserContextSuccess));
+}
+
+if (businessDataModel != null) {
+    myBloc.add(UpdateBusinessDataModelEvent(businessDataModel: businessDataModel));
+}
+
+if (errorModel != null) {
+    myBloc.add(UpdateErrorModelEvent(errorModel: errorModel));
+}
+
+if (businessId != null) {
+    myBloc.add(UpdateBusinessIdEvent(businessId: businessId));
+}
+
+if (isGetUserActiveBusiness != null) {
+    myBloc.add(UpdateIsGetUserActiveBusinessEvent(isGetUserActiveBusiness: isGetUserActiveBusiness));
+}
+
+if (getUserResponse != null) {
+    myBloc.add(UpdateGetUserResponseEvent(getUserResponse: getUserResponse));
+}
+
+if (isGetCardCapabilitySuccess != null) {
+    myBloc.add(UpdateIsGetCardCapabilitySuccessEvent(isGetCardCapabilitySuccess: isGetCardCapabilitySuccess));
+}
+
+if (isBusinessSubscriptionActive != null) {
+    myBloc.add(UpdateIsBusinessSubscriptionActiveEvent(isBusinessSubscriptionActive: isBusinessSubscriptionActive));
+}
+
+if (isTokenInvalid != null) {
+    myBloc.add(UpdateIsTokenInvalidEvent(isTokenInvalid: isTokenInvalid));
+}
+
+if (isGetBusinessDataSuccess != null) {
+    myBloc.add(UpdateIsGetBusinessDataSuccessEvent(isGetBusinessDataSuccess: isGetBusinessDataSuccess));
+}
+
+if (showLoginButton != null) {
+    myBloc.add(UpdateShowLoginButtonEvent(showLoginButton: showLoginButton));
+}
+
+if (loaderValue != null) {
+    myBloc.add(UpdateLoaderValueEvent(loaderValue: loaderValue));
+}
+
+  }
 }

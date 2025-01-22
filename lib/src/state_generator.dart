@@ -152,20 +152,35 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
   }).join("\n");
 
 
-String custumSetStateBlocImplementation =  fields.map((field) {
-    // Extract the variable name by removing type, modifiers, and assignments.
-    final variableName = field
-        .replaceAll(RegExp(r'final|var|const|\?|=.+|;'), '') // Remove keywords, types, and assignments
-        .trim() // Trim any spaces
-        .split(' ')
-        .last; // Get the actual variable name
+// String custumSetStateBlocImplementation =  fields.map((field) {
+//     // Extract the variable name by removing type, modifiers, and assignments.
+//     final variableName = field
+//         .replaceAll(RegExp(r'final|var|const|\?|=.+|;'), '') // Remove keywords, types, and assignments
+//         .trim() // Trim any spaces
+//         .split(' ')
+//         .last; // Get the actual variable name
 
+//     return '''
+// if ($variableName != null) {
+//     myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
+// }
+// ''';
+//   }).join('\n');
+
+String custumSetStateBlocImplementation = fields.map((field) {
+  // Use a regex to extract the variable name properly
+  final match = RegExp(r'final\s+[\w<>\?]+\s+(\w+)').firstMatch(field);
+  if (match != null) {
+    String variableName = match.group(1)!;
     return '''
 if ($variableName != null) {
     myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
 }
 ''';
-  }).join('\n');
+  }
+  return '';
+}).join('\n');
+
 
 
   String blocSetStateName = 'set${className.replaceAll("State", "Bloc")}State';

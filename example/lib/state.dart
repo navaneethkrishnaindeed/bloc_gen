@@ -1,8 +1,7 @@
-
 part of 'main.dart';
-@generateStates
-abstract class _$$SplashScreenState {
 
+@generateStates
+abstract class _$$BaseState {
   final bool? isLoading = false;
   final bool isError = false;
   final List<String>? errorMessages = [];
@@ -14,7 +13,8 @@ abstract class _$$SplashScreenState {
   final ErrorModel errorModel = ErrorModel();
   final int? businessId = null;
   final bool isGetUserActiveBusiness = false;
-  final GetMyUserResponseModel getUserResponse = GetMyUserResponseModel();
+  final GetMyUserResponseModelsssss getUserResponse =
+      GetMyUserResponseModelsssss();
   final bool isGetCardCapabilitySuccess = false;
   final bool? isBusinessSubscriptionActive = null;
   final bool? isTokenInvalid = false;
@@ -22,10 +22,12 @@ abstract class _$$SplashScreenState {
   final bool showLoginButton = false;
   final String loaderValue = "Loading...";
 }
-class BusinessDataModel{}
-class ErrorModel{}
-class GetMyUserResponseModel{}
 
+class BusinessDataModel {}
+
+class ErrorModel {}
+
+class GetMyUserResponseModelsssss {}
 
 // extension MyPackageContextExtension on BuildContext {
 //   // Custom function to dispatch an event to a BLoC
