@@ -2,10 +2,10 @@
 part of 'main.dart';
 
 @generateEvents
-abstract class BaseEvent extends Equatable {
-  const BaseEvent();
+abstract class SplashScreenEvent extends Equatable {
+  const SplashScreenEvent();
 
-  factory BaseEvent.userLoggedIn({required String userId,required String userIdde, bool? gfg}) = UserLoggedIn;
-  factory BaseEvent.userLoggedOut() = UserLoggedOut;
-  factory BaseEvent.dataLoaded({required List<String> items}) = DataLoaded;
+  factory SplashScreenEvent.userLoggedIn({required String userId,required String userIdde, bool? gfg}) = UserLoggedIn;
+  factory SplashScreenEvent.userLoggedOut() = UserLoggedOut;
+  factory SplashScreenEvent.dataLoaded({required List<String> items}) = DataLoaded;
 }

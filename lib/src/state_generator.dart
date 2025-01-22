@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:fbloc_event_gen/src/event_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
 
@@ -19,7 +20,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
 
     final buffer = StringBuffer();
     final className = element.name.replaceFirst('_\$\$', '');
-    
+
     final abstractClassRegex = RegExp(r"abstract class.*", dotAll: true);
     final match = abstractClassRegex.firstMatch(element.source.contents.data);
     List<String> fields = [];
@@ -32,12 +33,8 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
           .allMatches(abstractClassContent)
           .map((m) => m.group(0)!)
           .toList();
+    } else {}
 
-      
-    } else {
-      
-    }
-    
     String fieldParamsForGeneratedClass = fields
             .map((field) {
               final match =
@@ -122,10 +119,68 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
-    buffer.write('''
-/*
+    String stateGeneratedEvents = fields.map((field) {
+      final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
+      if (match != null) {
+        String varName = match.group(1)!;
+        return '''
+class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('State', 'Event')} {
+   ${field.trim().replaceAll(RegExp(r'\s*=\s*.*;'), '')};
+  const Update${capitalizeFirst(varName)}Event({required this.${varName}});
 
-*/
+  @override
+  List<Object?> get props => [${varName}];
+}
+''';
+      }
+      return "";
+    }).join("\n");
+
+
+
+ String registerEventsBody = fields.map((field) {
+    final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
+    if (match != null) {
+      String varName = match.group(1)!;
+      return '''
+  bloc.on<Update${capitalizeFirst(varName)}Event>((event, emit) {
+    emit(bloc.state.copyWith($varName: event.$varName)); 
+  });
+''';
+    }
+    return "";
+  }).join("\n");
+
+
+String custumSetStateBlocImplementation =  fields.map((field) {
+    // Extract the variable name by removing type, modifiers, and assignments.
+    final variableName = field
+        .replaceAll(RegExp(r'final|var|const|\?|=.+|;'), '') // Remove keywords, types, and assignments
+        .trim() // Trim any spaces
+        .split(' ')
+        .last; // Get the actual variable name
+
+    return '''
+if ($variableName != null) {
+    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
+}
+''';
+  }).join('\n');
+
+
+  String blocSetStateName = 'set${className.replaceAll("State", "Bloc")}State';
+
+
+
+
+    buffer.write('''
+
+$stateGeneratedEvents
+
+
+
+
+
 class $className extends Equatable {
 $fieldParamsForGeneratedClass
 
@@ -146,14 +201,34 @@ $fieldParamsForGeneratedClass
        $copyWithReturnFallbackParams
     );
   }
+  static void registerEvents(${className.replaceAll('State', 'Bloc')} bloc){
+ 
+    $registerEventsBody
+  
+  }
 
   @override
   List<Object?> get props => [
         $propsList
       ];
 }
+
+
+
+
+extension ${className.replaceAll('State', 'Bloc')}ContextExtension on BuildContext {
+  void $blocSetStateName({
+     $copyWithParams
+}) {
+    final myBloc = read<${className.replaceAll('State', 'Bloc')}>();  // Read the MyBloc instance
+     $custumSetStateBlocImplementation
+  }
+}
+
+
 ''');
 
     return buffer.toString();
   }
 }
+

@@ -1,4 +1,5 @@
 
+
 // Change from class to const constructor
 const generateEvents = GenerateEvents();
 
