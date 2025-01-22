@@ -9,3 +9,6 @@ Updated with annotations changes alsong with new state generators
 
 ## 2.0.1
 Updated with annotations as @generateEvents and as @generateStates
+
+## 2.0.2
+State Variable event Generator
