@@ -2,9 +2,9 @@
 
 A powerful code generation package that supercharges your Flutter Bloc implementation with zero boilerplate! Generate events, states, and utilities automatically.
 
-![state](./images/state.png)
+![state](./images/basestate.png)
 
-![state](./images/event%20call.png)
+![state](./images/callingevent.png)
 
 ![state](./images/event.png)
 
