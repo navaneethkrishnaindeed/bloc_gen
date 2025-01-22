@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0
+## 3.0.1
 ### Major Changes
 * Introduced automatic BuildContext extension generation
 * Added automatic Bloc event registration system
