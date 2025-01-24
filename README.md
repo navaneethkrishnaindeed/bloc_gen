@@ -1,5 +1,10 @@
 # 🚀 Flutter Bloc Generator
 
+Do you Want to Generate All state, event and even bloc code from a SINGLE VARIABLE
+but still want option to CUSTOMISE your bloc and event code with out hastle
+
+Then This is the Package u will ever need... 
+
 A powerful code generation package that supercharges your Flutter Bloc implementation with zero boilerplate! Generate events, states, and utilities automatically.
 
 ![state](./images/basestate.png)
