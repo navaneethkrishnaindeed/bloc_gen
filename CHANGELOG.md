@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.3
+* Readme and Documantation changes 
+* Updated Dependecy 
+* Android Ios Platform Support added
+
 ## 3.0.2
 ### Major Changes
 * Introduced automatic BuildContext extension generation

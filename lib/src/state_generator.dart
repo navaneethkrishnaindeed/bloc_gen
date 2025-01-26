@@ -4,6 +4,7 @@ import 'package:fbloc_event_gen/src/event_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
 
+/// [StateGenerator] is the class which handles logic for Generating States Events and Blocs
 class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
   @override
   String generateForAnnotatedElement(
@@ -136,57 +137,35 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
       return "";
     }).join("\n");
 
-
-
- String registerEventsBody = fields.map((field) {
-    final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
-    if (match != null) {
-      String varName = match.group(1)!;
-      return '''
+    String registerEventsBody = fields.map((field) {
+      final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
+      if (match != null) {
+        String varName = match.group(1)!;
+        return '''
   bloc.on<Update${capitalizeFirst(varName)}Event>((event, emit) {
     emit(bloc.state.copyWith($varName: event.$varName)); 
   });
 ''';
-    }
-    return "";
-  }).join("\n");
+      }
+      return "";
+    }).join("\n");
 
-
-// String custumSetStateBlocImplementation =  fields.map((field) {
-//     // Extract the variable name by removing type, modifiers, and assignments.
-//     final variableName = field
-//         .replaceAll(RegExp(r'final|var|const|\?|=.+|;'), '') // Remove keywords, types, and assignments
-//         .trim() // Trim any spaces
-//         .split(' ')
-//         .last; // Get the actual variable name
-
-//     return '''
-// if ($variableName != null) {
-//     myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
-// }
-// ''';
-//   }).join('\n');
-
-String custumSetStateBlocImplementation = fields.map((field) {
-  // Use a regex to extract the variable name properly
-  final match = RegExp(r'final\s+[\w<>\?]+\s+(\w+)').firstMatch(field);
-  if (match != null) {
-    String variableName = match.group(1)!;
-    return '''
+    String custumSetStateBlocImplementation = fields.map((field) {
+      // Use a regex to extract the variable name properly
+      final match = RegExp(r'final\s+[\w<>\?]+\s+(\w+)').firstMatch(field);
+      if (match != null) {
+        String variableName = match.group(1)!;
+        return '''
 if ($variableName != null) {
     myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
 }
 ''';
-  }
-  return '';
-}).join('\n');
+      }
+      return '';
+    }).join('\n');
 
-
-
-  String blocSetStateName = 'set${className.replaceAll("State", "Bloc")}State';
-
-
-
+    String blocSetStateName =
+        'set${className.replaceAll("State", "Bloc")}State';
 
     buffer.write('''
 
@@ -246,4 +225,3 @@ extension ${className.replaceAll('State', 'Bloc')}ContextExtension on BuildConte
     return buffer.toString();
   }
 }
-

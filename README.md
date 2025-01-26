@@ -7,11 +7,11 @@ Then This is the Package u will ever need...
 
 A powerful code generation package that supercharges your Flutter Bloc implementation with zero boilerplate! Generate events, states, and utilities automatically.
 
-![state](./images/basestate.png)
+![state image Placeholder](./images/basestate.png)
 
-![state](./images/callingevent.png)
+![calling event image place holder](./images/callingevent.png)
 
-![state](./images/event.png)
+![event image place holder](./images/event.png)
 
 
 ## 📚 Table of Contents
@@ -31,7 +31,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_bloc_generator: ^3.0.0
+  fbloc_event_gen: ^3.0.3
 
 dev_dependencies:
   build_runner: ^2.4.6

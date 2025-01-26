@@ -3,6 +3,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
 
+/// Class [EventGenerator] is Responcible for holding logic for creating custom events via factory constructors
 class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
   @override
   String generateForAnnotatedElement(
@@ -31,8 +32,9 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
       final parameters = constructor.parameters;
 
       // Generate field declarations
+
       final fieldDeclarations = parameters.map((param) {
-        final type = param.type.getDisplayString(withNullability: true);
+        final type = getTypeofPraram(param.toString());
         final name = param.name;
         return '  final $type $name;';
       }).join('\n');
@@ -65,14 +67,26 @@ $fieldDeclarations
   List<Object?> get props => [$propsList];
 }
 ''');
-
     }
 
     return buffer.toString();
   }
 }
 
+/// [capitalizeFirst] updates the First charecter of the String given and makes it Uppercase and returns the String
 String capitalizeFirst(String input) {
   if (input.isEmpty) return input; // Return if the string is empty
   return input[0].toUpperCase() + input.substring(1);
+}
+
+/// [getTypeofPraram] is responcible for bifurcating params in to parts and return the return type alone as String
+String getTypeofPraram(String inputStr) {
+  // Remove { and }
+  String cleanedStr = inputStr.replaceAll('{', '').replaceAll('}', '');
+
+  // Split into parts
+  List<String> parts = cleanedStr.split(' ');
+
+  // Check if second to last element contains '?'
+  return parts[parts.length - 2];
 }

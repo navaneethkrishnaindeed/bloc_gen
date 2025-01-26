@@ -34,7 +34,7 @@ class DataLoaded extends BaseEvent {
 }
 
 class UpdateIsLoadingEvent extends BaseEvent {
-   final bool? isLoading;
+  final bool? isLoading;
   const UpdateIsLoadingEvent({required this.isLoading});
 
   @override
@@ -42,7 +42,7 @@ class UpdateIsLoadingEvent extends BaseEvent {
 }
 
 class UpdateIsErrorEvent extends BaseEvent {
-   final bool isError;
+  final bool isError;
   const UpdateIsErrorEvent({required this.isError});
 
   @override
@@ -50,7 +50,7 @@ class UpdateIsErrorEvent extends BaseEvent {
 }
 
 class UpdateErrorMessagesEvent extends BaseEvent {
-   final List<String>? errorMessages;
+  final List<String>? errorMessages;
   const UpdateErrorMessagesEvent({required this.errorMessages});
 
   @override
@@ -58,15 +58,16 @@ class UpdateErrorMessagesEvent extends BaseEvent {
 }
 
 class UpdateIsSetUserDetailsSuccessEvent extends BaseEvent {
-   final bool isSetUserDetailsSuccess;
-  const UpdateIsSetUserDetailsSuccessEvent({required this.isSetUserDetailsSuccess});
+  final bool isSetUserDetailsSuccess;
+  const UpdateIsSetUserDetailsSuccessEvent(
+      {required this.isSetUserDetailsSuccess});
 
   @override
   List<Object?> get props => [isSetUserDetailsSuccess];
 }
 
 class UpdateIsStateClearedEvent extends BaseEvent {
-   final bool isStateCleared;
+  final bool isStateCleared;
   const UpdateIsStateClearedEvent({required this.isStateCleared});
 
   @override
@@ -74,7 +75,7 @@ class UpdateIsStateClearedEvent extends BaseEvent {
 }
 
 class UpdateIsGetFeatureSuccessEvent extends BaseEvent {
-   final bool isGetFeatureSuccess;
+  final bool isGetFeatureSuccess;
   const UpdateIsGetFeatureSuccessEvent({required this.isGetFeatureSuccess});
 
   @override
@@ -82,7 +83,7 @@ class UpdateIsGetFeatureSuccessEvent extends BaseEvent {
 }
 
 class UpdateGetUserContextSuccessEvent extends BaseEvent {
-   final bool getUserContextSuccess;
+  final bool getUserContextSuccess;
   const UpdateGetUserContextSuccessEvent({required this.getUserContextSuccess});
 
   @override
@@ -90,7 +91,7 @@ class UpdateGetUserContextSuccessEvent extends BaseEvent {
 }
 
 class UpdateBusinessDataModelEvent extends BaseEvent {
-   final List<BusinessDataModel> businessDataModel;
+  final List<BusinessDataModel> businessDataModel;
   const UpdateBusinessDataModelEvent({required this.businessDataModel});
 
   @override
@@ -98,7 +99,7 @@ class UpdateBusinessDataModelEvent extends BaseEvent {
 }
 
 class UpdateErrorModelEvent extends BaseEvent {
-   final ErrorModel errorModel;
+  final ErrorModel errorModel;
   const UpdateErrorModelEvent({required this.errorModel});
 
   @override
@@ -106,7 +107,7 @@ class UpdateErrorModelEvent extends BaseEvent {
 }
 
 class UpdateBusinessIdEvent extends BaseEvent {
-   final int? businessId;
+  final int? businessId;
   const UpdateBusinessIdEvent({required this.businessId});
 
   @override
@@ -114,15 +115,16 @@ class UpdateBusinessIdEvent extends BaseEvent {
 }
 
 class UpdateIsGetUserActiveBusinessEvent extends BaseEvent {
-   final bool isGetUserActiveBusiness;
-  const UpdateIsGetUserActiveBusinessEvent({required this.isGetUserActiveBusiness});
+  final bool isGetUserActiveBusiness;
+  const UpdateIsGetUserActiveBusinessEvent(
+      {required this.isGetUserActiveBusiness});
 
   @override
   List<Object?> get props => [isGetUserActiveBusiness];
 }
 
 class UpdateGetUserResponseEvent extends BaseEvent {
-   final GetMyUserResponseModelsssss    getUserResponse;
+  final GetMyUserResponseModelsssss getUserResponse;
   const UpdateGetUserResponseEvent({required this.getUserResponse});
 
   @override
@@ -130,23 +132,25 @@ class UpdateGetUserResponseEvent extends BaseEvent {
 }
 
 class UpdateIsGetCardCapabilitySuccessEvent extends BaseEvent {
-   final bool isGetCardCapabilitySuccess;
-  const UpdateIsGetCardCapabilitySuccessEvent({required this.isGetCardCapabilitySuccess});
+  final bool isGetCardCapabilitySuccess;
+  const UpdateIsGetCardCapabilitySuccessEvent(
+      {required this.isGetCardCapabilitySuccess});
 
   @override
   List<Object?> get props => [isGetCardCapabilitySuccess];
 }
 
 class UpdateIsBusinessSubscriptionActiveEvent extends BaseEvent {
-   final bool? isBusinessSubscriptionActive;
-  const UpdateIsBusinessSubscriptionActiveEvent({required this.isBusinessSubscriptionActive});
+  final bool? isBusinessSubscriptionActive;
+  const UpdateIsBusinessSubscriptionActiveEvent(
+      {required this.isBusinessSubscriptionActive});
 
   @override
   List<Object?> get props => [isBusinessSubscriptionActive];
 }
 
 class UpdateIsTokenInvalidEvent extends BaseEvent {
-   final bool? isTokenInvalid;
+  final bool? isTokenInvalid;
   const UpdateIsTokenInvalidEvent({required this.isTokenInvalid});
 
   @override
@@ -154,15 +158,16 @@ class UpdateIsTokenInvalidEvent extends BaseEvent {
 }
 
 class UpdateIsGetBusinessDataSuccessEvent extends BaseEvent {
-   final bool isGetBusinessDataSuccess;
-  const UpdateIsGetBusinessDataSuccessEvent({required this.isGetBusinessDataSuccess});
+  final bool isGetBusinessDataSuccess;
+  const UpdateIsGetBusinessDataSuccessEvent(
+      {required this.isGetBusinessDataSuccess});
 
   @override
   List<Object?> get props => [isGetBusinessDataSuccess];
 }
 
 class UpdateShowLoginButtonEvent extends BaseEvent {
-   final bool showLoginButton;
+  final bool showLoginButton;
   const UpdateShowLoginButtonEvent({required this.showLoginButton});
 
   @override
@@ -170,40 +175,35 @@ class UpdateShowLoginButtonEvent extends BaseEvent {
 }
 
 class UpdateLoaderValueEvent extends BaseEvent {
-   final String loaderValue;
+  final String loaderValue;
   const UpdateLoaderValueEvent({required this.loaderValue});
 
   @override
   List<Object?> get props => [loaderValue];
 }
 
-
-
-
-
-
 class BaseState extends Equatable {
-final bool? isLoading;
-final bool isError;
-final List<String>? errorMessages;
-final bool isSetUserDetailsSuccess;
-final bool isStateCleared;
-final bool isGetFeatureSuccess;
-final bool getUserContextSuccess;
-final List<BusinessDataModel> businessDataModel;
-final ErrorModel errorModel;
-final int? businessId;
-final bool isGetUserActiveBusiness;
-final GetMyUserResponseModelsssss    getUserResponse;
-final bool isGetCardCapabilitySuccess;
-final bool? isBusinessSubscriptionActive;
-final bool? isTokenInvalid;
-final bool isGetBusinessDataSuccess;
-final bool showLoginButton;
-final String loaderValue;
+  final bool? isLoading;
+  final bool isError;
+  final List<String>? errorMessages;
+  final bool isSetUserDetailsSuccess;
+  final bool isStateCleared;
+  final bool isGetFeatureSuccess;
+  final bool getUserContextSuccess;
+  final List<BusinessDataModel> businessDataModel;
+  final ErrorModel errorModel;
+  final int? businessId;
+  final bool isGetUserActiveBusiness;
+  final GetMyUserResponseModelsssss getUserResponse;
+  final bool isGetCardCapabilitySuccess;
+  final bool? isBusinessSubscriptionActive;
+  final bool? isTokenInvalid;
+  final bool isGetBusinessDataSuccess;
+  final bool showLoginButton;
+  final String loaderValue;
 
-  const BaseState({
-   this.isLoading,
+  const BaseState(
+      {this.isLoading,
       required this.isError,
       this.errorMessages,
       required this.isSetUserDetailsSuccess,
@@ -220,12 +220,11 @@ final String loaderValue;
       this.isTokenInvalid,
       required this.isGetBusinessDataSuccess,
       required this.showLoginButton,
-      required this.loaderValue
-  });
+      required this.loaderValue});
 
   static BaseState initial() {
     return BaseState(
-      isLoading: false,
+        isLoading: false,
         isError: false,
         errorMessages: [],
         isSetUserDetailsSuccess: false,
@@ -242,12 +241,11 @@ final String loaderValue;
         isTokenInvalid: false,
         isGetBusinessDataSuccess: false,
         showLoginButton: false,
-        loaderValue: "Loading..."
-    );
+        loaderValue: "Loading...");
   }
 
-  BaseState copyWith({
-  bool? isLoading,
+  BaseState copyWith(
+      {bool? isLoading,
       bool? isError,
       List<String>? errorMessages,
       bool? isSetUserDetailsSuccess,
@@ -264,104 +262,112 @@ final String loaderValue;
       bool? isTokenInvalid,
       bool? isGetBusinessDataSuccess,
       bool? showLoginButton,
-      String? loaderValue
-  }) {
+      String? loaderValue}) {
     return BaseState(
-       isLoading: isLoading ?? this.isLoading,
+        isLoading: isLoading ?? this.isLoading,
         isError: isError ?? this.isError,
         errorMessages: errorMessages ?? this.errorMessages,
-        isSetUserDetailsSuccess: isSetUserDetailsSuccess ?? this.isSetUserDetailsSuccess,
+        isSetUserDetailsSuccess:
+            isSetUserDetailsSuccess ?? this.isSetUserDetailsSuccess,
         isStateCleared: isStateCleared ?? this.isStateCleared,
         isGetFeatureSuccess: isGetFeatureSuccess ?? this.isGetFeatureSuccess,
-        getUserContextSuccess: getUserContextSuccess ?? this.getUserContextSuccess,
+        getUserContextSuccess:
+            getUserContextSuccess ?? this.getUserContextSuccess,
         businessDataModel: businessDataModel ?? this.businessDataModel,
         errorModel: errorModel ?? this.errorModel,
         businessId: businessId ?? this.businessId,
-        isGetUserActiveBusiness: isGetUserActiveBusiness ?? this.isGetUserActiveBusiness,
+        isGetUserActiveBusiness:
+            isGetUserActiveBusiness ?? this.isGetUserActiveBusiness,
         getUserResponse: getUserResponse ?? this.getUserResponse,
-        isGetCardCapabilitySuccess: isGetCardCapabilitySuccess ?? this.isGetCardCapabilitySuccess,
-        isBusinessSubscriptionActive: isBusinessSubscriptionActive ?? this.isBusinessSubscriptionActive,
+        isGetCardCapabilitySuccess:
+            isGetCardCapabilitySuccess ?? this.isGetCardCapabilitySuccess,
+        isBusinessSubscriptionActive:
+            isBusinessSubscriptionActive ?? this.isBusinessSubscriptionActive,
         isTokenInvalid: isTokenInvalid ?? this.isTokenInvalid,
-        isGetBusinessDataSuccess: isGetBusinessDataSuccess ?? this.isGetBusinessDataSuccess,
+        isGetBusinessDataSuccess:
+            isGetBusinessDataSuccess ?? this.isGetBusinessDataSuccess,
         showLoginButton: showLoginButton ?? this.showLoginButton,
-        loaderValue: loaderValue ?? this.loaderValue
-    );
+        loaderValue: loaderValue ?? this.loaderValue);
   }
-  static void registerEvents(BaseBloc bloc){
- 
-      bloc.on<UpdateIsLoadingEvent>((event, emit) {
-    emit(bloc.state.copyWith(isLoading: event.isLoading)); 
-  });
 
-  bloc.on<UpdateIsErrorEvent>((event, emit) {
-    emit(bloc.state.copyWith(isError: event.isError)); 
-  });
+  static void registerEvents(BaseBloc bloc) {
+    bloc.on<UpdateIsLoadingEvent>((event, emit) {
+      emit(bloc.state.copyWith(isLoading: event.isLoading));
+    });
 
-  bloc.on<UpdateErrorMessagesEvent>((event, emit) {
-    emit(bloc.state.copyWith(errorMessages: event.errorMessages)); 
-  });
+    bloc.on<UpdateIsErrorEvent>((event, emit) {
+      emit(bloc.state.copyWith(isError: event.isError));
+    });
 
-  bloc.on<UpdateIsSetUserDetailsSuccessEvent>((event, emit) {
-    emit(bloc.state.copyWith(isSetUserDetailsSuccess: event.isSetUserDetailsSuccess)); 
-  });
+    bloc.on<UpdateErrorMessagesEvent>((event, emit) {
+      emit(bloc.state.copyWith(errorMessages: event.errorMessages));
+    });
 
-  bloc.on<UpdateIsStateClearedEvent>((event, emit) {
-    emit(bloc.state.copyWith(isStateCleared: event.isStateCleared)); 
-  });
+    bloc.on<UpdateIsSetUserDetailsSuccessEvent>((event, emit) {
+      emit(bloc.state
+          .copyWith(isSetUserDetailsSuccess: event.isSetUserDetailsSuccess));
+    });
 
-  bloc.on<UpdateIsGetFeatureSuccessEvent>((event, emit) {
-    emit(bloc.state.copyWith(isGetFeatureSuccess: event.isGetFeatureSuccess)); 
-  });
+    bloc.on<UpdateIsStateClearedEvent>((event, emit) {
+      emit(bloc.state.copyWith(isStateCleared: event.isStateCleared));
+    });
 
-  bloc.on<UpdateGetUserContextSuccessEvent>((event, emit) {
-    emit(bloc.state.copyWith(getUserContextSuccess: event.getUserContextSuccess)); 
-  });
+    bloc.on<UpdateIsGetFeatureSuccessEvent>((event, emit) {
+      emit(bloc.state.copyWith(isGetFeatureSuccess: event.isGetFeatureSuccess));
+    });
 
-  bloc.on<UpdateBusinessDataModelEvent>((event, emit) {
-    emit(bloc.state.copyWith(businessDataModel: event.businessDataModel)); 
-  });
+    bloc.on<UpdateGetUserContextSuccessEvent>((event, emit) {
+      emit(bloc.state
+          .copyWith(getUserContextSuccess: event.getUserContextSuccess));
+    });
 
-  bloc.on<UpdateErrorModelEvent>((event, emit) {
-    emit(bloc.state.copyWith(errorModel: event.errorModel)); 
-  });
+    bloc.on<UpdateBusinessDataModelEvent>((event, emit) {
+      emit(bloc.state.copyWith(businessDataModel: event.businessDataModel));
+    });
 
-  bloc.on<UpdateBusinessIdEvent>((event, emit) {
-    emit(bloc.state.copyWith(businessId: event.businessId)); 
-  });
+    bloc.on<UpdateErrorModelEvent>((event, emit) {
+      emit(bloc.state.copyWith(errorModel: event.errorModel));
+    });
 
-  bloc.on<UpdateIsGetUserActiveBusinessEvent>((event, emit) {
-    emit(bloc.state.copyWith(isGetUserActiveBusiness: event.isGetUserActiveBusiness)); 
-  });
+    bloc.on<UpdateBusinessIdEvent>((event, emit) {
+      emit(bloc.state.copyWith(businessId: event.businessId));
+    });
 
-  bloc.on<UpdateGetUserResponseEvent>((event, emit) {
-    emit(bloc.state.copyWith(getUserResponse: event.getUserResponse)); 
-  });
+    bloc.on<UpdateIsGetUserActiveBusinessEvent>((event, emit) {
+      emit(bloc.state
+          .copyWith(isGetUserActiveBusiness: event.isGetUserActiveBusiness));
+    });
 
-  bloc.on<UpdateIsGetCardCapabilitySuccessEvent>((event, emit) {
-    emit(bloc.state.copyWith(isGetCardCapabilitySuccess: event.isGetCardCapabilitySuccess)); 
-  });
+    bloc.on<UpdateGetUserResponseEvent>((event, emit) {
+      emit(bloc.state.copyWith(getUserResponse: event.getUserResponse));
+    });
 
-  bloc.on<UpdateIsBusinessSubscriptionActiveEvent>((event, emit) {
-    emit(bloc.state.copyWith(isBusinessSubscriptionActive: event.isBusinessSubscriptionActive)); 
-  });
+    bloc.on<UpdateIsGetCardCapabilitySuccessEvent>((event, emit) {
+      emit(bloc.state.copyWith(
+          isGetCardCapabilitySuccess: event.isGetCardCapabilitySuccess));
+    });
 
-  bloc.on<UpdateIsTokenInvalidEvent>((event, emit) {
-    emit(bloc.state.copyWith(isTokenInvalid: event.isTokenInvalid)); 
-  });
+    bloc.on<UpdateIsBusinessSubscriptionActiveEvent>((event, emit) {
+      emit(bloc.state.copyWith(
+          isBusinessSubscriptionActive: event.isBusinessSubscriptionActive));
+    });
 
-  bloc.on<UpdateIsGetBusinessDataSuccessEvent>((event, emit) {
-    emit(bloc.state.copyWith(isGetBusinessDataSuccess: event.isGetBusinessDataSuccess)); 
-  });
+    bloc.on<UpdateIsTokenInvalidEvent>((event, emit) {
+      emit(bloc.state.copyWith(isTokenInvalid: event.isTokenInvalid));
+    });
 
-  bloc.on<UpdateShowLoginButtonEvent>((event, emit) {
-    emit(bloc.state.copyWith(showLoginButton: event.showLoginButton)); 
-  });
+    bloc.on<UpdateIsGetBusinessDataSuccessEvent>((event, emit) {
+      emit(bloc.state
+          .copyWith(isGetBusinessDataSuccess: event.isGetBusinessDataSuccess));
+    });
 
-  bloc.on<UpdateLoaderValueEvent>((event, emit) {
-    emit(bloc.state.copyWith(loaderValue: event.loaderValue)); 
-  });
+    bloc.on<UpdateShowLoginButtonEvent>((event, emit) {
+      emit(bloc.state.copyWith(showLoginButton: event.showLoginButton));
+    });
 
-  
+    bloc.on<UpdateLoaderValueEvent>((event, emit) {
+      emit(bloc.state.copyWith(loaderValue: event.loaderValue));
+    });
   }
 
   @override
@@ -387,12 +393,9 @@ final String loaderValue;
       ];
 }
 
-
-
-
 extension BaseBlocContextExtension on BuildContext {
-  void setBaseBlocState({
-     bool? isLoading,
+  void setBaseBlocState(
+      {bool? isLoading,
       bool? isError,
       List<String>? errorMessages,
       bool? isSetUserDetailsSuccess,
@@ -409,80 +412,86 @@ extension BaseBlocContextExtension on BuildContext {
       bool? isTokenInvalid,
       bool? isGetBusinessDataSuccess,
       bool? showLoginButton,
-      String? loaderValue
-}) {
-    final myBloc = read<BaseBloc>();  // Read the MyBloc instance
-     if (isLoading != null) {
-    myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading));
-}
+      String? loaderValue}) {
+    final myBloc = read<BaseBloc>(); // Read the MyBloc instance
+    if (isLoading != null) {
+      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading));
+    }
 
-if (isError != null) {
-    myBloc.add(UpdateIsErrorEvent(isError: isError));
-}
+    if (isError != null) {
+      myBloc.add(UpdateIsErrorEvent(isError: isError));
+    }
 
-if (errorMessages != null) {
-    myBloc.add(UpdateErrorMessagesEvent(errorMessages: errorMessages));
-}
+    if (errorMessages != null) {
+      myBloc.add(UpdateErrorMessagesEvent(errorMessages: errorMessages));
+    }
 
-if (isSetUserDetailsSuccess != null) {
-    myBloc.add(UpdateIsSetUserDetailsSuccessEvent(isSetUserDetailsSuccess: isSetUserDetailsSuccess));
-}
+    if (isSetUserDetailsSuccess != null) {
+      myBloc.add(UpdateIsSetUserDetailsSuccessEvent(
+          isSetUserDetailsSuccess: isSetUserDetailsSuccess));
+    }
 
-if (isStateCleared != null) {
-    myBloc.add(UpdateIsStateClearedEvent(isStateCleared: isStateCleared));
-}
+    if (isStateCleared != null) {
+      myBloc.add(UpdateIsStateClearedEvent(isStateCleared: isStateCleared));
+    }
 
-if (isGetFeatureSuccess != null) {
-    myBloc.add(UpdateIsGetFeatureSuccessEvent(isGetFeatureSuccess: isGetFeatureSuccess));
-}
+    if (isGetFeatureSuccess != null) {
+      myBloc.add(UpdateIsGetFeatureSuccessEvent(
+          isGetFeatureSuccess: isGetFeatureSuccess));
+    }
 
-if (getUserContextSuccess != null) {
-    myBloc.add(UpdateGetUserContextSuccessEvent(getUserContextSuccess: getUserContextSuccess));
-}
+    if (getUserContextSuccess != null) {
+      myBloc.add(UpdateGetUserContextSuccessEvent(
+          getUserContextSuccess: getUserContextSuccess));
+    }
 
-if (businessDataModel != null) {
-    myBloc.add(UpdateBusinessDataModelEvent(businessDataModel: businessDataModel));
-}
+    if (businessDataModel != null) {
+      myBloc.add(
+          UpdateBusinessDataModelEvent(businessDataModel: businessDataModel));
+    }
 
-if (errorModel != null) {
-    myBloc.add(UpdateErrorModelEvent(errorModel: errorModel));
-}
+    if (errorModel != null) {
+      myBloc.add(UpdateErrorModelEvent(errorModel: errorModel));
+    }
 
-if (businessId != null) {
-    myBloc.add(UpdateBusinessIdEvent(businessId: businessId));
-}
+    if (businessId != null) {
+      myBloc.add(UpdateBusinessIdEvent(businessId: businessId));
+    }
 
-if (isGetUserActiveBusiness != null) {
-    myBloc.add(UpdateIsGetUserActiveBusinessEvent(isGetUserActiveBusiness: isGetUserActiveBusiness));
-}
+    if (isGetUserActiveBusiness != null) {
+      myBloc.add(UpdateIsGetUserActiveBusinessEvent(
+          isGetUserActiveBusiness: isGetUserActiveBusiness));
+    }
 
-if (getUserResponse != null) {
-    myBloc.add(UpdateGetUserResponseEvent(getUserResponse: getUserResponse));
-}
+    if (getUserResponse != null) {
+      myBloc.add(UpdateGetUserResponseEvent(getUserResponse: getUserResponse));
+    }
 
-if (isGetCardCapabilitySuccess != null) {
-    myBloc.add(UpdateIsGetCardCapabilitySuccessEvent(isGetCardCapabilitySuccess: isGetCardCapabilitySuccess));
-}
+    if (isGetCardCapabilitySuccess != null) {
+      myBloc.add(UpdateIsGetCardCapabilitySuccessEvent(
+          isGetCardCapabilitySuccess: isGetCardCapabilitySuccess));
+    }
 
-if (isBusinessSubscriptionActive != null) {
-    myBloc.add(UpdateIsBusinessSubscriptionActiveEvent(isBusinessSubscriptionActive: isBusinessSubscriptionActive));
-}
+    if (isBusinessSubscriptionActive != null) {
+      myBloc.add(UpdateIsBusinessSubscriptionActiveEvent(
+          isBusinessSubscriptionActive: isBusinessSubscriptionActive));
+    }
 
-if (isTokenInvalid != null) {
-    myBloc.add(UpdateIsTokenInvalidEvent(isTokenInvalid: isTokenInvalid));
-}
+    if (isTokenInvalid != null) {
+      myBloc.add(UpdateIsTokenInvalidEvent(isTokenInvalid: isTokenInvalid));
+    }
 
-if (isGetBusinessDataSuccess != null) {
-    myBloc.add(UpdateIsGetBusinessDataSuccessEvent(isGetBusinessDataSuccess: isGetBusinessDataSuccess));
-}
+    if (isGetBusinessDataSuccess != null) {
+      myBloc.add(UpdateIsGetBusinessDataSuccessEvent(
+          isGetBusinessDataSuccess: isGetBusinessDataSuccess));
+    }
 
-if (showLoginButton != null) {
-    myBloc.add(UpdateShowLoginButtonEvent(showLoginButton: showLoginButton));
-}
+    if (showLoginButton != null) {
+      myBloc.add(UpdateShowLoginButtonEvent(showLoginButton: showLoginButton));
+    }
 
-if (loaderValue != null) {
-    myBloc.add(UpdateLoaderValueEvent(loaderValue: loaderValue));
-}
-
+    if (loaderValue != null) {
+      myBloc.add(UpdateLoaderValueEvent(loaderValue: loaderValue));
+    }
   }
 }
