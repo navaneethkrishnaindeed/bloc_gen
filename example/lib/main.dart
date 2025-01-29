@@ -42,6 +42,12 @@ abstract class _$$BaseState {
   final bool isGetBusinessDataSuccess = false;
   final bool showLoginButton = false;
   final String loaderValue = "Loading...";
+  final CardsQueryModel? filterListSelected = CardsQueryModel(
+      pageNo: 0,
+      pageNoList: 0,
+      cardHolderIds:
+          hasPermission([Permissions.cardManager]) ? [userInfo.id] : null);
+
 }
 
 class BaseBloc extends Bloc<BaseEvent, BaseState> {

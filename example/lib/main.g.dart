@@ -33,6 +33,10 @@ class DataLoaded extends BaseEvent {
   List<Object?> get props => [items];
 }
 
+// **************************************************************************
+// StateGenerator
+// **************************************************************************
+
 class UpdateIsLoadingEvent extends BaseEvent {
   final bool? isLoading;
   const UpdateIsLoadingEvent({required this.isLoading});
@@ -182,6 +186,14 @@ class UpdateLoaderValueEvent extends BaseEvent {
   List<Object?> get props => [loaderValue];
 }
 
+class UpdateFilterListSelectedEvent extends BaseEvent {
+  final CardsQueryModel? filterListSelected;
+  const UpdateFilterListSelectedEvent({required this.filterListSelected});
+
+  @override
+  List<Object?> get props => [filterListSelected];
+}
+
 class BaseState extends Equatable {
   final bool? isLoading;
   final bool isError;
@@ -201,6 +213,7 @@ class BaseState extends Equatable {
   final bool isGetBusinessDataSuccess;
   final bool showLoginButton;
   final String loaderValue;
+  final CardsQueryModel? filterListSelected;
 
   const BaseState(
       {this.isLoading,
@@ -220,7 +233,8 @@ class BaseState extends Equatable {
       this.isTokenInvalid,
       required this.isGetBusinessDataSuccess,
       required this.showLoginButton,
-      required this.loaderValue});
+      required this.loaderValue,
+      this.filterListSelected});
 
   static BaseState initial() {
     return BaseState(
@@ -241,7 +255,13 @@ class BaseState extends Equatable {
         isTokenInvalid: false,
         isGetBusinessDataSuccess: false,
         showLoginButton: false,
-        loaderValue: "Loading...");
+        loaderValue: "Loading...",
+        filterListSelected: CardsQueryModel(
+            pageNo: 0,
+            pageNoList: 0,
+            cardHolderIds: hasPermission([Permissions.cardManager])
+                ? [userInfo.id]
+                : null));
   }
 
   BaseState copyWith(
@@ -262,7 +282,8 @@ class BaseState extends Equatable {
       bool? isTokenInvalid,
       bool? isGetBusinessDataSuccess,
       bool? showLoginButton,
-      String? loaderValue}) {
+      String? loaderValue,
+      CardsQueryModel? filterListSelected}) {
     return BaseState(
         isLoading: isLoading ?? this.isLoading,
         isError: isError ?? this.isError,
@@ -287,7 +308,8 @@ class BaseState extends Equatable {
         isGetBusinessDataSuccess:
             isGetBusinessDataSuccess ?? this.isGetBusinessDataSuccess,
         showLoginButton: showLoginButton ?? this.showLoginButton,
-        loaderValue: loaderValue ?? this.loaderValue);
+        loaderValue: loaderValue ?? this.loaderValue,
+        filterListSelected: filterListSelected ?? this.filterListSelected);
   }
 
   static void registerEvents(BaseBloc bloc) {
@@ -368,6 +390,10 @@ class BaseState extends Equatable {
     bloc.on<UpdateLoaderValueEvent>((event, emit) {
       emit(bloc.state.copyWith(loaderValue: event.loaderValue));
     });
+
+    bloc.on<UpdateFilterListSelectedEvent>((event, emit) {
+      emit(bloc.state.copyWith(filterListSelected: event.filterListSelected));
+    });
   }
 
   @override
@@ -389,7 +415,8 @@ class BaseState extends Equatable {
         isTokenInvalid,
         isGetBusinessDataSuccess,
         showLoginButton,
-        loaderValue
+        loaderValue,
+        filterListSelected
       ];
 }
 
@@ -412,7 +439,8 @@ extension BaseBlocContextExtension on BuildContext {
       bool? isTokenInvalid,
       bool? isGetBusinessDataSuccess,
       bool? showLoginButton,
-      String? loaderValue}) {
+      String? loaderValue,
+      CardsQueryModel? filterListSelected}) {
     final myBloc = read<BaseBloc>(); // Read the MyBloc instance
     if (isLoading != null) {
       myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading));
@@ -492,6 +520,11 @@ extension BaseBlocContextExtension on BuildContext {
 
     if (loaderValue != null) {
       myBloc.add(UpdateLoaderValueEvent(loaderValue: loaderValue));
+    }
+
+    if (filterListSelected != null) {
+      myBloc.add(UpdateFilterListSelectedEvent(
+          filterListSelected: filterListSelected));
     }
   }
 }
