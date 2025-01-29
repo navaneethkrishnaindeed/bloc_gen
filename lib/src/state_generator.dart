@@ -120,15 +120,16 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
-String stateGeneratedEvents = fields.map((field) {
-  final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
-  if (match != null) {
-    String varName = match.group(1)!;
-    
-    // Remove everything from first '=' to first ';'
-    String fieldWithoutDefault = field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
+    String stateGeneratedEvents = fields.map((field) {
+      final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
+      if (match != null) {
+        String varName = match.group(1)!;
 
-    return '''
+        // Remove everything from first '=' to first ';'
+        String fieldWithoutDefault =
+            field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
+
+        return '''
 class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('State', 'Event')} {
    ${fieldWithoutDefault};
   const Update${capitalizeFirst(varName)}Event({required this.${varName}});
@@ -137,10 +138,9 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
   List<Object?> get props => [${varName}];
 }
 ''';
-  }
-  return "";
-}).join("\n");
-
+      }
+      return "";
+    }).join("\n");
 
     String registerEventsBody = fields.map((field) {
       final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
@@ -172,7 +172,7 @@ if ($variableName != null) {
     String blocSetStateName =
         'set${className.replaceAll("State", "Bloc")}State';
 
-   buffer.write('''
+    buffer.write('''
 
 $stateGeneratedEvents
 

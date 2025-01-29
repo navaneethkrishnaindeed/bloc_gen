@@ -47,7 +47,6 @@ abstract class _$$BaseState {
       pageNoList: 0,
       cardHolderIds:
           hasPermission([Permissions.cardManager]) ? [userInfo.id] : null);
-
 }
 
 class BaseBloc extends Bloc<BaseEvent, BaseState> {
