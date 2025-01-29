@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.4
+* Readme and Documantation changes 
+* Bug Fixes 
+
 ## 3.0.3
 * Readme and Documantation changes 
 * Updated Dependecy 

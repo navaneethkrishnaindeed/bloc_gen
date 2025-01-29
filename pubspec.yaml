@@ -1,6 +1,6 @@
 name: fbloc_event_gen
 description: Generates STATE, EVENT AND BLOC from a SINGLE LINE OF STATE VARIABLE and can generate custom event classes from factory constructors.
-version: 3.0.3
+version: 3.0.4
 homepage: https://github.com/naveen-as-a-geek-wolf/bloc_gen
 repository: https://github.com/naveen-as-a-geek-wolf/bloc_gen
 issue_tracker: https://github.com/naveen-as-a-geek-wolf/bloc_gen/issues
