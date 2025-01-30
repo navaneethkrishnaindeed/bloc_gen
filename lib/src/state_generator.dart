@@ -28,14 +28,35 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
     if (match != null) {
       String abstractClassContent = match.group(0)!;
 
-      final fieldRegex = RegExp(r"final\s+[\w<>\?]+\s+\w+\s*=\s*[^;]+;");
+      print(abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim());
+      int firstBraceIndex = abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim().indexOf('{');
+  int lastBraceIndex = abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim().lastIndexOf('}');
+  String extractedContent = abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim().substring(firstBraceIndex + 1, lastBraceIndex).trim();
 
-      fields = fieldRegex
-          .allMatches(abstractClassContent)
-          .map((m) => m.group(0)!)
-          .toList();
+  // Step 2: Split the extracted content by every occurrence of ';' and include ';'
+  List<String> splitStrings = extractedContent.split(';').map((e) => e.trim() + ';').toList();
+
+  // Remove the trailing ';' from the last item (if any)
+  if (splitStrings.isNotEmpty) {
+    splitStrings[splitStrings.length - 1] = splitStrings.last.replaceAll(';', '');
+  }
+
+  // Print the result
+  print(splitStrings);
+fields =splitStrings;
+      // final fieldRegex = RegExp(r"final\s+[\w<>\?]+\s+\w+\s*=\s*[^;]+;");
+
+      // fields = fieldRegex
+      //     .allMatches(abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim())
+      //     .map((m) => m.group(0)!.replaceAll(RegExp(r'\s+'), ' ').trim())
+      //     .toList();
+
+
     } else {}
-
+  print('\n\n\n');
+  print('********************************************************************');
+print(fields);
+ print('\n\n\n');
     String fieldParamsForGeneratedClass = fields
             .map((field) {
               final match =
@@ -172,7 +193,7 @@ if ($variableName != null) {
     String blocSetStateName =
         'set${className.replaceAll("State", "Bloc")}State';
 
-    buffer.write('''
+    print('''
 
 $stateGeneratedEvents
 
