@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.0
+* Rewritten generator Logic for better performance also Adaptation to Universal types 
+
 ## 3.0.4
 * Readme and Documantation changes 
 * Bug Fixes 

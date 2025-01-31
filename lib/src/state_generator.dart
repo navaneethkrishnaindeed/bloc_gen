@@ -29,171 +29,184 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
       String abstractClassContent = match.group(0)!;
 
       print(abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim());
-      int firstBraceIndex = abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim().indexOf('{');
-  int lastBraceIndex = abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim().lastIndexOf('}');
-  String extractedContent = abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim().substring(firstBraceIndex + 1, lastBraceIndex).trim();
+      int firstBraceIndex = abstractClassContent
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim()
+          .indexOf('{');
+      int lastBraceIndex = abstractClassContent
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim()
+          .lastIndexOf('}');
+      String extractedContent = abstractClassContent
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim()
+          .substring(firstBraceIndex + 1, lastBraceIndex)
+          .trim();
 
-  // Step 2: Split the extracted content by every occurrence of ';' and include ';'
-  List<String> splitStrings = extractedContent.split(';').map((e) => e.trim() + ';').toList();
+      // Step 2: Split the extracted content by every occurrence of ';' and include ';'
+      List<String> splitStrings =
+          extractedContent.split(';').map((e) => e.trim() + ';').toList();
 
-  // Remove the trailing ';' from the last item (if any)
-  if (splitStrings.isNotEmpty) {
-    splitStrings[splitStrings.length - 1] = splitStrings.last.replaceAll(';', '');
-  }
+      // Remove the trailing ';' from the last item (if any)
+      if (splitStrings.isNotEmpty) {
+        splitStrings[splitStrings.length - 1] =
+            splitStrings.last.replaceAll(';', '');
+      }
 
-  // Print the result
-  print(splitStrings);
-fields =splitStrings;
+      // Print the result
+      print(splitStrings);
+      fields = splitStrings;
       // final fieldRegex = RegExp(r"final\s+[\w<>\?]+\s+\w+\s*=\s*[^;]+;");
 
       // fields = fieldRegex
       //     .allMatches(abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim())
       //     .map((m) => m.group(0)!.replaceAll(RegExp(r'\s+'), ' ').trim())
       //     .toList();
-
-
     } else {}
-  print('\n\n\n');
-  print('********************************************************************');
-print(fields);
- print('\n\n\n');
-    String fieldParamsForGeneratedClass = fields
-            .map((field) {
-              final match =
-                  RegExp(r"(final\s+[\w<>\?]+\s+\w+)").firstMatch(field);
-              return match != null ? match.group(0)! : "";
-            })
-            .where((line) => line.isNotEmpty)
-            .join(";\n") +
+    print('\n\n\n');
+    print(
+        '********************************************************************');
+    print(fields);
+    print(
+        '********************************************************************');
+    print(
+        '********************************************************************');
+
+    List<VariableInfo> variableInfoList = [];
+
+    // Process each string in the list
+    for (int i = 0; i < fields.length - 1; i++) {
+      String str = fields[i];
+
+      // Step 1: Split the string into two parts: before and after '='
+      List<String> parts = str.split('=');
+      String beforeEquals = parts[0].trim(); // Part before '='
+      String afterEquals = parts[1].trim(); // Part after '='
+
+      // Step 2: Split the part before '=' into parts according to space
+      List<String> beforeParts = beforeEquals.split(' ');
+
+      // Step 3: Remove the first element (e.g., "final")
+      beforeParts.removeAt(0);
+
+      // Step 4: Take the last element as the variableName
+      String variableName = beforeParts.last;
+
+      // Step 5: Join the remaining parts to form the dataType
+      String dataType =
+          beforeParts.sublist(0, beforeParts.length - 1).join(' ');
+
+      // Step 6: Process the part after '='
+      // Remove trailing space and ';' to get the defaultValue
+      String defaultValue = afterEquals.replaceAll(';', '').trim();
+
+      // Create a VariableInfo object and add it to the list
+      VariableInfo variableInfo = VariableInfo(
+        field: str,
+        datatype: dataType,
+        variableName: variableName,
+        defaultValue: defaultValue,
+      );
+      variableInfoList.add(variableInfo);
+    }
+
+    print('\n\n\n');
+    String fieldParamsForGeneratedClass = variableInfoList.map((field) {
+          return '''final ${field.datatype} ${field.variableName}''';
+        }).join(";\n") +
         ";";
 
-    String constructorParams = fields
-        .map((field) {
-          final match =
-              RegExp(r"final\s+([\w<>\?]+)\s+(\w+)").firstMatch(field);
-          if (match != null) {
-            String type = match.group(1)!;
-            String variableName = match.group(2)!;
+    String constructorParams = variableInfoList.map((field) {
+      return field.datatype.contains('?')
+          ? "this.${field.variableName}"
+          : "required this.${field.variableName}";
+    }).join(",\n      ");
 
-            bool isNullable = type.contains("?");
-            return isNullable
-                ? "this.$variableName"
-                : "required this.$variableName";
-          }
-          return "";
-        })
-        .where((line) => line.isNotEmpty)
-        .join(",\n      ");
-
-    String initialStateValues = fields
+    String initialStateValues = variableInfoList
         .map((field) {
-          final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)\s*=\s*([^;]+);")
-              .firstMatch(field);
-          if (match != null) {
-            String variableName = match.group(1)!;
-            String defaultValue = match.group(2)!;
-            return "$variableName: $defaultValue";
-          }
-          return "";
+          return "${field.variableName}: ${field.defaultValue}";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
-    String copyWithParams = fields
+    String copyWithParams = variableInfoList
         .map((field) {
-          final match =
-              RegExp(r"final\s+([\w<>\?]+)\s+(\w+)").firstMatch(field);
-          if (match != null) {
-            String type = match.group(1)!;
-            String variableName = match.group(2)!;
-
-            if (!type.contains("?")) {
-              type += "?";
-            }
-
-            return "$type $variableName";
+          String type = field.datatype;
+          String variableName = field.variableName;
+          if (!type.contains("?")) {
+            type += "?";
           }
-          return "";
+
+          return "$type $variableName";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n      ");
 
-    String copyWithReturnFallbackParams = fields
+    String copyWithReturnFallbackParams = variableInfoList
         .map((field) {
-          final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
-          if (match != null) {
-            String variableName = match.group(1)!;
+            String variableName =field.variableName;
             return "$variableName: $variableName ?? this.$variableName";
-          }
-          return "";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
-    String propsList = fields
+    String propsList = variableInfoList
         .map((field) {
-          final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
-          if (match != null) {
-            return match.group(1)!;
-          }
-          return "";
+       
+            return field.variableName;
+      
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
-    String stateGeneratedEvents = fields.map((field) {
-      final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
-      if (match != null) {
-        String varName = match.group(1)!;
+    String stateGeneratedEvents = variableInfoList.map((field) {
+      
+        String varName = field.variableName;
 
         // Remove everything from first '=' to first ';'
-        String fieldWithoutDefault =
-            field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
+        // String fieldWithoutDefault =
+        //     field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
 
         return '''
 class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('State', 'Event')} {
-   ${fieldWithoutDefault};
+  final ${field.datatype} ${varName};
   const Update${capitalizeFirst(varName)}Event({required this.${varName}});
 
   @override
   List<Object?> get props => [${varName}];
 }
 ''';
-      }
-      return "";
+      
+    
     }).join("\n");
 
-    String registerEventsBody = fields.map((field) {
-      final match = RegExp(r"final\s+[\w<>\?]+\s+(\w+)").firstMatch(field);
-      if (match != null) {
-        String varName = match.group(1)!;
+    String registerEventsBody = variableInfoList.map((field) {
+   
+        String varName = field.variableName;
         return '''
   bloc.on<Update${capitalizeFirst(varName)}Event>((event, emit) {
     emit(bloc.state.copyWith($varName: event.$varName)); 
   });
 ''';
-      }
-      return "";
+      
     }).join("\n");
 
-    String custumSetStateBlocImplementation = fields.map((field) {
+    String custumSetStateBlocImplementation = variableInfoList.map((field) {
       // Use a regex to extract the variable name properly
-      final match = RegExp(r'final\s+[\w<>\?]+\s+(\w+)').firstMatch(field);
-      if (match != null) {
-        String variableName = match.group(1)!;
+      
+        String variableName = field.variableName;
         return '''
 if ($variableName != null) {
     myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
 }
 ''';
-      }
-      return '';
+      
     }).join('\n');
 
     String blocSetStateName =
         'set${className.replaceAll("State", "Bloc")}State';
 
-    print('''
+    buffer.write('''
 
 $stateGeneratedEvents
 
@@ -249,5 +262,33 @@ extension ${className.replaceAll('State', 'Bloc')}ContextExtension on BuildConte
 ''');
 
     return buffer.toString();
+  }
+}
+
+/// [VariableInfo] isused to spilt components ina state field
+class VariableInfo {
+  /// [field] carries complete field data
+  final String field;
+
+  /// [datatype] carries only datatype of the field
+  final String datatype;
+
+  /// [variableName] carries only variable name of field
+  final String variableName;
+
+  /// [defaultValue] carries onlu default value of the fiels
+  final String defaultValue;
+
+  /// Constructer used to Generate [VariableInfo] isused to spilt components ina state field
+  VariableInfo({
+    required this.field,
+    required this.datatype,
+    required this.variableName,
+    required this.defaultValue,
+  });
+
+  @override
+  String toString() {
+    return "String: $field\nDatatype: $datatype\nVariable Name: $variableName\nDefault Value: $defaultValue\n-----------------------------";
   }
 }
