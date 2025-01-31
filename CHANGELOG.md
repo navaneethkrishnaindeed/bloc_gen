@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.0+1
+* Implemented Code Formating 
+
 ## 3.1.0
 * Rewritten generator Logic for better performance also Adaptation to Universal types 
 
