@@ -37,14 +37,11 @@ abstract class _$$BaseState {
   final bool isGetBusinessDataSuccess = false;
   final bool showLoginButton = false;
   final List<Map<String, dynamic>> ds = [];
-  final List<Map<String,
-   dynamic>> items 
-   = [
+  final List<Map<String, dynamic>> items = [
     {"label": 'Physical', "value": "1"},
     {"label": 'Virtual', "value": "2"}
   ];
 }
-
 
 class BaseBloc extends Bloc<BaseEvent, BaseState> {
   BaseBloc() : super(BaseState.initial()) {

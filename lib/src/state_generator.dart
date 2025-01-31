@@ -144,30 +144,27 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
 
     String copyWithReturnFallbackParams = variableInfoList
         .map((field) {
-            String variableName =field.variableName;
-            return "$variableName: $variableName ?? this.$variableName";
+          String variableName = field.variableName;
+          return "$variableName: $variableName ?? this.$variableName";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
     String propsList = variableInfoList
         .map((field) {
-       
-            return field.variableName;
-      
+          return field.variableName;
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
 
     String stateGeneratedEvents = variableInfoList.map((field) {
-      
-        String varName = field.variableName;
+      String varName = field.variableName;
 
-        // Remove everything from first '=' to first ';'
-        // String fieldWithoutDefault =
-        //     field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
+      // Remove everything from first '=' to first ';'
+      // String fieldWithoutDefault =
+      //     field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
 
-        return '''
+      return '''
 class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('State', 'Event')} {
   final ${field.datatype} ${varName};
   const Update${capitalizeFirst(varName)}Event({required this.${varName}});
@@ -176,31 +173,26 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
   List<Object?> get props => [${varName}];
 }
 ''';
-      
-    
     }).join("\n");
 
     String registerEventsBody = variableInfoList.map((field) {
-   
-        String varName = field.variableName;
-        return '''
+      String varName = field.variableName;
+      return '''
   bloc.on<Update${capitalizeFirst(varName)}Event>((event, emit) {
     emit(bloc.state.copyWith($varName: event.$varName)); 
   });
 ''';
-      
     }).join("\n");
 
     String custumSetStateBlocImplementation = variableInfoList.map((field) {
       // Use a regex to extract the variable name properly
-      
-        String variableName = field.variableName;
-        return '''
+
+      String variableName = field.variableName;
+      return '''
 if ($variableName != null) {
     myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
 }
 ''';
-      
     }).join('\n');
 
     String blocSetStateName =
