@@ -29,4 +29,4 @@ platforms:
   macos:
   linux:
 
-topics: [bloc_generator,bloc_event_generator,bloc_state_generator,freezed,build_runner_generator]
+topics: [bloc-generator, bloc-event-generator, bloc-state-generator, freezed, build-runner-generator]
