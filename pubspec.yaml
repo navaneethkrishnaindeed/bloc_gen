@@ -31,9 +31,9 @@ platforms:
 
 topics:
   [
-    Bloc Generator,
-    Bloc event Generator,
-    Bloc state Generator,
+    bloc generator,
+    bloc event generator,
+    bloc state generator,
     freezed,
     build runner generator
   ]
