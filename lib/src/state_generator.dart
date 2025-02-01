@@ -28,7 +28,6 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
     if (match != null) {
       String abstractClassContent = match.group(0)!;
 
-      print(abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim());
       int firstBraceIndex = abstractClassContent
           .replaceAll(RegExp(r'\s+'), ' ')
           .trim()
@@ -53,24 +52,10 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
             splitStrings.last.replaceAll(';', '');
       }
 
-      // Print the result
-      print(splitStrings);
-      fields = splitStrings;
-      // final fieldRegex = RegExp(r"final\s+[\w<>\?]+\s+\w+\s*=\s*[^;]+;");
+      //
 
-      // fields = fieldRegex
-      //     .allMatches(abstractClassContent.replaceAll(RegExp(r'\s+'), ' ').trim())
-      //     .map((m) => m.group(0)!.replaceAll(RegExp(r'\s+'), ' ').trim())
-      //     .toList();
+      fields = splitStrings;
     } else {}
-    print('\n\n\n');
-    print(
-        '********************************************************************');
-    print(fields);
-    print(
-        '********************************************************************');
-    print(
-        '********************************************************************');
 
     List<VariableInfo> variableInfoList = [];
 
@@ -110,7 +95,6 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
       variableInfoList.add(variableInfo);
     }
 
-    print('\n\n\n');
     String fieldParamsForGeneratedClass = variableInfoList.map((field) {
           return '''final ${field.datatype} ${field.variableName}''';
         }).join(";\n") +
@@ -159,10 +143,6 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
 
     String stateGeneratedEvents = variableInfoList.map((field) {
       String varName = field.variableName;
-
-      // Remove everything from first '=' to first ';'
-      // String fieldWithoutDefault =
-      //     field.replaceFirst(RegExp(r"\s*=\s*[^;]+;"), "").trim();
 
       return '''
 class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('State', 'Event')} {

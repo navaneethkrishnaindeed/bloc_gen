@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.0+2
+* Code Topics Changes
+
 ## 3.1.0+1
 * Implemented Code Formating 
 

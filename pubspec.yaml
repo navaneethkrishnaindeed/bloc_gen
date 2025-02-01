@@ -1,9 +1,9 @@
 name: fbloc_event_gen
 description: Intended to replace @freezed BLOC. Generates STATE, EVENT AND BLOC from a SINGLE LINE OF STATE VARIABLE and can generate custom event classes from factory constructors.
-version: 3.1.0+1
-homepage: https://github.com/naveen-as-a-geek-wolf/bloc_gen
-repository: https://github.com/naveen-as-a-geek-wolf/bloc_gen
-issue_tracker: https://github.com/naveen-as-a-geek-wolf/bloc_gen/issues
+version: 3.1.0+2
+homepage: https://github.com/navaneethkrishnaindeed/bloc_gen
+repository: https://github.com/navaneethkrishnaindeed/bloc_gen
+issue_tracker: https://github.com/navaneethkrishnaindeed/bloc_gen/issues
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
@@ -13,14 +13,14 @@ dependencies:
   equatable: ^2.0.7
   source_gen: ^2.0.0
   build_runner: ^2.4.6
-  
 
 dev_dependencies:
   build_test: ^2.2.0
+
 screenshots:
   - description: The fbloc_event_gen package logo.
     path: images/fbloc_event_gen_logo.webp
-  
+
 platforms:
   android:
   ios:
@@ -28,3 +28,140 @@ platforms:
   windows:
   macos:
   linux:
+
+topics:
+  [
+    Flutter,  
+    Bloc,  
+    State Management,  
+    Code Generation,  
+    Flutter Bloc Generator,  
+    Bloc Events,  
+    Bloc States,  
+    Bloc Code Generator,
+    Bloc event Generator,
+    Bloc state Generator
+    Flutter Annotations,  
+    Build Runner,  
+    Equatable,  
+    Immutable State,  
+    Flutter DevTools,  
+    Automatic Code Generation,  
+    Flutter Architecture,  
+    Clean Code,  
+    Dependency Injection,  
+    Context Extensions,  
+    Boilerplate Reduction,  
+    Flutter Best Practices,  
+    Dart Annotations,  
+    Flutter Performance,  
+    Reactive Programming,  
+    Event-Driven Architecture,  
+    Functional Programming,  
+    Modular Flutter Apps,  
+    Stream-Based State Management,  
+    Simplified Bloc Implementation,  
+    Event Handling in Flutter,  
+    State Mutations,  
+    Stateless Widget Optimization,  
+    Stateful Widget Management,  
+    Flutter UI Updates,  
+    Dynamic UI State,  
+    Flutter Code Automation,  
+    Type-Safe Event Handling,  
+    Flutter Business Logic Layer,  
+    Reusable Bloc Components,  
+    Maintainable Flutter Code,  
+    Scalable Flutter Apps,  
+    Flutter Enterprise Development,  
+    Flutter App Optimization,  
+    Bloc Middleware,  
+    Bloc Provider Pattern,  
+    Widget Testing in Flutter,  
+    State-Driven UI,  
+    Flutter Productivity Tools,  
+    Effective Flutter Development,  
+    Flutter Bloc Patterns,  
+    DRY (Don't Repeat Yourself) Principle,  
+    Open Source Flutter Packages,  
+    Community-Driven Development,  
+    Custom Flutter State Management,  
+    Advanced Flutter State Handling,  
+    Flutter Backend Integration,  
+    Multi-State Bloc Management,  
+    Code Maintainability in Flutter,  
+    Flutter Architecture Patterns,  
+    Lightweight Bloc Implementation,  
+    Stream-Based UI Updates,  
+    Flutter UI State Synchronization,  
+    App-Wide State Management,  
+    Code Generation Efficiency,  
+    Flutter Dynamic Widgets,  
+    Event-Based State Changes,  
+    Automatic Event Handlers,  
+    Easy State Transitions,  
+    Dev-Friendly Flutter Packages,  
+    Seamless Bloc Integration,  
+    Next-Gen Flutter Bloc,  
+    Prebuilt State Management Solutions,  
+    Flutter UI Event Handling,  
+    Flutter API Integration with Bloc,  
+    Dart Meta Programming,  
+    Flutter Design Patterns,  
+    Bloc Code Reusability,  
+    Flutter UX Enhancements,  
+    Improved Code Readability,  
+    Widget Lifecycle Management,  
+    Efficient Data Flow in Flutter,  
+    Simplified UI Logic in Flutter,  
+    State Change Observers,  
+    Declarative UI State Updates,  
+    Code Automation in Flutter,  
+    Smart Bloc Extensions,  
+    Optimized Flutter State Handling,  
+    Flutter Data Management,  
+    Minimalistic Bloc Code,  
+    Structured Flutter Codebases,  
+    Automated Build Process,  
+    Scalable Codebase Design,  
+    Dart Build System,  
+    Future-Proof Flutter Code,  
+    Customizable Flutter State Handling,  
+    Code-First Flutter Development,  
+    Dart Source Generation,  
+    Streamlining Flutter Development,  
+    Flutter Performance Optimization,  
+    Flutter Modularization,  
+    Advanced Bloc Features,  
+    Bloc Code Simplification,  
+    Freezed,  
+    Flutter Freezed,  
+    Dart Freezed,  
+    Code Generation with Freezed,  
+    Freezed Annotations,  
+    Freezed and Bloc,  
+    Freezed State Management,  
+    Freezed Events,  
+    Freezed Data Classes,  
+    Freezed Union Classes,  
+    Sealed Classes with Freezed,  
+    Immutable Objects in Freezed,  
+    Data Modeling with Freezed,  
+    Freezed and Equatable,  
+    Freezed CopyWith,  
+    Flutter Freezed Bloc,  
+    Deep Copy in Freezed,  
+    Freezed Code Generation Automation,  
+    Freezed JSON Serialization,  
+    JsonSerializable with Freezed,  
+    Freezed Union Types,  
+    Extending Freezed Models,  
+    Freezed Constructor Overloading,  
+    Freezed Pattern Matching,  
+    Freezed vs Manual Class Writing,  
+    Freezed and Build Runner,  
+    Freezed Boilerplate Reduction,  
+    Freezed Immutable States,  
+    Freezed Factory Constructors,  
+    Flutter Freezed Utilities  
+  ]
