@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.2
+* CopyWith Extension Generator Added
+
 ## 3.1.1
 * Code Topics Changes
 

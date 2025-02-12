@@ -13,6 +13,12 @@ targets:
           - example/lib/**.dart
           - lib/**.dart
           - test/**.dart
+      fbloc_event_gen|fbloc_model_gen:
+        enabled: true
+        generate_for:
+          - example/lib/**.dart
+          - lib/**.dart
+          - test/**.dart
 
 builders:
   fbloc_event_gen:
@@ -26,6 +32,13 @@ builders:
     import: "package:fbloc_event_gen/builder.dart"
     builder_factories: ["stateGenerator"]
     build_extensions: {".dart": [".fbloc_state_gen.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+  fbloc_model_gen:
+    import: "package:fbloc_event_gen/builder.dart"
+    builder_factories: ["modelGenerator"]
+    build_extensions: {".dart": [".fbloc_model_gen.g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]

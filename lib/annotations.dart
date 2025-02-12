@@ -15,3 +15,12 @@ class GenerateStates {
   /// Const constructor for GenerateStates
   const GenerateStates();
 }
+
+/// Annotation for generating models
+const generateCopyWith = GenerateModel();
+
+/// Private class to handle the annotation for models
+class GenerateModel {
+  /// Const constructor for GenerateModel
+  const GenerateModel();
+}
