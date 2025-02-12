@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:fbloc_event_gen/src/event_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import '../annotations.dart';
 
