@@ -34,8 +34,15 @@ extension ${className}CopyWithExtension on ${className}{
 
 /// [generateCopyWithFunction] used to generate copyWithFunction
 String generateCopyWithFunction(String classString) {
+  final RegExp classNameRegExp = RegExp(r'class (\w+)');
   final RegExp regExp = RegExp(r'\s*(\w+\??)\s+(\w+);');
   final RegExp constructorRegExp = RegExp(r'this\.(\w+)(?:\s*=\s*([^,}]+))?');
+
+  final classNameMatch = classNameRegExp.firstMatch(classString);
+  if (classNameMatch == null) {
+    throw Exception("Class name not found");
+  }
+  final String className = classNameMatch.group(1)!;
 
   final matches = regExp.allMatches(classString);
   final constructorMatches = constructorRegExp.allMatches(classString);
@@ -58,18 +65,14 @@ String generateCopyWithFunction(String classString) {
 
     String nullableType = type.contains('?') ? type : '$type?';
     parameters.add('$nullableType $name');
-    if (defaultValues.containsKey(name)) {
-      assignments.add('$name: $name ?? this.$name');
-    } else {
-      assignments.add('$name: $name ?? this.$name');
-    }
+    assignments.add('$name: $name ?? this.$name');
   }
 
   String copyWithFunction = '''
-  AddCardRequestModel copyWith({
+  $className copyWith({
     ${parameters.join(',\n    ')}
   }) {
-    return AddCardRequestModel(
+    return $className(
       ${assignments.join(',\n      ')}
     );
   }
