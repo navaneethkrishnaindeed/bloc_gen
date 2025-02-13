@@ -1,5 +1,5 @@
 # Changelog
-## 3.1.4
+## 3.1.5
 * Readme Updates
 ## 3.1.4
 * BugFix for @generaeCopyWith
