@@ -1,6 +1,7 @@
 # Changelog
 
-
+## 3.1.4
+* BugFix for @generaeCopyWith
 ## 3.1.3
 * BugFix
 ## 3.1.2

@@ -20,7 +20,7 @@ class ModelGenerator extends GeneratorForAnnotation<GenerateModel> {
 
     final buffer = StringBuffer();
     final className = element.name;
-    final copyWith = generateCopyWithFunction(element.source.contents.data);
+    final copyWith = generateCopyWith(element.fields, element.name);
     buffer.write('''
 extension ${className}CopyWithExtension on ${className}{
   $copyWith
@@ -32,51 +32,24 @@ extension ${className}CopyWithExtension on ${className}{
   }
 }
 
-/// [generateCopyWithFunction] used to generate copyWithFunction
-String generateCopyWithFunction(String classString) {
-  final RegExp classNameRegExp = RegExp(r'class (\w+)');
-  final RegExp regExp = RegExp(r'\s*(\w+\??)\s+(\w+);');
-  final RegExp constructorRegExp = RegExp(r'this\.(\w+)(?:\s*=\s*([^,}]+))?');
+/// [generateCopyWith] used to generate copyWithFunction
 
-  final classNameMatch = classNameRegExp.firstMatch(classString);
-  if (classNameMatch == null) {
-    throw Exception("Class name not found");
-  }
-  final String className = classNameMatch.group(1)!;
-
-  final matches = regExp.allMatches(classString);
-  final constructorMatches = constructorRegExp.allMatches(classString);
-
-  Map<String, String> defaultValues = {};
-  for (var match in constructorMatches) {
-    String name = match.group(1)!;
-    String? defaultValue = match.group(2);
-    if (defaultValue != null) {
-      defaultValues[name] = defaultValue.trim();
-    }
-  }
-
-  List<String> parameters = [];
-  List<String> assignments = [];
-
-  for (var match in matches) {
-    String type = match.group(1)!;
-    String name = match.group(2)!;
-
-    String nullableType = type.contains('?') ? type : '$type?';
-    parameters.add('$nullableType $name');
-    assignments.add('$name: $name ?? this.$name');
-  }
-
-  String copyWithFunction = '''
-  $className copyWith({
-    ${parameters.join(',\n    ')}
-  }) {
-    return $className(
-      ${assignments.join(',\n      ')}
-    );
-  }
-  ''';
-
-  return copyWithFunction;
+String generateCopyWith(List<FieldElement> fields, String className) {
+  final newFields = fields.map((field) {
+    final fieldStr = field.toString();
+    final nullableField =
+        fieldStr.contains('?') ? fieldStr : fieldStr.replaceFirst(' ', '? ');
+    return '  $nullableField,';
+  });
+  return '''$className copyWith({
+${newFields.join('\n')}
+}) {
+  return $className(
+${newFields.map((field) {
+    final fieldName =
+        field.toString().split('?').last.trim().replaceAll(',', '');
+    return '    $fieldName: $fieldName ?? this.$fieldName,';
+  }).join('\n')}
+  );
+}''';
 }
