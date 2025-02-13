@@ -1,4 +1,6 @@
 # 🚀 Flutter Bloc Generator
+![✨ NOW WITH VSCODE EXTENSION! ✨](https://marketplace.visualstudio.com/items?itemName=NavaneethKrishna.fbloc-event-gen)
+Get the "Fbloc Event Gen" extension from Visual Studio Marketplace to supercharge your development workflow!
 
 Too much Unwanted freezed Bloc code... ??
 
@@ -36,7 +38,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  fbloc_event_gen: ^3.0.3
+  fbloc_event_gen: ^3.1.5
 
 dev_dependencies:
   build_runner: ^2.4.6
