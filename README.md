@@ -1,5 +1,5 @@
 # 🚀 Flutter Bloc Generator
-![✨ NOW WITH VSCODE EXTENSION! ✨](https://marketplace.visualstudio.com/items?itemName=NavaneethKrishna.fbloc-event-gen)
+[✨ NOW WITH VSCODE EXTENSION! ✨](https://marketplace.visualstudio.com/items?itemName=NavaneethKrishna.fbloc-event-gen)
 
 Get the "Fbloc Event Gen" extension from Visual Studio Marketplace to supercharge your development workflow!
 
