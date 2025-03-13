@@ -1,4 +1,7 @@
 # Changelog
+## 3.2.0
+* Made Null values updatable in setXBlocState.. that is now this function will accept null values for a perticular state variable using copywith twhile maintaining other state variable datas
+* Introduction of entity [UnspecifiedDataType] to manage null safty
 ## 3.1.5
 * Readme Updates
 ## 3.1.4

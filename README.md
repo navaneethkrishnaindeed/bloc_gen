@@ -172,20 +172,26 @@ class BaseState extends Equatable {
 
   /// 2️⃣ State Mutation Utilities
   BaseState copyWith({
-    bool? isAuthenticated,
-    bool? isLoading,
-    UserModel? currentUser,
-    List<String>? errorMessages,
-    AuthStatus? authStatus,
-    Map<String, dynamic>? userData,
+    /// Data type [bool]
+    Object? isAuthenticated = UnspecifiedDataType.instance,
+    /// Data type [bool] 
+    Object? isLoading = UnspecifiedDataType.instance,
+    /// Data type [UserModel?]
+    Object? currentUser = UnspecifiedDataType.instance,
+    /// Data type [List<String>]
+    Object? errorMessages = UnspecifiedDataType.instance,
+    /// Data type [AuthStatus]
+    Object? authStatus = UnspecifiedDataType.instance,
+    /// Data type [Map<String, dynamic>]
+    Object? userData = UnspecifiedDataType.instance,
   }) {
     return BaseState(
-      isAuthenticated: isAuthenticated ?? this.isAuthenticated,
-      isLoading: isLoading ?? this.isLoading,
-      currentUser: currentUser ?? this.currentUser,
-      errorMessages: errorMessages ?? this.errorMessages,
-      authStatus: authStatus ?? this.authStatus,
-      userData: userData ?? this.userData,
+      isAuthenticated: isAuthenticated is UnspecifiedDataType ? this.isAuthenticated : (isAuthenticated as bool),
+      isLoading: isLoading is UnspecifiedDataType ? this.isLoading : (isLoading as bool),
+      currentUser: currentUser is UnspecifiedDataType ? this.currentUser : (currentUser as UserModel?),
+      errorMessages: errorMessages is UnspecifiedDataType ? this.errorMessages : (errorMessages as List<String>),
+      authStatus: authStatus is UnspecifiedDataType ? this.authStatus : (authStatus as AuthStatus),
+      userData: userData is UnspecifiedDataType ? this.userData : (userData as Map<String, dynamic>),
     );
   }
 
@@ -236,19 +242,19 @@ class BaseState extends Equatable {
 /// 7️⃣ BuildContext Extensions
 extension BaseBlocContextExtension on BuildContext {
   void setBaseBlocState({
-    bool? isAuthenticated,
-    bool? isLoading,
-    UserModel? currentUser,
-    List<String>? errorMessages,
-    AuthStatus? authStatus,
-    Map<String, dynamic>? userData,
+    Object? isAuthenticated = UnspecifiedDataType.instance,
+    Object? isLoading = UnspecifiedDataType.instance,
+    Object? currentUser = UnspecifiedDataType.instance,
+    Object? errorMessages = UnspecifiedDataType.instance,
+    Object? authStatus = UnspecifiedDataType.instance,
+    Object? userData = UnspecifiedDataType.instance,
   }) {
     final bloc = read<BaseBloc>();
-    if (isAuthenticated != null) {
-      bloc.add(UpdateIsAuthenticatedEvent(isAuthenticated: isAuthenticated));
+    if (isAuthenticated != UnspecifiedDataType.instance) {
+      bloc.add(UpdateIsAuthenticatedEvent(isAuthenticated: isAuthenticated as bool));
     }
-    if (isLoading != null) {
-      bloc.add(UpdateIsLoadingEvent(isLoading: isLoading));
+    if (isLoading != UnspecifiedDataType.instance) {
+      bloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
     }
     // ... handlers for all state updates
   }
