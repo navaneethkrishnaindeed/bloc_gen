@@ -29,6 +29,6 @@ class GenerateModel {
 class UnspecifiedDataType {
   /// Const singleton for UnspecifiedDataType
   static const UnspecifiedDataType instance = UnspecifiedDataType._();
-  
+
   const UnspecifiedDataType._();
 }
