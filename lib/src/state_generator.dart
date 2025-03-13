@@ -121,7 +121,22 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
             type += "?";
           }
 
-          return "$type $variableName";
+          return '''
+/// Data type [${field.datatype}] 
+ Object? $variableName = UnspecifiedDataType.instance''';
+        })
+        .where((line) => line.isNotEmpty)
+        .join(",\n      ");
+
+    String setBlocStateParams = variableInfoList
+        .map((field) {
+          String type = field.datatype;
+          String variableName = field.variableName;
+          if (!type.contains("?")) {
+            type += "?";
+          }
+
+          return "Object? $variableName = UnspecifiedDataType.instance";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n      ");
@@ -129,7 +144,8 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
     String copyWithReturnFallbackParams = variableInfoList
         .map((field) {
           String variableName = field.variableName;
-          return "$variableName: $variableName ?? this.$variableName";
+          String type = field.datatype;
+          return "$variableName: $variableName is UnspecifiedDataType ? this.$variableName : ($variableName as $type)";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
@@ -167,10 +183,12 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
     String custumSetStateBlocImplementation = variableInfoList.map((field) {
       // Use a regex to extract the variable name properly
 
+      String type = field.datatype;
       String variableName = field.variableName;
+
       return '''
-if ($variableName != null) {
-    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
+if ($variableName != UnspecifiedDataType.instance) {
+    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName as $type));
 }
 ''';
     }).join('\n');
@@ -223,12 +241,13 @@ $fieldParamsForGeneratedClass
 
 extension ${className.replaceAll('State', 'Bloc')}ContextExtension on BuildContext {
   void $blocSetStateName({
-     $copyWithParams
+     $setBlocStateParams,
 }) {
     final myBloc = read<${className.replaceAll('State', 'Bloc')}>();  // Read the MyBloc instance
      $custumSetStateBlocImplementation
   }
 }
+
 
 
 ''');

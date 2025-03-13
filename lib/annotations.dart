@@ -24,3 +24,11 @@ class GenerateModel {
   /// Const constructor for GenerateModel
   const GenerateModel();
 }
+
+/// Data type that is not specified
+class UnspecifiedDataType {
+  /// Const singleton for UnspecifiedDataType
+  static const UnspecifiedDataType instance = UnspecifiedDataType._();
+  
+  const UnspecifiedDataType._();
+}
