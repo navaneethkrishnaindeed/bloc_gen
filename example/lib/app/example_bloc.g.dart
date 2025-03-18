@@ -38,21 +38,35 @@ class UpdateDssEvent extends ExampleEvent {
   List<Object?> get props => [dss];
 }
 
+class UpdateListEvent extends ExampleEvent {
+  final Map<String?, String?> list;
+  const UpdateListEvent({required this.list});
+
+  @override
+  List<Object?> get props => [list];
+}
+
 class ExampleState extends Equatable {
   final bool isLoading;
   final int conter;
   final String? data;
   final String? dss;
+  final Map<String?, String?> list;
 
   const ExampleState(
-      {required this.isLoading, required this.conter, this.data, this.dss});
+      {required this.isLoading,
+      required this.conter,
+      this.data,
+      this.dss,
+      required this.list});
 
   static ExampleState initial() {
     return ExampleState(
         isLoading: false,
         conter: 0,
         data: "You have pushed the button this many times:",
-        dss: null);
+        dss: null,
+        list: {});
   }
 
   ExampleState copyWith(
@@ -67,14 +81,20 @@ class ExampleState extends Equatable {
       Object? data = UnspecifiedDataType.instance,
 
       /// Data type [String?]
-      Object? dss = UnspecifiedDataType.instance}) {
+      Object? dss = UnspecifiedDataType.instance,
+
+      /// Data type [Map<String?, String?>]
+      Object? list = UnspecifiedDataType.instance}) {
     return ExampleState(
         isLoading: isLoading is UnspecifiedDataType
             ? this.isLoading
             : (isLoading as bool),
         conter: conter is UnspecifiedDataType ? this.conter : (conter as int),
         data: data is UnspecifiedDataType ? this.data : (data as String?),
-        dss: dss is UnspecifiedDataType ? this.dss : (dss as String?));
+        dss: dss is UnspecifiedDataType ? this.dss : (dss as String?),
+        list: list is UnspecifiedDataType
+            ? this.list
+            : (list as Map<String?, String?>));
   }
 
   static void registerEvents(ExampleBloc bloc) {
@@ -93,10 +113,14 @@ class ExampleState extends Equatable {
     bloc.on<UpdateDssEvent>((event, emit) {
       emit(bloc.state.copyWith(dss: event.dss));
     });
+
+    bloc.on<UpdateListEvent>((event, emit) {
+      emit(bloc.state.copyWith(list: event.list));
+    });
   }
 
   @override
-  List<Object?> get props => [isLoading, conter, data, dss];
+  List<Object?> get props => [isLoading, conter, data, dss, list];
 }
 
 extension ExampleBlocContextExtension on BuildContext {
@@ -105,6 +129,7 @@ extension ExampleBlocContextExtension on BuildContext {
     Object? conter = UnspecifiedDataType.instance,
     Object? data = UnspecifiedDataType.instance,
     Object? dss = UnspecifiedDataType.instance,
+    Object? list = UnspecifiedDataType.instance,
   }) {
     final myBloc = read<ExampleBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
@@ -121,6 +146,10 @@ extension ExampleBlocContextExtension on BuildContext {
 
     if (dss != UnspecifiedDataType.instance) {
       myBloc.add(UpdateDssEvent(dss: dss as String?));
+    }
+
+    if (list != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateListEvent(list: list as Map<String?, String?>));
     }
   }
 }

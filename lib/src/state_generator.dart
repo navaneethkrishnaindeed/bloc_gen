@@ -101,7 +101,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         ";";
 
     String constructorParams = variableInfoList.map((field) {
-      return field.datatype.contains('?')
+      return field.datatype.endsWith('?')
           ? "this.${field.variableName}"
           : "required this.${field.variableName}";
     }).join(",\n      ");
@@ -117,7 +117,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .map((field) {
           String type = field.datatype;
           String variableName = field.variableName;
-          if (!type.contains("?")) {
+          if (!type.endsWith("?")) {
             type += "?";
           }
 
@@ -132,7 +132,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .map((field) {
           String type = field.datatype;
           String variableName = field.variableName;
-          if (!type.contains("?")) {
+          if (!type.endsWith("?")) {
             type += "?";
           }
 
