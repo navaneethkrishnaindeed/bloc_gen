@@ -1,6 +1,6 @@
 name: fbloc_event_gen
 description: Intended to replace @freezed BLOC. Generates STATE, EVENT AND BLOC from a SINGLE LINE OF STATE VARIABLE and can generate custom event classes from factory constructors.
-version: 3.2.1
+version: 3.2.2
 homepage: https://github.com/navaneethkrishnaindeed/bloc_gen
 repository: https://github.com/navaneethkrishnaindeed/bloc_gen
 issue_tracker: https://github.com/navaneethkrishnaindeed/bloc_gen/issues
