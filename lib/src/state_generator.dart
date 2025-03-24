@@ -131,7 +131,6 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .map((field) {
           String variableName = field.variableName;
 
-          String type = field.datatype;
           return "$variableName: $variableName ?? this.$variableName";
         })
         .where((line) => line.isNotEmpty)
