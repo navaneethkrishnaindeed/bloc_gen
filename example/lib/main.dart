@@ -69,6 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            BlocSelector<ExampleBloc, ExampleState, Map<dynamic, dynamic>?>(
+              selector: (state) {
+                return state.test;
+              },
+              builder: (context, state) {
+                return Text(
+                  state.toString(),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -82,30 +92,40 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
+          // SizedBox(
+          //   width: 15,
+          // ),
+          // FloatingActionButton(
+          //   onPressed: () {
+          //     _counter--;
+          //     context.setExampleBlocState(
+          //         selectedDays: [false],
+          //         data: "fdsfdsfdsfdsd",
+          //         conter: _counter);
+          //   },
+          //   tooltip: 'Decrement',
+          //   child: const Icon(Icons.remove),
+          // ),
           SizedBox(
             width: 15,
           ),
           FloatingActionButton(
             onPressed: () {
-              _counter--;
               context.setExampleBlocState(
-                  data: "fdsfdsfdsfdsd", conter: _counter);
-            },
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              _counter++;
-              context.setExampleBlocState(
-                data: null,
+                data: "jhfuyfuf",
               );
+              context.setExampleBlocState(test: null, data: null);
             },
             tooltip: 'Decrement',
             child: const Icon(Icons.clear),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              context
+                  .setExampleBlocState(test: {}, data: "hdtursutrudsytfyufytf");
+            },
+            tooltip: 'Decrement',
+            child: const Icon(Icons.text_snippet),
           ),
         ],
       ),

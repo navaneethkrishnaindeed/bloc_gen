@@ -112,7 +112,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         })
         .where((line) => line.isNotEmpty)
         .join(",\n        ");
-
+//Copy with section
     String copyWithParams = variableInfoList
         .map((field) {
           String type = field.datatype;
@@ -122,11 +122,58 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
           }
 
           return '''
-/// Data type [${field.datatype}] 
- Object? $variableName = UnspecifiedDataType.instance''';
+        $type $variableName''';
         })
         .where((line) => line.isNotEmpty)
         .join(",\n      ");
+
+    String copyWithReturnFallbackParams = variableInfoList
+        .map((field) {
+          String variableName = field.variableName;
+
+          String type = field.datatype;
+          return "$variableName: $variableName ?? this.$variableName";
+        })
+        .where((line) => line.isNotEmpty)
+        .join(",\n        ");
+
+// Copy With Null  Section
+    String copyWithNullParams = variableInfoList
+        .map((field) {
+          String type = field.datatype;
+          String variableName = field.variableName;
+          if (type.endsWith("?")) {
+            return '''
+        bool $variableName = false''';
+          } else {
+            return '''
+        $type? $variableName''';
+          }
+        })
+        .where((line) => line.isNotEmpty)
+        .join(",\n      ");
+
+    String copyWithNullReturnFallbackParams = variableInfoList
+        .map((field) {
+          String variableName = field.variableName;
+
+          String type = field.datatype;
+          bool nullableType = type.endsWith('?');
+          if (!nullableType) {
+            return "$variableName: $variableName ?? this.$variableName";
+          } else {
+            return "$variableName: $variableName ? null : this.$variableName";
+          }
+        })
+        .where((line) => line.isNotEmpty)
+        .join(",\n        ");
+
+    String propsList = variableInfoList
+        .map((field) {
+          return field.variableName;
+        })
+        .where((line) => line.isNotEmpty)
+        .join(",\n        ");
 
     String setBlocStateParams = variableInfoList
         .map((field) {
@@ -141,23 +188,8 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .where((line) => line.isNotEmpty)
         .join(",\n      ");
 
-    String copyWithReturnFallbackParams = variableInfoList
-        .map((field) {
-          String variableName = field.variableName;
-          String type = field.datatype;
-          return "$variableName: $variableName is UnspecifiedDataType ? this.$variableName : ($variableName as $type)";
-        })
-        .where((line) => line.isNotEmpty)
-        .join(",\n        ");
-
-    String propsList = variableInfoList
-        .map((field) {
-          return field.variableName;
-        })
-        .where((line) => line.isNotEmpty)
-        .join(",\n        ");
-
     String stateGeneratedEvents = variableInfoList.map((field) {
+      print(field);
       String varName = field.variableName;
 
       return '''
@@ -173,11 +205,29 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
 
     String registerEventsBody = variableInfoList.map((field) {
       String varName = field.variableName;
-      return '''
+      String type = field.datatype;
+      bool nullableType = type.endsWith('?');
+      if (nullableType) {
+        return '''
   bloc.on<Update${capitalizeFirst(varName)}Event>((event, emit) {
-    emit(bloc.state.copyWith($varName: event.$varName)); 
+   if(event.$varName==null){
+   emit(bloc.state.copyWithNull($varName:true)); 
+   }else{
+   emit(bloc.state.copyWith($varName: event.$varName)); 
+   }
+    
   });
 ''';
+      } else {
+        return '''
+  bloc.on<Update${capitalizeFirst(varName)}Event>((event, emit) {
+  
+   emit(bloc.state.copyWith($varName: event.$varName)); 
+ 
+    
+  });
+''';
+      }
     }).join("\n");
 
     String custumSetStateBlocImplementation = variableInfoList.map((field) {
@@ -229,6 +279,16 @@ $fieldParamsForGeneratedClass
     $registerEventsBody
   
   }
+
+
+   $className copyWithNull({
+  $copyWithNullParams
+  }) {
+    return $className(
+       $copyWithNullReturnFallbackParams
+    );
+  }
+
 
   @override
   List<Object?> get props => [
