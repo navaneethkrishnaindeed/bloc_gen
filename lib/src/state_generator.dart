@@ -64,9 +64,11 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
       String str = fields[i];
 
       // Step 1: Split the string into two parts: before and after '='
-      List<String> parts = str.split('=');
-      String beforeEquals = parts[0].trim(); // Part before '='
-      String afterEquals = parts[1].trim(); // Part after '='
+      int firstEquals = str.indexOf('=');
+      String beforeEquals =
+          firstEquals == -1 ? str.trim() : str.substring(0, firstEquals).trim();
+      String afterEquals =
+          firstEquals == -1 ? '' : str.substring(firstEquals + 1).trim();
 
       // Step 2: Split the part before '=' into parts according to space
       List<String> beforeParts = beforeEquals.split(' ');

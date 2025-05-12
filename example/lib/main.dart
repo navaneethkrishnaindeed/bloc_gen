@@ -79,6 +79,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            Center(
+              child: SizedBox(
+                height: 200,
+                child: BlocSelector<ExampleBloc, ExampleState, List<String>>(
+                  selector: (state) {
+                    return state.listNm;
+                  },
+                  builder: (context, state) {
+                    return ListView.builder(
+                      
+                      itemCount: state.length,
+                      itemBuilder: (context, index) {
+                        return Text(state[index]);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

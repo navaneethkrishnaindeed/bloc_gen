@@ -38,6 +38,14 @@ class UpdateDssEvent extends ExampleEvent {
   List<Object?> get props => [dss];
 }
 
+class UpdateListNmEvent extends ExampleEvent {
+  final List<String> listNm;
+  const UpdateListNmEvent({required this.listNm});
+
+  @override
+  List<Object?> get props => [listNm];
+}
+
 class UpdateListEvent extends ExampleEvent {
   final Map<String?, String?> list;
   const UpdateListEvent({required this.list});
@@ -67,6 +75,7 @@ class ExampleState extends Equatable {
   final int conter;
   final String? data;
   final String? dss;
+  final List<String> listNm;
   final Map<String?, String?> list;
   final List<bool> selectedDays;
   final Map<dynamic, dynamic>? test;
@@ -76,6 +85,7 @@ class ExampleState extends Equatable {
       required this.conter,
       this.data,
       this.dss,
+      required this.listNm,
       required this.list,
       required this.selectedDays,
       this.test});
@@ -86,6 +96,7 @@ class ExampleState extends Equatable {
         conter: 0,
         data: "You have pushed the button this many times:",
         dss: null,
+        listNm: List.generate(10, (index) => 'item $index'),
         list: {},
         selectedDays: [],
         test: {});
@@ -96,6 +107,7 @@ class ExampleState extends Equatable {
       int? conter,
       String? data,
       String? dss,
+      List<String>? listNm,
       Map<String?, String?>? list,
       List<bool>? selectedDays,
       Map<dynamic, dynamic>? test}) {
@@ -104,6 +116,7 @@ class ExampleState extends Equatable {
         conter: conter ?? this.conter,
         data: data ?? this.data,
         dss: dss ?? this.dss,
+        listNm: listNm ?? this.listNm,
         list: list ?? this.list,
         selectedDays: selectedDays ?? this.selectedDays,
         test: test ?? this.test);
@@ -114,6 +127,7 @@ class ExampleState extends Equatable {
       int? conter,
       bool data = false,
       bool dss = false,
+      List<String>? listNm,
       Map<String?, String?>? list,
       List<bool>? selectedDays,
       bool test = false}) {
@@ -122,6 +136,7 @@ class ExampleState extends Equatable {
         conter: conter ?? this.conter,
         data: data ? null : this.data,
         dss: dss ? null : this.dss,
+        listNm: listNm ?? this.listNm,
         list: list ?? this.list,
         selectedDays: selectedDays ?? this.selectedDays,
         test: test ? null : this.test);
@@ -152,6 +167,10 @@ class ExampleState extends Equatable {
       }
     });
 
+    bloc.on<UpdateListNmEvent>((event, emit) {
+      emit(bloc.state.copyWith(listNm: event.listNm));
+    });
+
     bloc.on<UpdateListEvent>((event, emit) {
       emit(bloc.state.copyWith(list: event.list));
     });
@@ -171,7 +190,7 @@ class ExampleState extends Equatable {
 
   @override
   List<Object?> get props =>
-      [isLoading, conter, data, dss, list, selectedDays, test];
+      [isLoading, conter, data, dss, listNm, list, selectedDays, test];
 }
 
 extension ExampleBlocContextExtension on BuildContext {
@@ -180,6 +199,7 @@ extension ExampleBlocContextExtension on BuildContext {
     Object? conter = UnspecifiedDataType.instance,
     Object? data = UnspecifiedDataType.instance,
     Object? dss = UnspecifiedDataType.instance,
+    Object? listNm = UnspecifiedDataType.instance,
     Object? list = UnspecifiedDataType.instance,
     Object? selectedDays = UnspecifiedDataType.instance,
     Object? test = UnspecifiedDataType.instance,
@@ -199,6 +219,10 @@ extension ExampleBlocContextExtension on BuildContext {
 
     if (dss != UnspecifiedDataType.instance) {
       myBloc.add(UpdateDssEvent(dss: dss as String?));
+    }
+
+    if (listNm != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateListNmEvent(listNm: listNm as List<String>));
     }
 
     if (list != UnspecifiedDataType.instance) {
