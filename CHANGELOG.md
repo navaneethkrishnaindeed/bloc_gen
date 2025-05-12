@@ -1,6 +1,7 @@
 # Changelog
 ## 3.2.2
-Introduction of CopyWithNull to facilitate conviniant null safty and state management
+Introduction of CopyWithNull to facilitate conviniant null safty and state management. 
+Along with reported bug fixes
 ## 3.2.1
 Better Null safy generations given to Specific datatypes and reported bug Fixes
 ## 3.2.0
