@@ -121,8 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           FloatingActionButton(
             onPressed: () {
-              context
-                  .setExampleBlocState(test: {}, data: "hdtursutrudsytfyufytf");
+              context.setExampleBlocState(
+                test: {},
+              );
             },
             tooltip: 'Decrement',
             child: const Icon(Icons.text_snippet),
