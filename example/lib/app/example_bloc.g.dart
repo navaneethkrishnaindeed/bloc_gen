@@ -109,6 +109,24 @@ class ExampleState extends Equatable {
         test: test ?? this.test);
   }
 
+  ExampleState copyWithNull(
+      {bool? isLoading,
+      int? conter,
+      bool data = false,
+      bool dss = false,
+      Map<String?, String?>? list,
+      List<bool>? selectedDays,
+      bool test = false}) {
+    return ExampleState(
+        isLoading: isLoading ?? this.isLoading,
+        conter: conter ?? this.conter,
+        data: data ? null : this.data,
+        dss: dss ? null : this.dss,
+        list: list ?? this.list,
+        selectedDays: selectedDays ?? this.selectedDays,
+        test: test ? null : this.test);
+  }
+
   static void registerEvents(ExampleBloc bloc) {
     bloc.on<UpdateIsLoadingEvent>((event, emit) {
       emit(bloc.state.copyWith(isLoading: event.isLoading));
@@ -149,24 +167,6 @@ class ExampleState extends Equatable {
         emit(bloc.state.copyWith(test: event.test));
       }
     });
-  }
-
-  ExampleState copyWithNull(
-      {bool? isLoading,
-      int? conter,
-      bool data = false,
-      bool dss = false,
-      Map<String?, String?>? list,
-      List<bool>? selectedDays,
-      bool test = false}) {
-    return ExampleState(
-        isLoading: isLoading ?? this.isLoading,
-        conter: conter ?? this.conter,
-        data: data ? null : this.data,
-        dss: dss ? null : this.dss,
-        list: list ?? this.list,
-        selectedDays: selectedDays ?? this.selectedDays,
-        test: test ? null : this.test);
   }
 
   @override

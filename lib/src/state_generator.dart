@@ -273,19 +273,21 @@ $fieldParamsForGeneratedClass
        $copyWithReturnFallbackParams
     );
   }
-  static void registerEvents(${className.replaceAll('State', 'Bloc')} bloc){
- 
-    $registerEventsBody
+
   
-  }
-
-
-   $className copyWithNull({
+  $className copyWithNull({
   $copyWithNullParams
   }) {
     return $className(
        $copyWithNullReturnFallbackParams
     );
+  }
+
+
+  static void registerEvents(${className.replaceAll('State', 'Bloc')} bloc){
+ 
+    $registerEventsBody
+  
   }
 
 
