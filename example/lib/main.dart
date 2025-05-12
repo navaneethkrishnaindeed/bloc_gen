@@ -88,7 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   builder: (context, state) {
                     return ListView.builder(
-                      
                       itemCount: state.length,
                       itemBuilder: (context, index) {
                         return Text(state[index]);
@@ -97,6 +96,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               ),
+            ),
+            BlocSelector<ExampleBloc, ExampleState, Map<String, int>>(
+              selector: (state) {
+                return state.mapgenerate;
+              },
+              builder: (context, state) {
+                return Text(state.toString());
+              },
             ),
           ],
         ),

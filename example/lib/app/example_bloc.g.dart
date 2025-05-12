@@ -46,6 +46,14 @@ class UpdateListNmEvent extends ExampleEvent {
   List<Object?> get props => [listNm];
 }
 
+class UpdateMapgenerateEvent extends ExampleEvent {
+  final Map<String, int> mapgenerate;
+  const UpdateMapgenerateEvent({required this.mapgenerate});
+
+  @override
+  List<Object?> get props => [mapgenerate];
+}
+
 class UpdateListEvent extends ExampleEvent {
   final Map<String?, String?> list;
   const UpdateListEvent({required this.list});
@@ -76,6 +84,7 @@ class ExampleState extends Equatable {
   final String? data;
   final String? dss;
   final List<String> listNm;
+  final Map<String, int> mapgenerate;
   final Map<String?, String?> list;
   final List<bool> selectedDays;
   final Map<dynamic, dynamic>? test;
@@ -86,6 +95,7 @@ class ExampleState extends Equatable {
       this.data,
       this.dss,
       required this.listNm,
+      required this.mapgenerate,
       required this.list,
       required this.selectedDays,
       this.test});
@@ -97,6 +107,10 @@ class ExampleState extends Equatable {
         data: "You have pushed the button this many times:",
         dss: null,
         listNm: List.generate(10, (index) => 'item $index'),
+        mapgenerate: Map<String, int>.fromEntries(
+          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+              .map((e) => MapEntry<String, int>(e, int.parse(e))),
+        ),
         list: {},
         selectedDays: [],
         test: {});
@@ -108,6 +122,7 @@ class ExampleState extends Equatable {
       String? data,
       String? dss,
       List<String>? listNm,
+      Map<String, int>? mapgenerate,
       Map<String?, String?>? list,
       List<bool>? selectedDays,
       Map<dynamic, dynamic>? test}) {
@@ -117,6 +132,7 @@ class ExampleState extends Equatable {
         data: data ?? this.data,
         dss: dss ?? this.dss,
         listNm: listNm ?? this.listNm,
+        mapgenerate: mapgenerate ?? this.mapgenerate,
         list: list ?? this.list,
         selectedDays: selectedDays ?? this.selectedDays,
         test: test ?? this.test);
@@ -128,6 +144,7 @@ class ExampleState extends Equatable {
       bool data = false,
       bool dss = false,
       List<String>? listNm,
+      Map<String, int>? mapgenerate,
       Map<String?, String?>? list,
       List<bool>? selectedDays,
       bool test = false}) {
@@ -137,6 +154,7 @@ class ExampleState extends Equatable {
         data: data ? null : this.data,
         dss: dss ? null : this.dss,
         listNm: listNm ?? this.listNm,
+        mapgenerate: mapgenerate ?? this.mapgenerate,
         list: list ?? this.list,
         selectedDays: selectedDays ?? this.selectedDays,
         test: test ? null : this.test);
@@ -171,6 +189,10 @@ class ExampleState extends Equatable {
       emit(bloc.state.copyWith(listNm: event.listNm));
     });
 
+    bloc.on<UpdateMapgenerateEvent>((event, emit) {
+      emit(bloc.state.copyWith(mapgenerate: event.mapgenerate));
+    });
+
     bloc.on<UpdateListEvent>((event, emit) {
       emit(bloc.state.copyWith(list: event.list));
     });
@@ -189,8 +211,17 @@ class ExampleState extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [isLoading, conter, data, dss, listNm, list, selectedDays, test];
+  List<Object?> get props => [
+        isLoading,
+        conter,
+        data,
+        dss,
+        listNm,
+        mapgenerate,
+        list,
+        selectedDays,
+        test
+      ];
 }
 
 extension ExampleBlocContextExtension on BuildContext {
@@ -200,6 +231,7 @@ extension ExampleBlocContextExtension on BuildContext {
     Object? data = UnspecifiedDataType.instance,
     Object? dss = UnspecifiedDataType.instance,
     Object? listNm = UnspecifiedDataType.instance,
+    Object? mapgenerate = UnspecifiedDataType.instance,
     Object? list = UnspecifiedDataType.instance,
     Object? selectedDays = UnspecifiedDataType.instance,
     Object? test = UnspecifiedDataType.instance,
@@ -223,6 +255,11 @@ extension ExampleBlocContextExtension on BuildContext {
 
     if (listNm != UnspecifiedDataType.instance) {
       myBloc.add(UpdateListNmEvent(listNm: listNm as List<String>));
+    }
+
+    if (mapgenerate != UnspecifiedDataType.instance) {
+      myBloc.add(
+          UpdateMapgenerateEvent(mapgenerate: mapgenerate as Map<String, int>));
     }
 
     if (list != UnspecifiedDataType.instance) {
