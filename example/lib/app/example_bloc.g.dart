@@ -6,6 +6,7 @@ part of 'example_bloc.dart';
 // StateGenerator
 // **************************************************************************
 
+// Events Generated for corresponding states in State Class
 class UpdateIsLoadingEvent extends ExampleEvent {
   final bool isLoading;
   const UpdateIsLoadingEvent({required this.isLoading});
@@ -14,12 +15,12 @@ class UpdateIsLoadingEvent extends ExampleEvent {
   List<Object?> get props => [isLoading];
 }
 
-class UpdateConterEvent extends ExampleEvent {
-  final int conter;
-  const UpdateConterEvent({required this.conter});
+class UpdateCounterEvent extends ExampleEvent {
+  final int counter;
+  const UpdateCounterEvent({required this.counter});
 
   @override
-  List<Object?> get props => [conter];
+  List<Object?> get props => [counter];
 }
 
 class UpdateDataEvent extends ExampleEvent {
@@ -78,9 +79,11 @@ class UpdateTestEvent extends ExampleEvent {
   List<Object?> get props => [test];
 }
 
+/// A state class that represents the complete state of the 'ExampleBloc'.
+/// This class is immutable and extends Equatable for value comparison.
 class ExampleState extends Equatable {
   final bool isLoading;
-  final int conter;
+  final int counter;
   final String? data;
   final String? dss;
   final List<String> listNm;
@@ -89,9 +92,10 @@ class ExampleState extends Equatable {
   final List<bool> selectedDays;
   final Map<dynamic, dynamic>? test;
 
+  /// Creates a new instance of ExampleState with the given parameters.
   const ExampleState(
       {required this.isLoading,
-      required this.conter,
+      required this.counter,
       this.data,
       this.dss,
       required this.listNm,
@@ -100,10 +104,12 @@ class ExampleState extends Equatable {
       required this.selectedDays,
       this.test});
 
+  /// Creates the initial state of the 'ExampleBloc'.
+  /// This method sets up default values for all state properties.
   static ExampleState initial() {
     return ExampleState(
         isLoading: false,
-        conter: 0,
+        counter: 0,
         data: "You have pushed the button this many times:",
         dss: null,
         listNm: List.generate(10, (index) => 'item $index'),
@@ -116,9 +122,11 @@ class ExampleState extends Equatable {
         test: {});
   }
 
+  /// Creates a copy of this state with the given parameters replaced.
+  /// If a parameter is not provided, the value from the current state is used.
   ExampleState copyWith(
       {bool? isLoading,
-      int? conter,
+      int? counter,
       String? data,
       String? dss,
       List<String>? listNm,
@@ -128,7 +136,7 @@ class ExampleState extends Equatable {
       Map<dynamic, dynamic>? test}) {
     return ExampleState(
         isLoading: isLoading ?? this.isLoading,
-        conter: conter ?? this.conter,
+        counter: counter ?? this.counter,
         data: data ?? this.data,
         dss: dss ?? this.dss,
         listNm: listNm ?? this.listNm,
@@ -138,9 +146,11 @@ class ExampleState extends Equatable {
         test: test ?? this.test);
   }
 
+  /// Creates a copy of this state with the ability to set specific fields to null.
+  /// The boolean parameters control whether the corresponding field should be set to null.
   ExampleState copyWithNull(
       {bool? isLoading,
-      int? conter,
+      int? counter,
       bool data = false,
       bool dss = false,
       List<String>? listNm,
@@ -150,7 +160,7 @@ class ExampleState extends Equatable {
       bool test = false}) {
     return ExampleState(
         isLoading: isLoading ?? this.isLoading,
-        conter: conter ?? this.conter,
+        counter: counter ?? this.counter,
         data: data ? null : this.data,
         dss: dss ? null : this.dss,
         listNm: listNm ?? this.listNm,
@@ -160,13 +170,15 @@ class ExampleState extends Equatable {
         test: test ? null : this.test);
   }
 
+  /// Registers all event handlers for the 'ExampleBloc'.
+  /// This method sets up the event-to-state mapping for all possible state updates.
   static void registerEvents(ExampleBloc bloc) {
     bloc.on<UpdateIsLoadingEvent>((event, emit) {
       emit(bloc.state.copyWith(isLoading: event.isLoading));
     });
 
-    bloc.on<UpdateConterEvent>((event, emit) {
-      emit(bloc.state.copyWith(conter: event.conter));
+    bloc.on<UpdateCounterEvent>((event, emit) {
+      emit(bloc.state.copyWith(counter: event.counter));
     });
 
     bloc.on<UpdateDataEvent>((event, emit) {
@@ -210,10 +222,11 @@ class ExampleState extends Equatable {
     });
   }
 
+  /// Returns a list of all properties used for equality comparison.
   @override
   List<Object?> get props => [
         isLoading,
-        conter,
+        counter,
         data,
         dss,
         listNm,
@@ -224,10 +237,15 @@ class ExampleState extends Equatable {
       ];
 }
 
+/// Extension on BuildContext that provides convenient methods for updating the 'ExampleBloc' state.
+/// This extension simplifies state updates by providing a single method to update multiple state properties.
 extension ExampleBlocContextExtension on BuildContext {
+  /// Updates the 'ExampleBloc' state with the provided values.
+  /// Only the specified parameters will be updated; others will remain unchanged.
+  /// Uses UnspecifiedDataType.instance as a sentinel value to determine which parameters to update.
   void setExampleBlocState({
     Object? isLoading = UnspecifiedDataType.instance,
-    Object? conter = UnspecifiedDataType.instance,
+    Object? counter = UnspecifiedDataType.instance,
     Object? data = UnspecifiedDataType.instance,
     Object? dss = UnspecifiedDataType.instance,
     Object? listNm = UnspecifiedDataType.instance,
@@ -241,8 +259,8 @@ extension ExampleBlocContextExtension on BuildContext {
       myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
     }
 
-    if (conter != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateConterEvent(conter: conter as int));
+    if (counter != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateCounterEvent(counter: counter as int));
     }
 
     if (data != UnspecifiedDataType.instance) {

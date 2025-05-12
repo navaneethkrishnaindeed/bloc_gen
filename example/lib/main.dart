@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BlocSelector<ExampleBloc, ExampleState, int>(
               selector: (state) {
-                return state.conter;
+                return state.counter;
               },
               builder: (context, state) {
                 return Text(
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               _counter++;
-              context.setExampleBlocState(conter: _counter);
+              context.setExampleBlocState(counter: _counter); 
             },
             tooltip: 'Increment',
             child: const Icon(Icons.add),

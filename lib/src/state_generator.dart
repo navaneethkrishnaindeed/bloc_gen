@@ -248,26 +248,33 @@ if ($variableName != UnspecifiedDataType.instance) {
         'set${className.replaceAll("State", "Bloc")}State';
 
     buffer.write('''
-
+// Events Generated for corresponding states in State Class
 $stateGeneratedEvents
 
 
 
-
-
+/// A state class that represents the complete state of the '${className.replaceAll("State", "Bloc")}'.
+/// This class is immutable and extends Equatable for value comparison.
 class $className extends Equatable {
+
 $fieldParamsForGeneratedClass
 
+/// Creates a new instance of $className with the given parameters.
   const $className({
    $constructorParams
   });
 
+  /// Creates the initial state of the '${className.replaceAll("State", "Bloc")}'.
+  /// This method sets up default values for all state properties.
   static $className initial() {
     return $className(
       $initialStateValues
     );
   }
 
+
+  /// Creates a copy of this state with the given parameters replaced.
+  /// If a parameter is not provided, the value from the current state is used.
   $className copyWith({
   $copyWithParams
   }) {
@@ -277,6 +284,8 @@ $fieldParamsForGeneratedClass
   }
 
   
+  /// Creates a copy of this state with the ability to set specific fields to null.
+  /// The boolean parameters control whether the corresponding field should be set to null.
   $className copyWithNull({
   $copyWithNullParams
   }) {
@@ -285,14 +294,15 @@ $fieldParamsForGeneratedClass
     );
   }
 
-
+  /// Registers all event handlers for the '${className.replaceAll("State", "Bloc")}'.
+  /// This method sets up the event-to-state mapping for all possible state updates.
   static void registerEvents(${className.replaceAll('State', 'Bloc')} bloc){
  
     $registerEventsBody
   
   }
 
-
+  /// Returns a list of all properties used for equality comparison.
   @override
   List<Object?> get props => [
         $propsList
@@ -301,8 +311,12 @@ $fieldParamsForGeneratedClass
 
 
 
-
+/// Extension on BuildContext that provides convenient methods for updating the '${className.replaceAll("State", "Bloc")}' state.
+/// This extension simplifies state updates by providing a single method to update multiple state properties.
 extension ${className.replaceAll('State', 'Bloc')}ContextExtension on BuildContext {
+  /// Updates the '${className.replaceAll("State", "Bloc")}' state with the provided values.
+  /// Only the specified parameters will be updated; others will remain unchanged.
+  /// Uses UnspecifiedDataType.instance as a sentinel value to determine which parameters to update.
   void $blocSetStateName({
      $setBlocStateParams,
 }) {

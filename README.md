@@ -1,3 +1,12 @@
+## 📝 Reviews & Feedback
+
+We value your feedback! Help us improve by sharing your experience with the package:
+
+[📋 Submit Review via Google Form](https://docs.google.com/forms/d/e/1FAIpQLScgQX8dblYi_Bn4tNrUUTcc_tngZo5lmTX5oE9X3OkeizBUcQ/viewform?usp=header)
+
+Your feedback helps make this package better for everyone in the Flutter community. Let us know what features you love and what we can improve!
+
+
 # 🚀 Flutter Bloc Generator
 [✨ NOW WITH VSCODE EXTENSION! ✨](https://marketplace.visualstudio.com/items?itemName=NavaneethKrishna.fbloc-event-gen)
 
@@ -39,7 +48,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  fbloc_event_gen: ^3.1.5
+  fbloc_event_gen: ^3.2.2
 
 dev_dependencies:
   build_runner: ^2.4.6
@@ -73,47 +82,46 @@ Use `@GenerateEvents` when you need event-only generation. Perfect for defining 
 ```dart
 import 'package:flutter_bloc_generator/annotations.dart';
 
-@GenerateEvents
-abstract class BaseEvent extends Equatable {
-  const BaseEvent();
-  
-  // Factory constructors define your events
-  factory BaseEvent.userLoggedIn({
+@generateEvents
+abstract class ExampleEvent extends Equatable {
+  const ExampleEvent();
+   const factory ExampleEvent.userLoggedIn({
     required String userId,
     required String token,
     bool? rememberMe,
-  });
+  }) = UserLoggedIn;
   
-  factory BaseEvent.updateProfile({
-    required UserModel user,
-  });
+  const factory ExampleEvent.updateProfile({
+    required String user,
+  }) = UpdateProfile;
   
-  factory BaseEvent.logOut();
+  const factory ExampleEvent.logOut() = LogOut;
 }
+
 ```
 
 #### Generated Code ✨
 
 ```dart
-// Generated events.g.dart
 
-class UserLoggedIn extends BaseEvent {
+// **************************************************************************
+// EventGenerator
+// **************************************************************************
+
+class UserLoggedIn extends ExampleEvent {
   final String userId;
   final String token;
   final bool? rememberMe;
 
-  const UserLoggedIn({
-    required this.userId,
-    required this.token,
-    this.rememberMe,
-  });
+  const UserLoggedIn(
+      {required this.userId, required this.token, this.rememberMe});
 
   @override
   List<Object?> get props => [userId, token, rememberMe];
 }
 
-class UpdateProfile extends BaseEvent {
-  final UserModel user;
+class UpdateProfile extends ExampleEvent {
+  final String user;
 
   const UpdateProfile({required this.user});
 
@@ -121,7 +129,7 @@ class UpdateProfile extends BaseEvent {
   List<Object?> get props => [user];
 }
 
-class LogOut extends BaseEvent {
+class LogOut extends ExampleEvent {
   const LogOut();
 
   @override
@@ -134,129 +142,284 @@ class LogOut extends BaseEvent {
 Use `@GenerateStates` for complete state management generation. Define your state variables in an abstract class.
 
 ```dart
-import 'package:flutter_bloc_generator/annotations.dart';
+part of 'example_bloc.dart';
 
-@GenerateStates
-abstract class _$$BaseState {
-  final bool isAuthenticated = false;
+@generateStates
+abstract class _$$ExampleState {
   final bool isLoading = false;
-  final UserModel? currentUser = null;
-  final List<String> errorMessages = [];
-  final AuthStatus authStatus = AuthStatus.initial;
-  final Map<String, dynamic> userData = {};
+  final int counter = 0;
+  final String? data = "You have pushed the button this many times:";
+  final String? dss = null;
+  final List<String> listNm = List.generate(10, (index) => 'item $index');
+  final Map<String, int> mapgenerate = Map<String, int>.fromEntries(
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        .map((e) => MapEntry<String, int>(e, int.parse(e))),
+  );
+  final Map<String?, String?> list = {};
+  final List<bool> selectedDays = [];
+  final Map<dynamic, dynamic>? test = {};
 }
+
 ```
 
 #### Generated Code ✨
 
 ```dart
-// Generated state.g.dart
 
-/// 1️⃣ State Class Definition
-class BaseState extends Equatable {
-  final bool isAuthenticated;
+// **************************************************************************
+// StateGenerator
+// **************************************************************************
+
+
+// Events Generated for corresponding states in State Class
+class UpdateIsLoadingEvent extends ExampleEvent {
   final bool isLoading;
-  final UserModel? currentUser;
-  final List<String> errorMessages;
-  final AuthStatus authStatus;
-  final Map<String, dynamic> userData;
+  const UpdateIsLoadingEvent({required this.isLoading});
 
-  const BaseState({
-    required this.isAuthenticated,
-    required this.isLoading,
-    this.currentUser,
-    required this.errorMessages,
-    required this.authStatus,
-    required this.userData,
-  });
+  @override
+  List<Object?> get props => [isLoading];
+}
 
-  /// 2️⃣ State Mutation Utilities
-  BaseState copyWith({
-    /// Data type [bool]
-    Object? isAuthenticated = UnspecifiedDataType.instance,
-    /// Data type [bool] 
-    Object? isLoading = UnspecifiedDataType.instance,
-    /// Data type [UserModel?]
-    Object? currentUser = UnspecifiedDataType.instance,
-    /// Data type [List<String>]
-    Object? errorMessages = UnspecifiedDataType.instance,
-    /// Data type [AuthStatus]
-    Object? authStatus = UnspecifiedDataType.instance,
-    /// Data type [Map<String, dynamic>]
-    Object? userData = UnspecifiedDataType.instance,
-  }) {
-    return BaseState(
-      isAuthenticated: isAuthenticated is UnspecifiedDataType ? this.isAuthenticated : (isAuthenticated as bool),
-      isLoading: isLoading is UnspecifiedDataType ? this.isLoading : (isLoading as bool),
-      currentUser: currentUser is UnspecifiedDataType ? this.currentUser : (currentUser as UserModel?),
-      errorMessages: errorMessages is UnspecifiedDataType ? this.errorMessages : (errorMessages as List<String>),
-      authStatus: authStatus is UnspecifiedDataType ? this.authStatus : (authStatus as AuthStatus),
-      userData: userData is UnspecifiedDataType ? this.userData : (userData as Map<String, dynamic>),
-    );
+class UpdateCounterEvent extends ExampleEvent {
+  final int counter;
+  const UpdateCounterEvent({required this.counter});
+
+  @override
+  List<Object?> get props => [counter];
+}
+// ... So and So unique event classes for each state properties
+
+/// A state class that represents the complete state of the ExampleBloc.
+/// This class is immutable and extends Equatable for value comparison.
+class ExampleState extends Equatable {
+  /// Indicates whether the bloc is currently processing an operation
+  final bool isLoading;
+  
+  /// Counter value for tracking state changes
+  final int counter;
+  
+  /// Optional data string that can be displayed to the user
+  final String? data;
+  
+  /// Optional secondary data string
+  final String? dss;
+  
+  /// List of string items
+  final List<String> listNm;
+  
+  /// Map containing string keys and integer values
+  final Map<String, int> mapgenerate;
+  
+  /// Map with nullable string keys and values
+  final Map<String?, String?> list;
+  
+  /// List of boolean values representing selected days
+  final List<bool> selectedDays;
+  
+  /// Optional map for storing dynamic key-value pairs
+  final Map<dynamic, dynamic>? test;
+
+  /// Creates a new instance of ExampleState with the given parameters.
+  /// All parameters except [data], [dss], and [test] are required.
+  const ExampleState({
+      required this.isLoading,
+      required this.counter,
+      this.data,
+      this.dss,
+      required this.listNm,
+      required this.mapgenerate,
+      required this.list,
+      required this.selectedDays,
+      this.test});
+
+  /// Creates the initial state of the ExampleBloc.
+  /// This method sets up default values for all state properties.
+  static ExampleState initial() {
+    return ExampleState(
+        isLoading: false,
+        counter: 0,
+        data: "You have pushed the button this many times:",
+        dss: null,
+        listNm: List.generate(10, (index) => 'item $index'),
+        mapgenerate: Map<String, int>.fromEntries(
+          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+              .map((e) => MapEntry<String, int>(e, int.parse(e))),
+        ),
+        list: {},
+        selectedDays: [],
+        test: {});
   }
 
-  /// 3️⃣ Initial State Factory
-  static BaseState initial() {
-    return BaseState(
-      isAuthenticated: false,
-      isLoading: false,
-      currentUser: null,
-      errorMessages: [],
-      authStatus: AuthStatus.initial,
-      userData: {},
-    );
+  /// Creates a copy of this state with the given parameters replaced.
+  /// If a parameter is not provided, the value from the current state is used.
+  ExampleState copyWith({
+      bool? isLoading,
+      int? counter,
+      String? data,
+      String? dss,
+      List<String>? listNm,
+      Map<String, int>? mapgenerate,
+      Map<String?, String?>? list,
+      List<bool>? selectedDays,
+      Map<dynamic, dynamic>? test}) {
+    return ExampleState(
+        isLoading: isLoading ?? this.isLoading,
+        counter: counter ?? this.counter,
+        data: data ?? this.data,
+        dss: dss ?? this.dss,
+        listNm: listNm ?? this.listNm,
+        mapgenerate: mapgenerate ?? this.mapgenerate,
+        list: list ?? this.list,
+        selectedDays: selectedDays ?? this.selectedDays,
+        test: test ?? this.test);
   }
 
-  /// 4️⃣ State Update Events
-  class UpdateIsAuthenticatedEvent extends BaseEvent {
-    final bool isAuthenticated;
-    const UpdateIsAuthenticatedEvent({required this.isAuthenticated});
-    @override
-    List<Object?> get props => [isAuthenticated];
+  /// Creates a copy of this state with the ability to set specific fields to null.
+  /// The boolean parameters control whether the corresponding field should be set to null.
+  ExampleState copyWithNull({
+      bool? isLoading,
+      int? counter,
+      bool data = false,
+      bool dss = false,
+      List<String>? listNm,
+      Map<String, int>? mapgenerate,
+      Map<String?, String?>? list,
+      List<bool>? selectedDays,
+      bool test = false}) {
+    return ExampleState(
+        isLoading: isLoading ?? this.isLoading,
+        counter: counter ?? this.counter,
+        data: data ? null : this.data,
+        dss: dss ? null : this.dss,
+        listNm: listNm ?? this.listNm,
+        mapgenerate: mapgenerate ?? this.mapgenerate,
+        list: list ?? this.list,
+        selectedDays: selectedDays ?? this.selectedDays,
+        test: test ? null : this.test);
   }
-  // ... events for each state variable
 
-  /// 5️⃣ Event Handlers Registration
-  static void registerEvents(BaseBloc bloc) {
-    bloc.on<UpdateIsAuthenticatedEvent>((event, emit) {
-      emit(bloc.state.copyWith(isAuthenticated: event.isAuthenticated));
-    });
+  /// Registers all event handlers for the ExampleBloc.
+  /// This method sets up the event-to-state mapping for all possible state updates.
+  static void registerEvents(ExampleBloc bloc) {
     bloc.on<UpdateIsLoadingEvent>((event, emit) {
       emit(bloc.state.copyWith(isLoading: event.isLoading));
     });
-    // ... handlers for all events
+
+    bloc.on<UpdatecounterEvent>((event, emit) {
+      emit(bloc.state.copyWith(counter: event.counter));
+    });
+
+    bloc.on<UpdateDataEvent>((event, emit) {
+      if (event.data == null) {
+        emit(bloc.state.copyWithNull(data: true));
+      } else {
+        emit(bloc.state.copyWith(data: event.data));
+      }
+    });
+
+    bloc.on<UpdateDssEvent>((event, emit) {
+      if (event.dss == null) {
+        emit(bloc.state.copyWithNull(dss: true));
+      } else {
+        emit(bloc.state.copyWith(dss: event.dss));
+      }
+    });
+
+    bloc.on<UpdateListNmEvent>((event, emit) {
+      emit(bloc.state.copyWith(listNm: event.listNm));
+    });
+
+    bloc.on<UpdateMapgenerateEvent>((event, emit) {
+      emit(bloc.state.copyWith(mapgenerate: event.mapgenerate));
+    });
+
+    bloc.on<UpdateListEvent>((event, emit) {
+      emit(bloc.state.copyWith(list: event.list));
+    });
+
+    bloc.on<UpdateSelectedDaysEvent>((event, emit) {
+      emit(bloc.state.copyWith(selectedDays: event.selectedDays));
+    });
+
+    bloc.on<UpdateTestEvent>((event, emit) {
+      if (event.test == null) {
+        emit(bloc.state.copyWithNull(test: true));
+      } else {
+        emit(bloc.state.copyWith(test: event.test));
+      }
+    });
   }
 
-  /// 6️⃣ Equatable Implementation
+  /// Returns a list of all properties used for equality comparison.
   @override
   List<Object?> get props => [
-    isAuthenticated,
-    isLoading,
-    currentUser,
-    errorMessages,
-    authStatus,
-    userData,
-  ];
+        isLoading,
+        counter,
+        data,
+        dss,
+        listNm,
+        mapgenerate,
+        list,
+        selectedDays,
+        test
+      ];
 }
 
-/// 7️⃣ BuildContext Extensions
-extension BaseBlocContextExtension on BuildContext {
-  void setBaseBlocState({
-    Object? isAuthenticated = UnspecifiedDataType.instance,
+/// Extension on BuildContext that provides convenient methods for updating the ExampleBloc state.
+/// This extension simplifies state updates by providing a single method to update multiple state properties.
+extension ExampleBlocContextExtension on BuildContext {
+  /// Updates the ExampleBloc state with the provided values.
+  /// Only the specified parameters will be updated; others will remain unchanged.
+  /// Uses UnspecifiedDataType.instance as a sentinel value to determine which parameters to update.
+  void setExampleBlocState({
     Object? isLoading = UnspecifiedDataType.instance,
-    Object? currentUser = UnspecifiedDataType.instance,
-    Object? errorMessages = UnspecifiedDataType.instance,
-    Object? authStatus = UnspecifiedDataType.instance,
-    Object? userData = UnspecifiedDataType.instance,
+    Object? counter = UnspecifiedDataType.instance,
+    Object? data = UnspecifiedDataType.instance,
+    Object? dss = UnspecifiedDataType.instance,
+    Object? listNm = UnspecifiedDataType.instance,
+    Object? mapgenerate = UnspecifiedDataType.instance,
+    Object? list = UnspecifiedDataType.instance,
+    Object? selectedDays = UnspecifiedDataType.instance,
+    Object? test = UnspecifiedDataType.instance,
   }) {
-    final bloc = read<BaseBloc>();
-    if (isAuthenticated != UnspecifiedDataType.instance) {
-      bloc.add(UpdateIsAuthenticatedEvent(isAuthenticated: isAuthenticated as bool));
-    }
+    final myBloc = read<ExampleBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
-      bloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
+      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
     }
-    // ... handlers for all state updates
+
+    if (counter != UnspecifiedDataType.instance) {
+      myBloc.add(UpdatecounterEvent(counter: counter as int));
+    }
+
+    if (data != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateDataEvent(data: data as String?));
+    }
+
+    if (dss != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateDssEvent(dss: dss as String?));
+    }
+
+    if (listNm != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateListNmEvent(listNm: listNm as List<String>));
+    }
+
+    if (mapgenerate != UnspecifiedDataType.instance) {
+      myBloc.add(
+          UpdateMapgenerateEvent(mapgenerate: mapgenerate as Map<String, int>));
+    }
+
+    if (list != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateListEvent(list: list as Map<String?, String?>));
+    }
+
+    if (selectedDays != UnspecifiedDataType.instance) {
+      myBloc.add(
+          UpdateSelectedDaysEvent(selectedDays: selectedDays as List<bool>));
+    }
+
+    if (test != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateTestEvent(test: test as Map<dynamic, dynamic>?));
+    }
   }
 }
 ```
@@ -266,27 +429,26 @@ extension BaseBlocContextExtension on BuildContext {
 ### Bloc Class
 
 ```dart
-class BaseBloc extends Bloc<BaseEvent, BaseState> {
-  BaseBloc() : super(BaseState.initial()) {
-    // Register all event handlers automatically
-    BaseState.registerEvents(this);
-    
-    // Add your custom event handlers
+
+class ExampleBloc extends Bloc<ExampleEvent, ExampleState> {
+  ExampleBloc() : super(ExampleState.initial()) {
+    ExampleState.registerEvents(this);
     on<UserLoggedIn>(_onUserLoggedIn);
+    on<UpdateProfile>(_onUpdateProfile); 
+    on<LogOut>(_onLogOut);
+  }   
+  void _onUserLoggedIn(UserLoggedIn event, Emitter<ExampleState> emit) {
+    emit(state.copyWith(isLoading: true));
   }
 
-  Future<void> _onUserLoggedIn(
-    UserLoggedIn event,
-    Emitter<BaseState> emit,
-  ) async {
+  void _onUpdateProfile(UpdateProfile event, Emitter<ExampleState> emit) {
     emit(state.copyWith(isLoading: true));
-    // ... authentication logic
-    emit(state.copyWith(
-      isLoading: false,
-      isAuthenticated: true,
-    ));
+  } 
+  void _onLogOut(LogOut event, Emitter<ExampleState> emit) {
+    emit(state.copyWith(isLoading: true));
   }
 }
+
 ```
 
 ### Widget Usage
@@ -296,15 +458,13 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Traditional way
-    context.read<BaseBloc>().add(
-      UpdateProfile(user: updatedUser)
+    BlocProvider.of<ExampleBloc>(context).add(
+      UpdateCounterEvent(counter: 42)
     );
 
     // Using generated extension (Cleaner!)
-    context.setBaseBlocState(
-      isLoading: true,
-      currentUser: updatedUser,
-      authStatus: AuthStatus.authenticated,
+    context.setExampleBlocState(
+      counter: 42
     );
   }
 }
