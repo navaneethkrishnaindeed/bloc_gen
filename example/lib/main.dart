@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               _counter++;
-              context.setExampleBlocState(counter: _counter); 
+              context.setExampleBlocState(counter: _counter);
             },
             tooltip: 'Increment',
             child: const Icon(Icons.add),
