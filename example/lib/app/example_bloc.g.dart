@@ -285,7 +285,7 @@ extension ExampleBlocContextExtension on BuildContext {
     }
 
     if (listNm != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListNmEvent(listNm: listNm as List<String>));
+      myBloc.add(UpdateListNmEvent(listNm: listNm ));
     }
 
     if (mapgenerate != UnspecifiedDataType.instance) {

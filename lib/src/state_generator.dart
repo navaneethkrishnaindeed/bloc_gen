@@ -238,7 +238,7 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
 
       return '''
 if ($variableName != UnspecifiedDataType.instance) {
-    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName as $type));
+    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
 }
 ''';
     }).join('\n');
