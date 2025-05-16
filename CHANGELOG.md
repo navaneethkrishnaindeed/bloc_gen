@@ -1,4 +1,6 @@
 # Changelog
+## 3.2.4
+setBlocState default types changes.
 ## 3.2.3+1
 Readme.md File changes.
 ## 3.2.3

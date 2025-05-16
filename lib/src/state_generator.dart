@@ -184,7 +184,7 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
             type += "?";
           }
 
-          return "Object? $variableName = UnspecifiedDataType.instance";
+          return "dynamic $variableName = UnspecifiedDataType.instance";
         })
         .where((line) => line.isNotEmpty)
         .join(",\n      ");

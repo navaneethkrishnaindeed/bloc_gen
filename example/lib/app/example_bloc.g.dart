@@ -257,15 +257,15 @@ extension ExampleBlocContextExtension on BuildContext {
   /// Only the specified parameters will be updated; others will remain unchanged.
   /// Uses UnspecifiedDataType.instance as a sentinel value to determine which parameters to update.
   void setExampleBlocState({
-    Object? isLoading = UnspecifiedDataType.instance,
-    Object? counter = UnspecifiedDataType.instance,
-    Object? data = UnspecifiedDataType.instance,
-    Object? dss = UnspecifiedDataType.instance,
-    Object? listNm = UnspecifiedDataType.instance,
-    Object? mapgenerate = UnspecifiedDataType.instance,
-    Object? list = UnspecifiedDataType.instance,
-    Object? selectedDays = UnspecifiedDataType.instance,
-    Object? test = UnspecifiedDataType.instance,
+    dynamic isLoading = UnspecifiedDataType.instance,
+    dynamic counter = UnspecifiedDataType.instance,
+    dynamic data = UnspecifiedDataType.instance,
+    dynamic dss = UnspecifiedDataType.instance,
+    dynamic listNm = UnspecifiedDataType.instance,
+    dynamic mapgenerate = UnspecifiedDataType.instance,
+    dynamic list = UnspecifiedDataType.instance,
+    dynamic selectedDays = UnspecifiedDataType.instance,
+    dynamic test = UnspecifiedDataType.instance,
   }) {
     final myBloc = read<ExampleBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
