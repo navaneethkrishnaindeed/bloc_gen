@@ -1,4 +1,6 @@
 # Changelog
+## 3.2.5
+Explicit type casting made implicit in updating state
 ## 3.2.4
 setBlocState default types changes.
 ## 3.2.3+1
