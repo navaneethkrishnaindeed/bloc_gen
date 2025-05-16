@@ -190,7 +190,6 @@ class StateGenerator extends GeneratorForAnnotation<GenerateStates> {
         .join(",\n      ");
 
     String stateGeneratedEvents = variableInfoList.map((field) {
-      print(field);
       String varName = field.variableName;
 
       return '''

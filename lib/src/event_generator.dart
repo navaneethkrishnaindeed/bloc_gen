@@ -43,7 +43,7 @@ class EventGenerator extends GeneratorForAnnotation<GenerateEvents> {
         final name = param.name;
         final requiredKeyword =
             param.isRequired && param.isNamed ? 'required ' : '';
-        final namedParam = param.isNamed ? 'this.' : '';
+        final namedParam = param.isNamed ? 'this.' : 'this.';
         return '$requiredKeyword$namedParam$name';
       }).join(', ');
 

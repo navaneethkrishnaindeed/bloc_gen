@@ -1,4 +1,7 @@
 # Changelog
+## 3.2.3
+Readme.md File changes.
+Eased constraints of @generateEvents syntax
 ## 3.2.2
 Introduction of CopyWithNull to facilitate conviniant null safty and state management. 
 Along with reported bug fixes

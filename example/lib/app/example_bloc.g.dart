@@ -3,6 +3,19 @@
 part of 'example_bloc.dart';
 
 // **************************************************************************
+// EventGenerator
+// **************************************************************************
+
+class UpdateIsLoadingGet extends ExampleEvent {
+  final bool? isLoading;
+
+  const UpdateIsLoadingGet(this.isLoading);
+
+  @override
+  List<Object?> get props => [isLoading];
+}
+
+// **************************************************************************
 // StateGenerator
 // **************************************************************************
 

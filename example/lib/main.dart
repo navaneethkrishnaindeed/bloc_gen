@@ -118,20 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
-          // SizedBox(
-          //   width: 15,
-          // ),
-          // FloatingActionButton(
-          //   onPressed: () {
-          //     _counter--;
-          //     context.setExampleBlocState(
-          //         selectedDays: [false],
-          //         data: "fdsfdsfdsfdsd",
-          //         conter: _counter);
-          //   },
-          //   tooltip: 'Decrement',
-          //   child: const Icon(Icons.remove),
-          // ),
           SizedBox(
             width: 15,
           ),
