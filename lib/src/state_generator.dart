@@ -233,7 +233,6 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
     String custumSetStateBlocImplementation = variableInfoList.map((field) {
       // Use a regex to extract the variable name properly
 
-      String type = field.datatype;
       String variableName = field.variableName;
 
       return '''
