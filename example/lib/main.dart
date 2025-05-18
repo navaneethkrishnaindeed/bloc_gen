@@ -114,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               _counter++;
               context.setExampleBlocState(counter: _counter);
+              // context.updateExampleState(counter: _counter);
             },
             tooltip: 'Increment',
             child: const Icon(Icons.add),
@@ -126,7 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
               context.setExampleBlocState(
                 data: "jhfuyfuf",
               );
-              context.setExampleBlocState(test: null, data: null);
             },
             tooltip: 'Decrement',
             child: const Icon(Icons.clear),
@@ -134,7 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: () {
               context.setExampleBlocState(
-                test: {},
+                mapgenerate: {},
+                listNm: [],
               );
             },
             tooltip: 'Decrement',

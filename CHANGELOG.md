@@ -1,4 +1,6 @@
 # Changelog
+## 3.2.6
+Improved and Updated Explicit type casting updating state
 ## 3.2.5
 Explicit type casting made implicit in updating state
 ## 3.2.4

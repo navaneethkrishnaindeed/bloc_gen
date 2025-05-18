@@ -21,7 +21,7 @@ class UpdateIsLoadingGet extends ExampleEvent {
 
 // Events Generated for corresponding states in State Class
 class UpdateIsLoadingEvent extends ExampleEvent {
-  final bool isLoading;
+  final bool? isLoading;
   const UpdateIsLoadingEvent({required this.isLoading});
 
   @override
@@ -50,6 +50,14 @@ class UpdateDssEvent extends ExampleEvent {
 
   @override
   List<Object?> get props => [dss];
+}
+
+class UpdateIterableEvent extends ExampleEvent {
+  final Iterable<String> iterable;
+  const UpdateIterableEvent({required this.iterable});
+
+  @override
+  List<Object?> get props => [iterable];
 }
 
 class UpdateListNmEvent extends ExampleEvent {
@@ -95,10 +103,11 @@ class UpdateTestEvent extends ExampleEvent {
 /// A state class that represents the complete state of the 'ExampleBloc'.
 /// This class is immutable and extends Equatable for value comparison.
 class ExampleState extends Equatable {
-  final bool isLoading;
+  final bool? isLoading;
   final int counter;
   final String? data;
   final String? dss;
+  final Iterable<String> iterable;
   final List<String> listNm;
   final Map<String, int> mapgenerate;
   final Map<String?, String?> list;
@@ -107,10 +116,11 @@ class ExampleState extends Equatable {
 
   /// Creates a new instance of ExampleState with the given parameters.
   const ExampleState(
-      {required this.isLoading,
+      {this.isLoading,
       required this.counter,
       this.data,
       this.dss,
+      required this.iterable,
       required this.listNm,
       required this.mapgenerate,
       required this.list,
@@ -125,6 +135,7 @@ class ExampleState extends Equatable {
         counter: 0,
         data: "You have pushed the button this many times:",
         dss: null,
+        iterable: [],
         listNm: List.generate(10, (index) => 'item $index'),
         mapgenerate: Map<String, int>.fromEntries(
           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
@@ -142,6 +153,7 @@ class ExampleState extends Equatable {
       int? counter,
       String? data,
       String? dss,
+      Iterable<String>? iterable,
       List<String>? listNm,
       Map<String, int>? mapgenerate,
       Map<String?, String?>? list,
@@ -152,6 +164,7 @@ class ExampleState extends Equatable {
         counter: counter ?? this.counter,
         data: data ?? this.data,
         dss: dss ?? this.dss,
+        iterable: iterable ?? this.iterable,
         listNm: listNm ?? this.listNm,
         mapgenerate: mapgenerate ?? this.mapgenerate,
         list: list ?? this.list,
@@ -162,20 +175,22 @@ class ExampleState extends Equatable {
   /// Creates a copy of this state with the ability to set specific fields to null.
   /// The boolean parameters control whether the corresponding field should be set to null.
   ExampleState copyWithNull(
-      {bool? isLoading,
+      {bool isLoading = false,
       int? counter,
       bool data = false,
       bool dss = false,
+      Iterable<String>? iterable,
       List<String>? listNm,
       Map<String, int>? mapgenerate,
       Map<String?, String?>? list,
       List<bool>? selectedDays,
       bool test = false}) {
     return ExampleState(
-        isLoading: isLoading ?? this.isLoading,
+        isLoading: isLoading ? null : this.isLoading,
         counter: counter ?? this.counter,
         data: data ? null : this.data,
         dss: dss ? null : this.dss,
+        iterable: iterable ?? this.iterable,
         listNm: listNm ?? this.listNm,
         mapgenerate: mapgenerate ?? this.mapgenerate,
         list: list ?? this.list,
@@ -187,7 +202,11 @@ class ExampleState extends Equatable {
   /// This method sets up the event-to-state mapping for all possible state updates.
   static void registerEvents(ExampleBloc bloc) {
     bloc.on<UpdateIsLoadingEvent>((event, emit) {
-      emit(bloc.state.copyWith(isLoading: event.isLoading));
+      if (event.isLoading == null) {
+        emit(bloc.state.copyWithNull(isLoading: true));
+      } else {
+        emit(bloc.state.copyWith(isLoading: event.isLoading));
+      }
     });
 
     bloc.on<UpdateCounterEvent>((event, emit) {
@@ -208,6 +227,10 @@ class ExampleState extends Equatable {
       } else {
         emit(bloc.state.copyWith(dss: event.dss));
       }
+    });
+
+    bloc.on<UpdateIterableEvent>((event, emit) {
+      emit(bloc.state.copyWith(iterable: event.iterable));
     });
 
     bloc.on<UpdateListNmEvent>((event, emit) {
@@ -242,6 +265,7 @@ class ExampleState extends Equatable {
         counter,
         data,
         dss,
+        iterable,
         listNm,
         mapgenerate,
         list,
@@ -261,6 +285,7 @@ extension ExampleBlocContextExtension on BuildContext {
     dynamic counter = UnspecifiedDataType.instance,
     dynamic data = UnspecifiedDataType.instance,
     dynamic dss = UnspecifiedDataType.instance,
+    dynamic iterable = UnspecifiedDataType.instance,
     dynamic listNm = UnspecifiedDataType.instance,
     dynamic mapgenerate = UnspecifiedDataType.instance,
     dynamic list = UnspecifiedDataType.instance,
@@ -269,7 +294,7 @@ extension ExampleBlocContextExtension on BuildContext {
   }) {
     final myBloc = read<ExampleBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
+      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool?));
     }
 
     if (counter != UnspecifiedDataType.instance) {
@@ -284,26 +309,30 @@ extension ExampleBlocContextExtension on BuildContext {
       myBloc.add(UpdateDssEvent(dss: dss as String?));
     }
 
+    if (iterable != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateIterableEvent(iterable: iterable.cast<String>()));
+    }
+
     if (listNm != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListNmEvent(listNm: listNm));
+      myBloc.add(UpdateListNmEvent(listNm: listNm.cast<String>()));
     }
 
     if (mapgenerate != UnspecifiedDataType.instance) {
       myBloc.add(
-          UpdateMapgenerateEvent(mapgenerate: mapgenerate as Map<String, int>));
+          UpdateMapgenerateEvent(mapgenerate: mapgenerate.cast<String, int>()));
     }
 
     if (list != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListEvent(list: list as Map<String?, String?>));
+      myBloc.add(UpdateListEvent(list: list.cast<String?, String?>()));
     }
 
     if (selectedDays != UnspecifiedDataType.instance) {
       myBloc.add(
-          UpdateSelectedDaysEvent(selectedDays: selectedDays as List<bool>));
+          UpdateSelectedDaysEvent(selectedDays: selectedDays.cast<bool>()));
     }
 
     if (test != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateTestEvent(test: test as Map<dynamic, dynamic>?));
+      myBloc.add(UpdateTestEvent(test: test.cast<dynamic, dynamic>()));
     }
   }
 }

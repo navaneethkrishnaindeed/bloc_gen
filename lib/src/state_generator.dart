@@ -230,14 +230,57 @@ class Update${capitalizeFirst(varName)}Event extends ${className.replaceAll('Sta
       }
     }).join("\n");
 
+    /// Get Cast Statement
+    String getCastStatement(VariableInfo field) {
+      final name = field.variableName;
+      final type = field.datatype;
+
+      final patterns = {
+        'List<': 5,
+        'Map<': 4,
+        'Set<': 4,
+        'Queue<': 6,
+        'LinkedList<': 11,
+        'DoubleLinkedQueue<': 18,
+        'Iterable<': 9,
+        'SplayTreeMap<': 13,
+        'SplayTreeSet<': 13,
+        'HashMap<': 7,
+        'HashSet<': 7,
+        'LinkedHashMap<': 13,
+        'LinkedHashSet<': 13,
+        'TreeMap<': 7,
+        'TreeSet<': 7,
+        'UnmodifiableListView<': 21,
+        'UnmodifiableSetView<': 20,
+        'UnmodifiableMapView<': 20,
+      };
+
+      for (final entry in patterns.entries) {
+        final prefix = entry.key;
+        final offset = entry.value;
+
+        if (type.startsWith(prefix)) {
+          final endsWithNullable = type.endsWith('?');
+          final endIndex = type.length - (endsWithNullable ? 2 : 1);
+          final innerType = type.substring(offset, endIndex);
+          return '$name.cast<$innerType>()';
+        }
+      }
+
+      return name + ' as $type';
+    }
+
     String custumSetStateBlocImplementation = variableInfoList.map((field) {
       // Use a regex to extract the variable name properly
 
       String variableName = field.variableName;
+      String castStatement = getCastStatement(field);
 
       return '''
 if ($variableName != UnspecifiedDataType.instance) {
-    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $variableName));
+    
+    myBloc.add(Update${capitalizeFirst(variableName)}Event($variableName: $castStatement));
 }
 ''';
     }).join('\n');
@@ -245,6 +288,7 @@ if ($variableName != UnspecifiedDataType.instance) {
     String blocSetStateName =
         'set${className.replaceAll("State", "Bloc")}State';
 
+    /// Code generation Logic
     buffer.write('''
 // Events Generated for corresponding states in State Class
 $stateGeneratedEvents
