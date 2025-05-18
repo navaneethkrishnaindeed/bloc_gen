@@ -48,7 +48,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  fbloc_event_gen: ^3.2.3+1
+  fbloc_event_gen: ^3.2.6
 
 dev_dependencies:
   build_runner: ^2.4.6
@@ -78,7 +78,7 @@ flutter pub get
 
 ### @GenerateStates
 
-Use `@GenerateStates` for complete state management generation. Define your state variables in an abstract class.
+Use `@GenerateStates` for complete state management generation. Define your state variables in the abstract class in the following format.
 
 ```dart
 part of 'example_bloc.dart';
@@ -422,11 +422,11 @@ extension ExampleBlocContextExtension on BuildContext {
   }) {
     final myBloc = read<ExampleBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
+      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool?));
     }
 
     if (counter != UnspecifiedDataType.instance) {
-      myBloc.add(UpdatecounterEvent(counter: counter as int));
+      myBloc.add(UpdateCounterEvent(counter: counter as int));
     }
 
     if (data != UnspecifiedDataType.instance) {
@@ -437,26 +437,30 @@ extension ExampleBlocContextExtension on BuildContext {
       myBloc.add(UpdateDssEvent(dss: dss as String?));
     }
 
+    if (iterable != UnspecifiedDataType.instance) {
+      myBloc.add(UpdateIterableEvent(iterable: iterable.cast<String>()));
+    }
+
     if (listNm != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListNmEvent(listNm: listNm as List<String>));
+      myBloc.add(UpdateListNmEvent(listNm: listNm.cast<String>()));
     }
 
     if (mapgenerate != UnspecifiedDataType.instance) {
       myBloc.add(
-          UpdateMapgenerateEvent(mapgenerate: mapgenerate as Map<String, int>));
+          UpdateMapgenerateEvent(mapgenerate: mapgenerate.cast<String, int>()));
     }
 
     if (list != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListEvent(list: list as Map<String?, String?>));
+      myBloc.add(UpdateListEvent(list: list.cast<String?, String?>()));
     }
 
     if (selectedDays != UnspecifiedDataType.instance) {
       myBloc.add(
-          UpdateSelectedDaysEvent(selectedDays: selectedDays as List<bool>));
+          UpdateSelectedDaysEvent(selectedDays: selectedDays.cast<bool>()));
     }
 
     if (test != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateTestEvent(test: test as Map<dynamic, dynamic>?));
+      myBloc.add(UpdateTestEvent(test: test.cast<dynamic, dynamic>()));
     }
   }
 }
