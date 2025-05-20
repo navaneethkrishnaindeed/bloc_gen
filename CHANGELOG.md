@@ -1,4 +1,6 @@
 # Changelog
+## 3.2.6+1
+Equatable readme Update.
 ## 3.2.6
 Improved and Updated Explicit type casting updating state
 ## 3.2.5

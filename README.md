@@ -50,6 +50,7 @@ Add to your `pubspec.yaml`:
 ```yaml
 dependencies:
   fbloc_event_gen: ^3.2.6
+  equatable: ^2.0.7
 
 dev_dependencies:
   build_runner: ^2.4.6
