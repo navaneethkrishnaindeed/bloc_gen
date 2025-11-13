@@ -1,4 +1,6 @@
 # Changelog
+## 3.2.8
+pubspec.yaml updates
 ## 3.2.7+1
 Readme Patch Updates
 ## 3.2.7
