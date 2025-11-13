@@ -1,5 +1,6 @@
 # Changelog
-
+## 3.2.7+1
+Readme Patch Updates
 ## 3.2.7
 Complete Documentation Updates 
 ## 3.2.6+1

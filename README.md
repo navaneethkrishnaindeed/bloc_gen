@@ -54,11 +54,9 @@ abstract class BaseEvent extends Equatable {
 </td>
   </tr>
   <tr>
-    <td colspan="2" align="center">
+    <td colspan="2">
 
 **Use Generated Code - Simple Context Extension**
-
-<div style="display: inline-block; text-align: left;">
 
 ```dart
 ElevatedButton(
@@ -69,8 +67,7 @@ ElevatedButton(
 ), // ElevatedButton
 ```
 
-</div>
-    </td>
+</td>
   </tr>
 </table>
 
