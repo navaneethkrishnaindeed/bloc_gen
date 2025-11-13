@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 part of 'example_bloc.dart';
 
 @generateStates

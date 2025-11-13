@@ -1,4 +1,7 @@
 # Changelog
+
+## 3.2.7
+Complete Documentation Updates 
 ## 3.2.6+1
 Equatable readme Update.
 ## 3.2.6

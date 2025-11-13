@@ -1,219 +1,624 @@
-## 📝 Reviews & Feedback
 
-We value your feedback! Help us improve by sharing your experience with the package:
 
-[📋 Submit Review via Google Form](https://docs.google.com/forms/d/e/1FAIpQLScgQX8dblYi_Bn4tNrUUTcc_tngZo5lmTX5oE9X3OkeizBUcQ/viewform?usp=header)
-
-Your feedback helps make this package better for everyone in the Flutter community. Let us know what features you love and what we can improve!
 
 
 # 🚀 Flutter Bloc Generator
 
-[✨ NOW WITH VSCODE EXTENSION! ✨](https://marketplace.visualstudio.com/items?itemName=NavaneethKrishna.fbloc-event-gen)
 
-Get the "Fbloc Event Gen" extension from Visual Studio Marketplace to supercharge your development workflow!
+**A revolutionary Flutter package that eliminates verbose boilerplate in BLoC pattern development.** Generate complete STATE, EVENT, and BLOC implementations from a single line of state variable declaration. With support for custom event classes through factory constructors, it dramatically reduces development time while maintaining type safety and best practices.
 
-Too much Unwanted freezed Bloc code... ??
+<img src="images/banner.png" alt="Flutter Bloc Generator Banner" style="width: 100%;" />
 
-Generate All state, event and even bloc code from a SINGLE VARIABLE
+<p align="center">
+  <br>
+  <a href="https://pub.dev/packages/fbloc_event_gen">
+    <img src="https://img.shields.io/pub/v/fbloc_event_gen.svg" alt="Pub Version" />
+  </a>
+  <a href="https://github.com/navaneethkrishnaindeed/bloc_gen">
+    <img src="https://img.shields.io/github/stars/navaneethkrishnaindeed/bloc_gen" alt="GitHub" />
+  </a>
+  <a href="https://discord.gg/ckHZg5qsXZ">
+    <img src="https://img.shields.io/badge/Discord-Join%20Server-7289da?logo=discord&logoColor=white" alt="Discord" />
+  </a>
+</p>
 
-Update State with without having to Rememeber all those events.. in a single context.Set.. Fn()
+<table align="center">
+  <tr>
+    <td width="50%">
 
-With all options to CUSTOMISE your bloc and event code with out hastle
+**Define States with @generateStates**
 
-Then This is the Package u will ever need... 
+```dart
+@generateStates
+abstract class _$$BaseState {
+  final bool active = false;
+  final bool? isLoading = false;
+  final bool isError = false;
+}
+```
 
-A powerful code generation package that supercharges your Flutter Bloc implementation with zero boilerplate! Generate events, states, and utilities automatically.
+</td>
+    <td width="50%">
 
-![state image Placeholder](./images/basestate.png)
+**Define Events with @generateEvents**
 
-![calling event image place holder](./images/callingevent.png)
+```dart
 
-![event image place holder](./images/event.png)
+@generateEvents
+abstract class BaseEvent extends Equatable {
+  const BaseEvent();
+}
+
+```
+
+</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+
+**Use Generated Code - Simple Context Extension**
+
+<div style="display: inline-block; text-align: left;">
+
+```dart
+ElevatedButton(
+  onPressed: () {
+    context.setBaseBlocState(active: isActive);
+  },
+  child: Text('Active'),
+), // ElevatedButton
+```
+
+</div>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🚀 Why Choose fbloc_event_gen?
+
+### **VSCode Extension Available!**
+Get the [Fbloc Event Gen extension](https://marketplace.visualstudio.com/items?itemName=NavaneethKrishna.fbloc-event-gen) from Visual Studio Marketplace to supercharge your development workflow!
+
+### **Key Benefits**
+- **Zero Boilerplate**: Generate all state, event, and even bloc code from a SINGLE VARIABLE
+- **Simple State Updates**: Update state without remembering event names - just use `context.set{BlocName}State()`
+- **Fully Customizable**: All options to customize your bloc and event code without hassle
+- **Type-Safe**: Automatic type checking and null safety support
+- **Production Ready**: Built for apps of any scale - from small projects to large enterprise applications
+
+### **Community**
+Join our growing community on [Discord](https://discord.gg/8a8gtHZrT6) to get support, share feedback, and stay updated with the latest features!
 
 
 ## 📚 Table of Contents
-- [Installation](#-installation)
-- [Features](#-features)
-- [Usage](#-usage)
-  - [@GenerateEvents](#-generateevents)
-  - [@GenerateStates](#-generatestates)
-- [Examples](#-examples)
-- [Migration Guide](#-migration-guide)
-- [Contributing](#-contributing)
-- [License](#-license)
 
-## 📦 Installation
+1. [Quick Start](#quick-start)
+2. [Installation](#installation)
+3. [Core Features](#core-features)
+4. [Usage Guide](#usage-guide)
+   - [Using @GenerateStates](#using-generatestates)
+   - [Using @GenerateEvents](#using-generateevents)
+   - [Complete Implementation](#complete-implementation)
+5. [What Gets Generated](#what-gets-generated)
+6. [Best Practices](#best-practices)
+7. [Migration Guide](#migration-guide)
+8. [Contributing](#contributing)
+9. [License](#license)
 
-Add to your `pubspec.yaml`:
+---
+
+<div id="quick-start"></div>
+
+## ⚡ Quick Start
+
+Get up and running in just 3 steps!
+
+### Step 1: Add Dependencies
 
 ```yaml
 dependencies:
-  fbloc_event_gen: ^3.2.6
+  fbloc_event_gen: ^3.2.7
   equatable: ^2.0.7
+  flutter_bloc: # Any Bloc Version
 
 dev_dependencies:
   build_runner: ^2.4.6
 ```
 
-Run:
+### Step 2: Create Your Files
+
+**counter_bloc.dart** (main file)
+```dart
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fbloc_event_gen/annotations.dart';
+import 'package:equatable/equatable.dart';
+
+part 'counter_event.dart';
+part 'counter_state.dart';
+part 'counter_bloc.g.dart';
+
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+  CounterBloc() : super(CounterState.initial()) {
+    // ⚠️ IMPORTANT: Register auto-generated events
+    CounterState.registerEvents(this);
+  }
+}
+```
+
+**counter_state.dart**
+```dart
+part of 'counter_bloc.dart';
+
+@generateStates
+abstract class _$$CounterState {
+  final int count = 0;
+  final bool isLoading = false;
+}
+```
+
+**counter_event.dart**
+```dart
+part of 'counter_bloc.dart';
+
+@generateEvents
+abstract class CounterEvent extends Equatable {
+  const CounterEvent();
+}
+```
+
+### Step 3: Run Code Generation
+
+```bash
+dart run build_runner build --delete-conflicting-outputs --use-polling-watcher
+```
+
+That's it! Now use `context.setCounterBlocState(count: 5)` anywhere in your widgets! 🎉
+
+---
+
+<div id="installation"></div>
+
+## 📦 Installation
+
+### Add to `pubspec.yaml`
+
+```yaml
+dependencies:
+  fbloc_event_gen: ^3.2.7
+  equatable: ^2.0.7
+  flutter_bloc:   # Any Bloc Version above Required for BLoC pattern
+
+dev_dependencies:
+  build_runner: ^2.4.6
+```
+
+### Install Packages
+
 ```bash
 flutter pub get
 ```
 
-## ✨ Features
+### Setup Build Runner (Optional - Watch Mode)
 
-- 🎯 **Two Powerful Annotations**
-  - `@GenerateEvents` - Generate events from factory constructors
-  - `@GenerateStates` - Generate complete state management code
-- 🔄 **Automatic Generation**
-  - Type-safe events and states
-  - BuildContext extensions
-  - Immutable state updates
-- 🛡️ **Built-in Safety**
-  - Null safety support
-  - Equatable implementation
-  - Type checking
+For automatic code generation on file changes:
 
-## 🎯 Usage
+```bash
+dart run build_runner watch --delete-conflicting-outputs --use-polling-watcher
+```
 
+Or for one-time generation:
 
-### @GenerateStates
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
 
-Use `@GenerateStates` for complete state management generation. Define your state variables in the abstract class in the following format.
+---
+
+<div id="core-features"></div>
+
+## ✨ Core Features
+
+<table>
+<tr>
+<td width="33%" align="center">
+
+### Two Annotations
+
+**@GenerateStates**  
+Complete state management
+
+**@GenerateEvents**  
+Custom event classes
+
+</td>
+<td width="33%" align="center">
+
+### Auto Generation
+
+- Type-safe events  
+- Immutable states  
+- Context extensions  
+- copyWith methods  
+
+</td>
+<td width="33%" align="center">
+
+### Built-in Safety
+
+- Null safety  
+- Equatable support  
+- Type checking  
+- Documentation  
+
+</td>
+</tr>
+</table>
+
+---
+
+<div id="usage-guide"></div>
+
+## 📖 Usage Guide
+
+> **⚠️ IMPORTANT NOTE**  
+> When using `@GenerateStates`, you **MUST** call `{YourState}.registerEvents(this)` in your bloc constructor.  
+> Without this, the `context.set{YourBloc}State()` extension won't work!
+>
+> ```dart
+> class YourBloc extends Bloc<YourEvent, YourState> {
+>   YourBloc() : super(YourState.initial()) {
+>     YourState.registerEvents(this);  // ← Don't forget this!
+>   }
+> }
+> ```
+
+---
+
+<a name="using-generatestates"></a>
+### Using @GenerateStates
+
+`@GenerateStates` is your all-in-one solution for complete state management. Simply define your state variables with initial values, and let the generator create everything else!
+
+**📝 Define Your State** (counter_state.dart)
 
 ```dart
-part of 'example_bloc.dart';
+part of 'counter_bloc.dart';
 
 @generateStates
-abstract class _$$ExampleState {
-  final bool isLoading = false;
+abstract class _$$CounterState {
   final int counter = 0;
-  final String? data = "You have pushed the button this many times:";
-  final String? dss = null;
-  final List<String> listNm = List.generate(10, (index) => 'item $index');
-  final Map<String, int> mapgenerate = Map<String, int>.fromEntries(
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-        .map((e) => MapEntry<String, int>(e, int.parse(e))),
-  );
-  final Map<String?, String?> list = {};
-  final List<bool> selectedDays = [];
-  final Map<dynamic, dynamic>? test = {};
+  final bool isLoading = false;
+  final String? message = null;
+  final List<String> items = const [];
+  final Map<String, dynamic> data = const {};
 }
 ```
 
-### @GenerateEvents
-
-Use `@GenerateEvents` when you need event-only generation. Perfect for defining bloc events through factory constructors.
+**📝 Create Your Bloc** (counter_bloc.dart - main file)
 
 ```dart
-import 'package:flutter_bloc_generator/annotations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fbloc_event_gen/annotations.dart';
+import 'package:equatable/equatable.dart';
+
+part 'counter_event.dart';
+part 'counter_state.dart';
+part 'counter_bloc.g.dart';
+
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+  CounterBloc() : super(CounterState.initial()) {
+    // ⚠️ CRITICAL: This line is REQUIRED for context.setCounterBlocState() to work
+    CounterState.registerEvents(this);
+  }
+}
+```
+
+**📝 Define Your Event** (counter_event.dart)
+
+```dart
+part of 'counter_bloc.dart';
 
 @generateEvents
-abstract class ExampleEvent extends Equatable {
-  const ExampleEvent();
-  
-   const factory ExampleEvent.userLoggedIn({required String userId,required String token,
-   bool? rememberMe,}) = UserLoggedIn;
-  
-  const factory ExampleEvent.updateProfile({required String user,}) = UpdateProfile;
-  
-  const factory ExampleEvent.logOut() = LogOut;
+abstract class CounterEvent extends Equatable {
+  const CounterEvent();
 }
 ```
 
+**What You Get**
 
-### Implementation Example
+- `CounterState` class with all properties
+- `CounterState.initial()` factory constructor
+- `copyWith()` method for immutable updates
+- `copyWithNull()` for setting nullable fields to null
+- Auto-generated events for each property
+- `context.setCounterBlocState()` extension method
+- `registerEvents()` method for easy bloc setup
+- Full Equatable implementation
 
-#### Widget Usage
+---
+
+<a name="using-generateevents"></a>
+### Using @GenerateEvents
+
+`@GenerateEvents` is perfect when you need custom event classes with factory constructors. Great for complex user actions!
+
+**📝 Main Bloc File** (auth_bloc.dart)
 
 ```dart
-class MyWidget extends StatelessWidget {
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fbloc_event_gen/annotations.dart';
+import 'package:equatable/equatable.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
+part 'auth_bloc.g.dart';
+
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc() : super(AuthState.initial()) {
+    AuthState.registerEvents(this);
+    on<LoginEvent>(_onLogin);
+    on<LogoutEvent>(_onLogout);
+  }
+  
+  void _onLogin(LoginEvent event, Emitter<AuthState> emit) {
+    // Your login logic
+  }
+  
+  void _onLogout(LogoutEvent event, Emitter<AuthState> emit) {
+    // Your logout logic
+  }
+}
+```
+
+**📝 Define Your Events** (auth_event.dart)
+
+```dart
+part of 'auth_bloc.dart';
+
+@generateEvents
+abstract class AuthEvent extends Equatable {
+  const AuthEvent();
+  
+  // Login event with required and optional parameters
+  const factory AuthEvent.login({
+    required String email,
+    required String password,
+    bool? rememberMe,
+  }) = LoginEvent;
+  
+  // Simple logout event
+  const factory AuthEvent.logout() = LogoutEvent;
+  
+  // Update profile event
+  const factory AuthEvent.updateProfile({
+    required String name,
+    String? avatarUrl,
+  }) = UpdateProfileEvent;
+}
+```
+
+**📝 Define Your State** (auth_state.dart)
+
+```dart
+part of 'auth_bloc.dart';
+
+@generateStates
+abstract class _$$AuthState {
+  final bool isAuthenticated = false;
+  final String? userId = null;
+  final String? token = null;
+}
+```
+
+**What You Get**
+
+- Complete event classes (`LoginEvent`, `LogoutEvent`, etc.)
+- Proper constructors with required/optional parameters
+- Equatable implementation with props
+- Immutable and type-safe events
+
+---
+
+<a name="complete-implementation"></a>
+### Complete Implementation
+
+Here's a full example showing how everything works together:
+
+#### 1. Main Bloc File (counter_bloc.dart)
+
+```dart
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fbloc_event_gen/annotations.dart';
+import 'package:equatable/equatable.dart';
+
+part 'counter_event.dart';
+part 'counter_state.dart';
+part 'counter_bloc.g.dart';
+
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+  CounterBloc() : super(CounterState.initial()) {
+    // Register auto-generated state update events
+    CounterState.registerEvents(this);
+    
+    // Handle custom events
+    on<IncrementEvent>(_onIncrement);
+    on<DecrementEvent>(_onDecrement);
+    on<ResetEvent>(_onReset);
+  }
+  
+  void _onIncrement(IncrementEvent event, Emitter<CounterState> emit) {
+    emit(state.copyWith(count: state.count + 1));
+  }
+  
+  void _onDecrement(DecrementEvent event, Emitter<CounterState> emit) {
+    emit(state.copyWith(count: state.count - 1));
+  }
+  
+  void _onReset(ResetEvent event, Emitter<CounterState> emit) {
+    emit(state.copyWith(count: 0));
+  }
+}
+```
+
+#### 2. State File (counter_state.dart)
+
+```dart
+part of 'counter_bloc.dart';
+
+@generateStates
+abstract class _$$CounterState {
+  final int count = 0;
+  final bool isLoading = false;
+  final String? errorMessage = null;
+}
+```
+
+#### 3. Event File (counter_event.dart)
+
+```dart
+part of 'counter_bloc.dart';
+
+@generateEvents
+abstract class CounterEvent extends Equatable {
+  const CounterEvent();
+  
+  const factory CounterEvent.increment() = IncrementEvent;
+  const factory CounterEvent.decrement() = DecrementEvent;
+  const factory CounterEvent.reset() = ResetEvent;
+}
+```
+
+> 💡 **File Structure:** These 3 files will generate `counter_bloc.g.dart` containing all the generated code.
+
+#### 4. Use in Widget
+
+```dart
+class CounterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Traditional way
-    BlocProvider.of<ExampleBloc>(context).add(
-      UpdateCounterEvent(counter: 42)
-    );
-
-    // Using generated extension (Cleaner!)
-    context.setExampleBlocState(
-      counter: 42
+    return Column(
+      children: [
+        // Display state
+        BlocBuilder<CounterBloc, CounterState>(
+          builder: (context, state) {
+            return Text('Count: ${state.count}');
+          },
+        ),
+        
+        // Traditional way - using custom events
+        ElevatedButton(
+          onPressed: () => context.read<CounterBloc>().add(
+            const CounterEvent.increment()
+          ),
+          child: Text('Increment'),
+        ),
+        
+        // Generated way - direct state updates
+        ElevatedButton(
+          onPressed: () => context.setCounterBlocState(
+            count: 100,
+            isLoading: true,
+          ),
+          child: Text('Set to 100'),
+        ),
+      ],
     );
   }
 }
 ```
 
-#### Bloc Class
+---
+
+<div id="what-gets-generated"></div>
+
+## 🔍 What Gets Generated
+
+Understanding what code is generated helps you leverage the full power of fbloc_event_gen!
+
+### For @GenerateEvents
+
+When you define:
 
 ```dart
-class ExampleBloc extends Bloc<ExampleEvent, ExampleState> {
-  ExampleBloc() : super(ExampleState.initial()) {
-    ExampleState.registerEvents(this);
-    on<UserLoggedIn>(_onUserLoggedIn);
-    on<UpdateProfile>(_onUpdateProfile); 
-    on<LogOut>(_onLogOut);
-  }   
-  void _onUserLoggedIn(UserLoggedIn event, Emitter<ExampleState> emit) {
-    emit(state.copyWith(isLoading: true));
-  }
-
-  void _onUpdateProfile(UpdateProfile event, Emitter<ExampleState> emit) {
-    emit(state.copyWith(isLoading: true));
-  } 
-  void _onLogOut(LogOut event, Emitter<ExampleState> emit) {
-    emit(state.copyWith(isLoading: true));
-  }
+@generateEvents
+abstract class AuthEvent extends Equatable {
+  const AuthEvent();
+  
+  const factory AuthEvent.login({
+    required String email,
+    required String password,
+    bool? rememberMe,
+  }) = LoginEvent;
+  
+  const factory AuthEvent.logout() = LogoutEvent;
 }
 ```
 
-## 🔍 Generated Code Examples
-
-### @GenerateEvents Generated Code
+**You automatically get:**
 
 ```dart
 // **************************************************************************
 // EventGenerator
 // **************************************************************************
 
-class UserLoggedIn extends ExampleEvent {
-  final String userId;
-  final String token;
+class LoginEvent extends AuthEvent {
+  final String email;
+  final String password;
   final bool? rememberMe;
 
-  const UserLoggedIn(
-      {required this.userId, required this.token, this.rememberMe});
+  const LoginEvent({
+    required this.email,
+    required this.password,
+    this.rememberMe,
+  });
 
   @override
-  List<Object?> get props => [userId, token, rememberMe];
+  List<Object?> get props => [email, password, rememberMe];
 }
 
-class UpdateProfile extends ExampleEvent {
-  final String user;
-
-  const UpdateProfile({required this.user});
-
-  @override
-  List<Object?> get props => [user];
-}
-
-class LogOut extends ExampleEvent {
-  const LogOut();
+class LogoutEvent extends AuthEvent {
+  const LogoutEvent();
 
   @override
   List<Object?> get props => [];
 }
 ```
 
-### @GenerateStates Generated Code
+**Benefits:** Type-safe, immutable events with automatic Equatable implementation!
+
+---
+
+### For @GenerateStates
+
+When you define:
 
 ```dart
-// **************************************************************************
-// StateGenerator
-// **************************************************************************
+@generateStates
+abstract class _$$CounterState {
+  final int count = 0;
+  final bool isLoading = false;
+  final String? message = null;
+}
+```
 
-// Events Generated for corresponding states in State Class
-class UpdateIsLoadingEvent extends ExampleEvent {
+**You automatically get:**
+
+<details>
+<summary><b>🎯 State Class with Auto-Generated Events</b></summary>
+
+```dart
+// Auto-generated events for each state property
+class UpdateCountEvent extends CounterEvent {
+  final int count;
+  const UpdateCountEvent({required this.count});
+
+  @override
+  List<Object?> get props => [count];
+}
+
+class UpdateIsLoadingEvent extends CounterEvent {
   final bool isLoading;
   const UpdateIsLoadingEvent({required this.isLoading});
 
@@ -221,283 +626,364 @@ class UpdateIsLoadingEvent extends ExampleEvent {
   List<Object?> get props => [isLoading];
 }
 
-class UpdateCounterEvent extends ExampleEvent {
-  final int counter;
-  const UpdateCounterEvent({required this.counter});
+class UpdateMessageEvent extends CounterEvent {
+  final String? message;
+  const UpdateMessageEvent({required this.message});
 
   @override
-  List<Object?> get props => [counter];
+  List<Object?> get props => [message];
 }
+```
 
-/// A state class that represents the complete state of the ExampleBloc.
-/// This class is immutable and extends Equatable for value comparison.
-class ExampleState extends Equatable {
-  /// Indicates whether the bloc is currently processing an operation
+</details>
+
+<details>
+<summary><b>📦 Complete State Class</b></summary>
+
+```dart
+class CounterState extends Equatable {
+  final int count;
   final bool isLoading;
-  
-  /// Counter value for tracking state changes
-  final int counter;
-  
-  /// Optional data string that can be displayed to the user
-  final String? data;
-  
-  /// Optional secondary data string
-  final String? dss;
-  
-  /// List of string items
-  final List<String> listNm;
-  
-  /// Map containing string keys and integer values
-  final Map<String, int> mapgenerate;
-  
-  /// Map with nullable string keys and values
-  final Map<String?, String?> list;
-  
-  /// List of boolean values representing selected days
-  final List<bool> selectedDays;
-  
-  /// Optional map for storing dynamic key-value pairs
-  final Map<dynamic, dynamic>? test;
+  final String? message;
 
-  /// Creates a new instance of ExampleState with the given parameters.
-  /// All parameters except [data], [dss], and [test] are required.
-  const ExampleState({
-      required this.isLoading,
-      required this.counter,
-      this.data,
-      this.dss,
-      required this.listNm,
-      required this.mapgenerate,
-      required this.list,
-      required this.selectedDays,
-      this.test});
+  const CounterState({
+    required this.count,
+    required this.isLoading,
+    this.message,
+  });
 
-  /// Creates the initial state of the ExampleBloc.
-  /// This method sets up default values for all state properties.
-  static ExampleState initial() {
-    return ExampleState(
-        isLoading: false,
-        counter: 0,
-        data: "You have pushed the button this many times:",
-        dss: null,
-        listNm: List.generate(10, (index) => 'item $index'),
-        mapgenerate: Map<String, int>.fromEntries(
-          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-              .map((e) => MapEntry<String, int>(e, int.parse(e))),
-        ),
-        list: {},
-        selectedDays: [],
-        test: {});
+  // Factory constructor for initial state
+  static CounterState initial() {
+    return const CounterState(
+      count: 0,
+      isLoading: false,
+      message: null,
+    );
   }
 
-  /// Creates a copy of this state with the given parameters replaced.
-  /// If a parameter is not provided, the value from the current state is used.
-  ExampleState copyWith({
-      bool? isLoading,
-      int? counter,
-      String? data,
-      String? dss,
-      List<String>? listNm,
-      Map<String, int>? mapgenerate,
-      Map<String?, String?>? list,
-      List<bool>? selectedDays,
-      Map<dynamic, dynamic>? test}) {
-    return ExampleState(
-        isLoading: isLoading ?? this.isLoading,
-        counter: counter ?? this.counter,
-        data: data ?? this.data,
-        dss: dss ?? this.dss,
-        listNm: listNm ?? this.listNm,
-        mapgenerate: mapgenerate ?? this.mapgenerate,
-        list: list ?? this.list,
-        selectedDays: selectedDays ?? this.selectedDays,
-        test: test ?? this.test);
+  // copyWith method for immutable updates
+  CounterState copyWith({
+    int? count,
+    bool? isLoading,
+    String? message,
+  }) {
+    return CounterState(
+      count: count ?? this.count,
+      isLoading: isLoading ?? this.isLoading,
+      message: message ?? this.message,
+    );
   }
 
-  /// Creates a copy of this state with the ability to set specific fields to null.
-  /// The boolean parameters control whether the corresponding field should be set to null.
-  ExampleState copyWithNull({
-      bool? isLoading,
-      int? counter,
-      bool data = false,
-      bool dss = false,
-      List<String>? listNm,
-      Map<String, int>? mapgenerate,
-      Map<String?, String?>? list,
-      List<bool>? selectedDays,
-      bool test = false}) {
-    return ExampleState(
-        isLoading: isLoading ?? this.isLoading,
-        counter: counter ?? this.counter,
-        data: data ? null : this.data,
-        dss: dss ? null : this.dss,
-        listNm: listNm ?? this.listNm,
-        mapgenerate: mapgenerate ?? this.mapgenerate,
-        list: list ?? this.list,
-        selectedDays: selectedDays ?? this.selectedDays,
-        test: test ? null : this.test);
+  // copyWithNull for nullable fields
+  CounterState copyWithNull({bool message = false}) {
+    return CounterState(
+      count: this.count,
+      isLoading: this.isLoading,
+      message: message ? null : this.message,
+    );
   }
 
-  /// Registers all event handlers for the ExampleBloc.
-  /// This method sets up the event-to-state mapping for all possible state updates.
-  static void registerEvents(ExampleBloc bloc) {
+  // Auto-registers event handlers
+  static void registerEvents(CounterBloc bloc) {
+    bloc.on<UpdateCountEvent>((event, emit) {
+      emit(bloc.state.copyWith(count: event.count));
+    });
+
     bloc.on<UpdateIsLoadingEvent>((event, emit) {
       emit(bloc.state.copyWith(isLoading: event.isLoading));
     });
 
-    bloc.on<UpdatecounterEvent>((event, emit) {
-      emit(bloc.state.copyWith(counter: event.counter));
-    });
-
-    bloc.on<UpdateDataEvent>((event, emit) {
-      if (event.data == null) {
-        emit(bloc.state.copyWithNull(data: true));
+    bloc.on<UpdateMessageEvent>((event, emit) {
+      if (event.message == null) {
+        emit(bloc.state.copyWithNull(message: true));
       } else {
-        emit(bloc.state.copyWith(data: event.data));
-      }
-    });
-
-    bloc.on<UpdateDssEvent>((event, emit) {
-      if (event.dss == null) {
-        emit(bloc.state.copyWithNull(dss: true));
-      } else {
-        emit(bloc.state.copyWith(dss: event.dss));
-      }
-    });
-
-    bloc.on<UpdateListNmEvent>((event, emit) {
-      emit(bloc.state.copyWith(listNm: event.listNm));
-    });
-
-    bloc.on<UpdateMapgenerateEvent>((event, emit) {
-      emit(bloc.state.copyWith(mapgenerate: event.mapgenerate));
-    });
-
-    bloc.on<UpdateListEvent>((event, emit) {
-      emit(bloc.state.copyWith(list: event.list));
-    });
-
-    bloc.on<UpdateSelectedDaysEvent>((event, emit) {
-      emit(bloc.state.copyWith(selectedDays: event.selectedDays));
-    });
-
-    bloc.on<UpdateTestEvent>((event, emit) {
-      if (event.test == null) {
-        emit(bloc.state.copyWithNull(test: true));
-      } else {
-        emit(bloc.state.copyWith(test: event.test));
+        emit(bloc.state.copyWith(message: event.message));
       }
     });
   }
 
-  /// Returns a list of all properties used for equality comparison.
   @override
-  List<Object?> get props => [
-        isLoading,
-        counter,
-        data,
-        dss,
-        listNm,
-        mapgenerate,
-        list,
-        selectedDays,
-        test
-      ];
+  List<Object?> get props => [count, isLoading, message];
 }
+```
 
-/// Extension on BuildContext that provides convenient methods for updating the ExampleBloc state.
-/// This extension simplifies state updates by providing a single method to update multiple state properties.
-extension ExampleBlocContextExtension on BuildContext {
-  /// Updates the ExampleBloc state with the provided values.
-  /// Only the specified parameters will be updated; others will remain unchanged.
-  /// Uses UnspecifiedDataType.instance as a sentinel value to determine which parameters to update.
-  void setExampleBlocState({
+</details>
+
+<details>
+<summary><b>🔧 BuildContext Extension</b></summary>
+
+```dart
+extension CounterBlocContextExtension on BuildContext {
+  /// Updates the CounterBloc state with the provided values.
+  /// Only specified parameters will be updated; others remain unchanged.
+  void setCounterBlocState({
+    Object? count = UnspecifiedDataType.instance,
     Object? isLoading = UnspecifiedDataType.instance,
-    Object? counter = UnspecifiedDataType.instance,
-    Object? data = UnspecifiedDataType.instance,
-    Object? dss = UnspecifiedDataType.instance,
-    Object? listNm = UnspecifiedDataType.instance,
-    Object? mapgenerate = UnspecifiedDataType.instance,
-    Object? list = UnspecifiedDataType.instance,
-    Object? selectedDays = UnspecifiedDataType.instance,
-    Object? test = UnspecifiedDataType.instance,
+    Object? message = UnspecifiedDataType.instance,
   }) {
-    final myBloc = read<ExampleBloc>(); // Read the MyBloc instance
+    final bloc = read<CounterBloc>();
+    
+    if (count != UnspecifiedDataType.instance) {
+      bloc.add(UpdateCountEvent(count: count as int));
+    }
+
     if (isLoading != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool?));
+      bloc.add(UpdateIsLoadingEvent(isLoading: isLoading as bool));
     }
 
-    if (counter != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateCounterEvent(counter: counter as int));
-    }
-
-    if (data != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateDataEvent(data: data as String?));
-    }
-
-    if (dss != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateDssEvent(dss: dss as String?));
-    }
-
-    if (iterable != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateIterableEvent(iterable: iterable.cast<String>()));
-    }
-
-    if (listNm != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListNmEvent(listNm: listNm.cast<String>()));
-    }
-
-    if (mapgenerate != UnspecifiedDataType.instance) {
-      myBloc.add(
-          UpdateMapgenerateEvent(mapgenerate: mapgenerate.cast<String, int>()));
-    }
-
-    if (list != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateListEvent(list: list.cast<String?, String?>()));
-    }
-
-    if (selectedDays != UnspecifiedDataType.instance) {
-      myBloc.add(
-          UpdateSelectedDaysEvent(selectedDays: selectedDays.cast<bool>()));
-    }
-
-    if (test != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateTestEvent(test: test.cast<dynamic, dynamic>()));
+    if (message != UnspecifiedDataType.instance) {
+      bloc.add(UpdateMessageEvent(message: message as String?));
     }
   }
 }
 ```
 
+</details>
 
-## 🎯 Best Practices
+**Benefits:**
+- Complete state class with all properties
+- `initial()` factory with default values
+- `copyWith()` for immutable updates
+- `copyWithNull()` for nullable fields
+- Auto-generated update events
+- `registerEvents()` for easy setup
+- Context extensions for easy state updates
+- Full documentation comments
 
-1. **State Variables**
-   - Keep state classes focused and minimal
-   - Use meaningful variable names
-   - Consider nullability carefully
+---
 
-2. **Event Generation**
-   - Use descriptive factory constructor names
-   - Group related events together
-   - Document complex event parameters
+<div id="best-practices"></div>
 
-3. **State Updates**
-   - Prefer extension methods for simple updates
-   - Use traditional events for complex logic
-   - Keep state immutable
+## 💡 Best Practices
+
+### State Management
+
+<table>
+<tr>
+<td width="50%">
+
+**DO**
+
+```dart
+@generateStates
+abstract class _$$UserState {
+  final String username = '';
+  final bool isAuthenticated = false;
+  final String? profileUrl = null;
+}
+```
+Use meaningful, descriptive names  
+Provide default values  
+Consider nullability carefully  
+
+</td>
+<td width="50%">
+
+**DON'T**
+
+```dart
+@generateStates
+abstract class _$$UserState {
+  final String u = '';
+  final bool b = false;
+  final String? x;
+}
+```
+Avoid cryptic variable names  
+Don't skip default values  
+Don't over-use nullable types  
+
+</td>
+</tr>
+</table>
+
+### Event Naming
+
+<table>
+<tr>
+<td width="50%">
+
+**DO**
+
+```dart
+@generateEvents
+abstract class AuthEvent {
+  const factory AuthEvent.loginWithEmail({
+    required String email,
+    required String password,
+  }) = LoginWithEmailEvent;
+}
+```
+Use descriptive names  
+Follow verb-noun pattern  
+Group related events  
+
+</td>
+<td width="50%">
+
+**DON'T**
+
+```dart
+@generateEvents
+abstract class AuthEvent {
+  const factory AuthEvent.e1({
+    String? x,
+    String? y,
+  }) = Event1;
+}
+```
+Avoid generic names  
+Don't use numbered events  
+Missing documentation  
+
+</td>
+</tr>
+</table>
+
+### When to Use What
+
+| Use Case | Recommendation | Why? |
+|----------|---------------|------|
+| Simple state updates | `context.set{Bloc}State()` | Cleaner, less code |
+| Complex business logic | Custom events + handlers | Better separation of concerns |
+| Multiple state changes | `copyWith()` in bloc | Atomic state updates |
+| Nullable field reset | `copyWithNull()` | Explicitly set to null |
+| Initial setup | `{State}.initial()` | Consistent defaults |
+
+### File Organization
+
+```
+lib/
+├── blocs/
+│   ├── auth/
+│   │   ├── auth_bloc.dart        # Main bloc file (imports, bloc class)
+│   │   ├── auth_event.dart       # Event definitions with @generateEvents
+│   │   ├── auth_state.dart       # State definitions with @generateStates
+│   │   └── auth_bloc.g.dart      # Generated file (auto-generated events + states)
+│   └── counter/
+│       ├── counter_bloc.dart     # Main bloc file (imports, bloc class)
+│       ├── counter_event.dart    # Event definitions with @generateEvents
+│       ├── counter_state.dart    # State definitions with @generateStates
+│       └── counter_bloc.g.dart   # Generated file (auto-generated events + states)
+```
+
+**File Structure Breakdown:**
+
+| File | Purpose | Contains |
+|------|---------|----------|
+| `{name}_bloc.dart` | Main file | Imports, part declarations, Bloc class |
+| `{name}_state.dart` | State definition | `part of` + `@generateStates` |
+| `{name}_event.dart` | Event definition | `part of` + `@generateEvents` |
+| `{name}_bloc.g.dart` | Generated code | Auto-generated events, states, extensions |
+
+---
+
+<div id="migration-guide"></div>
 
 ## 🔄 Migration Guide
 
-### 2.0.0 to 3.0.0
-- Update annotation imports
-- Rename existing state classes to include `_$$` prefix
-- Add initial values to state variables
-- Run code generation
+### Migrating from 2.x to 3.x
+
+#### Step 1: Update Dependencies
+
+```yaml
+dependencies:
+  fbloc_event_gen: ^3.2.7  # Update version
+```
+
+#### Step 2: Update State Class Names
+
+**Before:**
+```dart
+@generateStates
+abstract class MyState {
+  // ...
+}
+```
+
+**After:**
+```dart
+@generateStates
+abstract class _$$MyState {  // Add _$$ prefix
+  // ...
+}
+```
+
+#### Step 3: Add Initial Values
+
+**Before:**
+```dart
+abstract class _$$MyState {
+  final int counter;
+  final bool isLoading;
+}
+```
+
+**After:**
+```dart
+abstract class _$$MyState {
+  final int counter = 0;           // Add defaults
+  final bool isLoading = false;     // Add defaults
+}
+```
+
+#### Step 4: Run Code Generation
+
+```bash
+dart run build_runner clean
+dart run build_runner build --delete-conflicting-outputs
+```
+
+---
+
+<div id="contributing"></div>
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [contributing guide](CONTRIBUTING.md) for details.
+We love contributions! 💙
+
+### How to Contribute
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Ways to Contribute
+
+- Report bugs
+- Suggest new features
+- Improve documentation
+- Add tests
+- Fix issues
+
+See our [Contributing Guide](CONTRIBUTING.md) for more details.
+
+---
+
+<div id="license"></div>
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+Special thanks to all our contributors and the Flutter community for their support!
+
+### Show Your Support
+
+If you like this package, please give it a ⭐ on [GitHub](https://github.com/navaneethkrishnaindeed/bloc_gen)!
+
+### Get in Touch
+
+- [Discord Community](https://discord.gg/8a8gtHZrT6)
+- [GitHub Issues](https://github.com/navaneethkrishnaindeed/bloc_gen/issues)
+- [Pub.dev](https://pub.dev/packages/fbloc_event_gen)
+
+---
+
+<p align="center">Made with ❤️ for the Flutter Community</p>
